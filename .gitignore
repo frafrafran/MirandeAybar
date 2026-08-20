@@ -1,0 +1,32 @@
+# Sistema operativo
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*~
+
+# Dependencias y builds (lithos-mapa)
+node_modules/
+dist/
+.vite/
+
+# Temporales
+*.log
+*.tmp
+*.bak
+__pycache__/
+*.pyc
+
+# El Excel de propiedades NO va: la columna CLIENTE tiene nombres reales
+# de propietarios y este repositorio es publico.
+*.xlsx
+*.xls
+
+# Config local de herramientas (lleva rutas absolutas de cada maquina)
+.claude/

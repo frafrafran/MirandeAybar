@@ -35,8 +35,8 @@
   --gold:#C9A87E;                 /* acento sobre OSCURO, 5.25:1 */
   --gold-l:#7A5E40;               /* acento sobre CLARO, 4.74:1 */
   --gold-deep:#8A6A4C;
-  --gold-graphic:#A68364;
-  --alerta:#9E3B2E;      /* error de formulario, 5.32:1 sobre --ivory */         /* bronce de marca: solo filetes y rellenos */
+  --gold-graphic:#A68364;         /* bronce de marca: solo filetes y rellenos */
+  --alerta:#9E3B2E;               /* error de formulario, 5.32:1 sobre --ivory */
   --gold-soft:rgba(166,131,100,.14);
 
   --muted-d:#9AA6AC;              /* 6.7:1 sobre oscuro, con tinte navy */

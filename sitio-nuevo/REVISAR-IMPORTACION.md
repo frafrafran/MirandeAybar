@@ -4,10 +4,12 @@ al esquema real de tu tabla `propiedades`.
 
 ## Cómo importarlas
 
-**Antes que nada, aplicá `ARREGLAR-SEGURIDAD.sql`.** Hoy cualquiera que abra
-tu web puede borrar esta tabla.
+> Una versión anterior de este documento decía que había que aplicar un parche
+> de seguridad urgente. **Era una conclusión equivocada**, hecha con pruebas mal
+> armadas; RLS ya estaba funcionando. El detalle está en `SEGURIDAD-Y-DATOS.sql`.
+> No hay nada que aplicar antes de importar.
 
-Después, cualquiera de las dos:
+Cualquiera de las dos:
 
 - **CSV** → Supabase → Table Editor → tabla `propiedades` → *Insert* → *Import data from CSV* → subís `propiedades-import.csv`
 - **SQL** → Supabase → SQL Editor → New query → pegás `propiedades-import.sql` → *Run*

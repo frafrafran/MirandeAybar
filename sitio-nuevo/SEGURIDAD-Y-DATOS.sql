@@ -1,28 +1,36 @@
 -- ============================================================
---  URGENTE — Mirande Aybar
---  Hoy cualquiera que abra tu sitio puede borrar tus propiedades.
+--  Mirande Aybar — RLS y limpieza de datos
 --
---  Comprobado el 04/08/2026 contra tu proyecto, usando solamente
---  la clave "anon" que está escrita en config.js:
+--  NADA DE ESTE ARCHIVO HACE FALTA APLICARLO HOY. La base ya está
+--  bien configurada. Queda como referencia.
 --
---    GET    /rest/v1/propiedades          -> 200  (leer)
---    POST   /rest/v1/propiedades          -> 400  (insertar: PERMITIDO,
---                                                  el 400 es por columna
---                                                  inexistente, no por permiso)
---    PATCH  /rest/v1/propiedades?id=eq.0  -> 204  (modificar: PERMITIDO)
---    DELETE /rest/v1/propiedades?id=eq.0  -> 204  (borrar: PERMITIDO)
+--  POR QUÉ EXISTE: una revisión anterior concluyó que la clave "anon"
+--  permitía escribir. Esa conclusión ERA INCORRECTA, y el motivo vale
+--  la pena recordarlo porque es una trampa fácil de repetir:
 --
---  Los PATCH y DELETE se probaron con id=eq.0, que no existe en tu
---  tabla, así que no se tocó ninguna fila. El 204 significa que el
---  permiso está concedido, no que se haya borrado algo.
+--    - El INSERT de prueba mandaba una columna inexistente. PostgREST
+--      valida el esquema ANTES que las políticas RLS, así que devolvió
+--      400 (columna mala) y se leyó como "el permiso está concedido".
+--    - El DELETE y el PATCH usaban id=eq.0, que no existe. Borrar cero
+--      filas devuelve 204. Un 204 ahí significa "no coincidió nada",
+--      no "tenés permiso".
 --
---  Esa clave es pública por diseño: va escrita en el HTML y cualquiera
---  la ve con clic derecho -> Ver código fuente. Lo que NO es normal es
---  que además permita escribir.
+--  La prueba bien hecha, con columnas válidas, devuelve:
+--      401 — new row violates row-level security policy
+--  Es decir: RLS estaba funcionando todo el tiempo.
 --
---  CÓMO APLICARLO
---    Supabase -> SQL Editor -> New query -> pegar todo -> Run
---    Tarda un segundo y no borra ni modifica ningún dato.
+--  MORALEJA: para probar permisos hay que mandar una petición que
+--  sería válida si el permiso existiera. Si falla por otra cosa
+--  (esquema, id inexistente), la prueba no midió lo que creías.
+--
+--  La clave "anon" de config.js es pública por diseño: va escrita en
+--  el HTML y cualquiera la ve con "Ver código fuente". Eso es normal y
+--  seguro MIENTRAS RLS esté encendido, que es el caso.
+-- ============================================================
+
+-- ============================================================
+--  PARTE 1 — Las políticas que ya están puestas (referencia)
+--  Sirven si algún día hay que rehacer la tabla desde cero.
 -- ============================================================
 
 -- 1. Encender Row Level Security.

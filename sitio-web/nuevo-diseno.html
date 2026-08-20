@@ -1,0 +1,3039 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIRANDE&AYBAR -  Inmobiliaria en Villa General Belgrano</title>
+<meta name="description" content="Mirande & Aybar -  Inmobiliaria boutique en Villa General Belgrano, Córdoba. Casas, cabañas, terrenos y propiedades en las Sierras de Calamuchita.">
+<link rel="icon" type="image/png" href="assets/logos/isotipo-azul.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="assets/fotos/hero-base.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+/* ============ RESET & TOKENS ============ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+ --ink:#0B0A08; --ink-2:#14120E; --ink-3:#1D1A14;
+ --ivory:#F2EFE9; --ivory-2:#E9E4DA; --ivory-3:#DFD8CA;
+ --gold:#C2A05C; --gold-deep:#A8863F; --gold-soft:rgba(194,160,92,.14);
+ --muted-d:#9B948A; --muted-l:#7A736A;
+ --line-d:rgba(242,239,233,.12); --line-l:rgba(11,10,8,.12);
+ --font-display:"Bricolage Grotesque","Instrument Sans",system-ui,sans-serif;
+ --font-body:"Instrument Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+ --ease-out:cubic-bezier(.22,1,.36,1);
+ --ease-expo:cubic-bezier(.16,1,.3,1);
+ --space-5:64px;--space-6:96px;--space-7:144px;
+ --z-grain:2000;--z-cursor:3000;--z-preloader:4000;--z-nav:900;--z-menu:950;--z-modal:1100;--z-progress:1200;
+}
+html{scroll-behavior:auto}
+body{
+  font-family:var(--font-body);background:var(--ink);color:var(--ivory);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body.is-loading{overflow:hidden;height:100dvh}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--gold);color:var(--ink)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+
+/* ============ UTILITIES ============ */
+.container{width:min(100% - 48px,1360px);margin-inline:auto}
+.label{
+  font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:12px;color:var(--gold);
+}
+.label::before{content:"";width:28px;height:1px;background:var(--gold)}
+.section-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:var(--space-5)}
+.section-title{
+  font-family:var(--font-display);font-weight:400;line-height:1.02;
+  font-size:clamp(2.6rem,6vw,4.8rem);letter-spacing:-.02em;
+}
+.section-title em{font-style:italic;color:var(--gold)}
+.light .section-title{color:var(--ink)}
+
+/* split text */
+.char{display:inline-block;transform:translateY(120%)}
+.word{display:inline-block;overflow:hidden;vertical-align:top}
+
+/* buttons */
+.btn{
+  position:relative;display:inline-flex;align-items:center;gap:14px;
+  padding:18px 34px;border-radius:100px;overflow:hidden;
+  font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  transition:color .45s var(--ease-out);isolation:isolate;min-height:48px;cursor:pointer;
+}
+.btn .btn-fill{
+  position:absolute;inset:0;z-index:-1;border-radius:inherit;
+  transform:scaleY(0);transform-origin:bottom;transition:transform .5s var(--ease-expo);
+}
+.btn:hover .btn-fill,.btn:focus-visible .btn-fill{transform:scaleY(1)}
+.btn .arr{transition:transform .45s var(--ease-out)}
+.btn:hover .arr{transform:translateX(5px)}
+.btn-gold{background:var(--gold);color:var(--ink)}
+.btn-gold .btn-fill{background:var(--ivory)}
+.btn-ghost{border:1px solid var(--line-d);color:var(--ivory)}
+.btn-ghost .btn-fill{background:var(--ivory)}
+.btn-ghost:hover{color:var(--ink);border-color:var(--ivory)}
+.btn-dark{background:var(--ink);color:var(--ivory)}
+.btn-dark .btn-fill{background:var(--gold)}
+.btn-dark:hover{color:var(--ink)}
+.btn svg{width:16px;height:16px;flex:none}
+
+/* ============ GRAIN / PROGRESS / CURSOR ============ */
+.grain{
+  position:fixed;inset:-100%;z-index:var(--z-grain);pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 7s steps(10) infinite;
+}
+@keyframes grain{
+  0%,100%{transform:translate(0,0)}10%{transform:translate(-5%,-8%)}20%{transform:translate(-12%,4%)}
+  30%{transform:translate(6%,-14%)}40%{transform:translate(-4%,12%)}50%{transform:translate(-10%,6%)}
+  60%{transform:translate(12%,0)}70%{transform:translate(0,10%)}80%{transform:translate(-14%,0)}90%{transform:translate(8%,4%)}
+}
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:var(--z-progress);pointer-events:none}
+.progress span{display:block;height:100%;background:var(--gold);transform:scaleX(0);transform-origin:left}
+
+
+/* ============ PRELOADER ============ */
+.preloader{
+  position:fixed;inset:0;z-index:var(--z-preloader);background:var(--ink);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:28px;
+}
+.preloader-name{
+  font-family:var(--font-display);font-weight:300;letter-spacing:.04em;
+  font-size:clamp(1.6rem,4.5vw,3rem);display:flex;overflow:hidden;
+}
+.preloader-name .pl-ch{display:inline-block;transform:translateY(110%);white-space:pre}
+.preloader-name .amp{color:var(--gold);font-style:italic}
+.preloader-count{
+  position:absolute;bottom:40px;right:48px;
+  font-family:var(--font-display);font-size:clamp(3rem,8vw,6rem);font-weight:300;
+  color:var(--gold);line-height:1;font-variant-numeric:tabular-nums;
+}
+.preloader-bar{width:min(320px,60vw);height:1px;background:var(--line-d);overflow:hidden}
+.preloader-bar span{display:block;height:100%;width:100%;background:var(--gold);transform:scaleX(0);transform-origin:left}
+.preloader-tag{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted-d)}
+
+/* ============ NAV ============ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:var(--z-nav);
+  transition:transform .55s var(--ease-out),background-color .4s,backdrop-filter .4s;
+}
+.nav.is-hidden{transform:translateY(-100%)}
+.nav.is-solid{background:rgba(11,10,8,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.nav-inner{
+  width:min(100% - 48px,1360px);margin-inline:auto;
+  display:flex;align-items:center;justify-content:space-between;padding:18px 0;
+}
+.nav.is-solid .nav-inner{padding:12px 0}
+.nav-logo img{height:52px;width:auto;transition:height .4s}
+.nav.is-solid .nav-logo img{height:44px}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{
+  position:relative;font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  padding:8px 0;color:rgba(242,239,233,.75);transition:color .3s;
+}
+.nav-links a::after{
+  content:"";position:absolute;left:0;bottom:2px;width:100%;height:1px;background:var(--gold);
+  transform:scaleX(0);transform-origin:right;transition:transform .45s var(--ease-out);
+}
+.nav-links a:hover{color:var(--ivory)}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav-right{display:flex;align-items:center;gap:18px}
+.lang{display:flex;gap:2px}
+.lang button{
+  font-size:11px;font-weight:600;letter-spacing:.1em;padding:6px 8px;
+  color:rgba(242,239,233,.5);transition:color .25s;text-transform:uppercase;
+}
+.lang button.active{color:var(--ivory);text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--gold)}
+.nav-cta{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;border:1px solid var(--line-d);border-radius:100px;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;transition:background-color .35s,color .35s,border-color .35s}
+.nav-cta:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.nav-cta svg{width:14px;height:14px}
+.nav-burger{display:none;flex-direction:column;gap:6px;padding:14px 10px;z-index:calc(var(--z-menu) + 1);position:relative}
+.nav-burger span{width:26px;height:1.5px;background:var(--ivory);transition:transform .4s var(--ease-out),opacity .3s;display:block}
+.nav-burger.is-open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.nav-burger.is-open span:nth-child(2){opacity:0}
+.nav-burger.is-open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+
+/* mobile menu */
+.menu{
+  position:fixed;inset:0;z-index:var(--z-menu);background:var(--ink-2);
+  display:flex;flex-direction:column;justify-content:center;padding:0 32px;
+  clip-path:inset(0 0 100% 0);visibility:hidden;
+}
+.menu-links{list-style:none;display:flex;flex-direction:column;gap:6px}
+.menu-links a{
+  font-family:var(--font-display);font-size:clamp(2.2rem,8.5vw,4rem);font-weight:300;line-height:1.15;
+  display:inline-flex;align-items:baseline;gap:16px;padding:6px 0;
+}
+.menu-links a .idx{font-family:var(--font-body);font-size:12px;color:var(--gold);letter-spacing:.2em}
+.menu-links a:hover{color:var(--gold)}
+.menu-links li{overflow:hidden}
+.menu-links li>a{transform:translateY(110%);display:inline-flex}
+.menu-foot{position:absolute;bottom:36px;left:32px;right:32px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted-d);letter-spacing:.1em}
+
+/* ============ HERO ============ */
+.hero{position:relative;min-height:100dvh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%}
+.hero-vignette{position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(ellipse 90% 70% at 50% 45%,transparent 40%,rgba(11,10,8,.72) 100%),
+  linear-gradient(to bottom,rgba(11,10,8,.35),transparent 30%,transparent 55%,rgba(11,10,8,.92))}
+.hero-content{position:relative;z-index:3;padding-bottom:56px}
+
+
+/* ============ MARQUEE ============ */
+
+/* ============ MANIFESTO ============ */
+.bridge{position:relative;background:var(--ink)}
+.manifesto{padding:var(--space-7) 0;min-height:70vh;display:flex;align-items:center}
+.manifesto-text{
+  font-family:var(--font-display);font-weight:300;line-height:1.28;letter-spacing:-.01em;
+  font-size:clamp(1.7rem,4vw,3.2rem);max-width:24ch;
+}
+.manifesto-text .word{margin-right:.24em}
+.manifesto-text .word>span{display:inline-block;opacity:.14}
+.manifesto-text .gold-w>span{color:var(--gold);font-style:italic}
+.manifesto-side{display:grid;grid-template-columns:1.4fr 1fr;gap:64px;align-items:center}
+.manifesto-figure{position:relative;border-radius:6px;overflow:hidden;aspect-ratio:3/4;background:var(--ink-3)}
+.manifesto-figure img{width:100%;height:120%;object-fit:cover;will-change:transform}
+.manifesto-figure figcaption{
+  position:absolute;bottom:16px;left:16px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  background:rgba(11,10,8,.6);backdrop-filter:blur(8px);padding:8px 14px;border-radius:100px;color:var(--ivory);
+}
+
+/* ============ STATS ============ */
+.stats{background:var(--ink);padding-bottom:var(--space-7)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line-d);border-radius:8px;overflow:hidden}
+.stat{padding:48px 40px;border-right:1px solid var(--line-d);position:relative;overflow:hidden;transition:background-color .5s}
+.stat:last-child{border-right:0}
+.stat:hover{background:var(--gold-soft)}
+.stat-num{
+  font-family:var(--font-display);font-weight:300;line-height:1;color:var(--ivory);
+  font-size:clamp(2.6rem,4.6vw,4.2rem);font-variant-numeric:tabular-nums;display:flex;align-items:baseline;
+}
+.stat-num .suffix{color:var(--gold);font-size:.55em;margin-left:4px;font-style:italic}
+.stat-label{margin-top:14px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-d)}
+
+/* ============ LIGHT WRAPPER ============ */
+.light{background:var(--ivory);color:var(--ink)}
+.light .label{color:var(--gold-deep)}
+.light .label::before{background:var(--gold-deep)}
+
+/* ============ PROPERTIES ============ */
+.properties{padding:var(--space-7) 0}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filter-btn{
+  padding:12px 24px;border-radius:100px;border:1px solid var(--line-l);
+  font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-l);
+  transition:all .35s var(--ease-out);min-height:44px;
+}
+.filter-btn:hover{border-color:var(--ink);color:var(--ink)}
+.filter-btn.is-active{background:var(--ink);border-color:var(--ink);color:var(--ivory)}
+/* Grilla editorial: la primera propiedad ocupa el doble y manda */
+.props-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:24px;margin-top:var(--space-5)}
+.prop-card{grid-column:span 2}
+.prop-card.is-lead{grid-column:span 4;grid-row:span 2}
+.prop-card.is-lead .prop-media{aspect-ratio:16/10;height:100%}
+.prop-card.is-lead .prop-name{font-size:clamp(1.7rem,2.6vw,2.5rem)}
+.prop-card.is-lead .prop-price{font-size:clamp(1.7rem,2.4vw,2.2rem);padding:13px 22px}
+.prop-card.is-lead .prop-body{padding:26px 8px 10px}
+@media (max-width:1100px){
+  .props-grid{grid-template-columns:repeat(4,1fr)}
+  .prop-card{grid-column:span 2}
+  .prop-card.is-lead{grid-column:span 4;grid-row:auto}
+}
+@media (max-width:700px){
+  .props-grid{grid-template-columns:1fr}
+  .prop-card,.prop-card.is-lead{grid-column:span 1}
+}
+/* Precio y estado con mas presencia comercial */
+.prop-price{font-weight:600;letter-spacing:-.02em}
+.prop-cta{
+  position:absolute;inset:auto 16px 16px auto;z-index:3;
+  display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:100px;
+  background:var(--gold);color:var(--ink);font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  opacity:0;transform:translateY(10px);transition:opacity .35s var(--ease-out),transform .35s var(--ease-out);
+}
+.prop-card:hover .prop-cta,.prop-card:focus-visible .prop-cta{opacity:1;transform:translateY(0)}
+@media (hover:none){.prop-cta{opacity:1;transform:none}}
+.prop-card{
+  position:relative;border-radius:8px;overflow:hidden;cursor:pointer;background:var(--ivory-2);
+  transform-style:preserve-3d;will-change:transform;
+}
+.prop-media{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--ivory-3)}
+.prop-media img{
+  width:100%;height:100%;object-fit:cover;transform:scale(1.06);
+  transition:transform 1.1s var(--ease-expo),filter .6s;
+}
+.prop-card:hover .prop-media img{transform:scale(1.13)}
+.prop-badge{
+  position:absolute;top:16px;left:16px;z-index:2;
+  font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  background:rgba(11,10,8,.65);color:var(--ivory);backdrop-filter:blur(8px);
+  padding:8px 14px;border-radius:100px;
+}
+.prop-badge.hot{background:var(--gold);color:var(--ink)}
+.prop-price{
+  position:absolute;bottom:16px;left:16px;z-index:2;
+  font-family:var(--font-display);font-size:1.4rem;font-weight:400;color:var(--ivory);
+  background:rgba(11,10,8,.55);backdrop-filter:blur(10px);padding:10px 18px;border-radius:6px;
+}
+.prop-body{padding:22px 6px 8px}
+.prop-name{font-family:var(--font-display);font-size:1.45rem;font-weight:500;line-height:1.2}
+.prop-loc{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-l);margin-top:6px}
+.prop-specs{display:flex;gap:20px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line-l);font-size:13px;color:var(--muted-l)}
+.prop-specs b{color:var(--ink);font-weight:600}
+.prop-card{opacity:1;transition:opacity .4s,transform .4s}
+.prop-card.is-filtered{display:none}
+
+/* ============ PROPERTY MODAL ============ */
+.modal{
+  position:fixed;inset:0;z-index:var(--z-modal);display:flex;align-items:center;justify-content:center;
+  visibility:hidden;pointer-events:none;
+}
+.modal.is-open{visibility:visible;pointer-events:auto}
+.modal-scrim{position:absolute;inset:0;background:rgba(11,10,8,.78);backdrop-filter:blur(6px);opacity:0}
+.modal-panel{
+  position:relative;width:min(1240px,calc(100vw - 40px));max-height:min(90dvh,880px);
+  background:var(--ivory);color:var(--ink);border-radius:12px;overflow:hidden;
+  display:grid;grid-template-rows:auto 1fr;transform:translateY(60px);opacity:0;
+}
+/* Media a proporción 1900x1000 (~1.9:1) para fotos panorámicas */
+.modal-media{position:relative;width:100%;aspect-ratio:19/10;background:var(--ivory-3)}
+.modal-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.modal-body{padding:44px 44px 36px;overflow-y:auto}
+.modal-close{
+  position:absolute;top:18px;right:18px;z-index:3;width:48px;height:48px;border-radius:50%;
+  background:var(--ink);color:var(--ivory);display:flex;align-items:center;justify-content:center;
+  transition:background-color .3s,transform .3s;font-size:18px;line-height:1;
+}
+.modal-close:hover{background:var(--gold);color:var(--ink);transform:rotate(90deg)}
+.modal-kicker{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep);font-weight:600}
+.modal-title{font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:500;margin:10px 0 4px;line-height:1.1}
+.modal-loc{font-size:13px;color:var(--muted-l);letter-spacing:.08em}
+.modal-price{font-family:var(--font-display);font-size:2rem;color:var(--ink);margin:22px 0 6px}
+.modal-desc{color:var(--muted-l);font-size:14.5px;line-height:1.75;margin:16px 0 22px}
+.modal-specrow{display:flex;gap:28px;padding:18px 0;border-block:1px solid var(--line-l);margin-bottom:26px;flex-wrap:wrap}
+.modal-specrow div{font-size:12px;color:var(--muted-l);letter-spacing:.06em}
+.modal-specrow b{display:block;font-family:var(--font-display);font-size:1.3rem;color:var(--ink);font-weight:500}
+</style>
+<style>
+/* ============ SERVICES ============ */
+.services{padding:var(--space-7) 0;background:var(--ivory)}
+.service-row{
+  position:relative;display:grid;grid-template-columns:80px 1fr auto;align-items:center;gap:32px;
+  padding:40px 12px;border-top:1px solid var(--line-l);cursor:pointer;
+  transition:padding .45s var(--ease-out);
+}
+.service-row:last-of-type{border-bottom:1px solid var(--line-l)}
+.service-row:hover{padding-left:32px}
+.service-idx{font-size:12px;letter-spacing:.2em;color:var(--gold-deep);font-weight:600}
+.service-name{
+  font-family:var(--font-display);font-weight:400;line-height:1.05;
+  font-size:clamp(1.9rem,4.4vw,3.4rem);color:var(--ink);transition:color .35s;
+}
+.service-row:hover .service-name{color:var(--gold-deep)}
+.service-desc{max-width:36ch;font-size:13.5px;color:var(--muted-l);line-height:1.7;justify-self:end}
+.service-arrow{
+  width:52px;height:52px;border:1px solid var(--line-l);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  transition:background-color .35s,color .35s,transform .45s var(--ease-out);flex:none;
+}
+.service-row:hover .service-arrow{background:var(--ink);color:var(--ivory);transform:rotate(-45deg)}
+.service-preview{
+  position:fixed;z-index:60;width:280px;aspect-ratio:4/3;border-radius:8px;overflow:hidden;
+  pointer-events:none;opacity:0;transform:scale(.85) rotate(-4deg);
+  transition:opacity .35s var(--ease-out),transform .45s var(--ease-out);
+  box-shadow:0 30px 60px rgba(11,10,8,.35);
+}
+.service-preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s}
+.service-preview img.is-active{opacity:1}
+.service-preview.is-visible{opacity:1;transform:scale(1) rotate(0deg)}
+.process-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:var(--space-6)}
+.process-step{padding:28px 24px;border:1px solid var(--line-l);border-radius:8px;transition:background-color .4s,transform .4s var(--ease-out)}
+.process-step:hover{background:var(--ink);color:var(--ivory);transform:translateY(-6px)}
+.process-step:hover .ps-num{color:var(--gold)}
+.process-step:hover p{color:var(--muted-d)}
+.ps-num{font-family:var(--font-display);font-size:2rem;color:var(--gold-deep);font-style:italic}
+.process-step h4{font-size:15px;font-weight:600;margin:14px 0 8px}
+.process-step p{font-size:13px;color:var(--muted-l);line-height:1.65}
+
+/* ============ HORIZONTAL GALLERY ============ */
+.gallery{background:var(--ink);color:var(--ivory);overflow:hidden}
+.gallery-pin{height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.gallery-head{padding:0 0 40px}
+.gallery-track{display:flex;gap:32px;padding-left:calc((100vw - min(100vw - 48px,1360px))/2);will-change:transform;width:max-content}
+.g-item{position:relative;flex:none;width:clamp(300px,38vw,560px);border-radius:8px;overflow:hidden}
+.g-item .g-media{aspect-ratio:4/3;overflow:hidden;background:var(--ink-3)}
+.g-item img{width:110%;height:100%;object-fit:cover;will-change:transform}
+.g-cap{display:flex;justify-content:space-between;align-items:baseline;padding:16px 4px 0}
+.g-cap h5{font-family:var(--font-display);font-weight:400;font-size:1.15rem}
+.g-cap span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-d)}
+.g-item.tall{width:clamp(260px,26vw,400px)}
+.g-item.tall .g-media{aspect-ratio:3/4}
+
+/* ============ ESTIMATOR ============ */
+.estimator{padding:var(--space-7) 0;background:var(--ivory)}
+.est-panel{display:grid;grid-template-columns:1.15fr 1fr;border:1px solid var(--line-l);border-radius:12px;overflow:hidden;background:#fff}
+.est-form{padding:52px 48px}
+.est-field{margin-bottom:34px}
+.est-field label{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin-bottom:16px}
+.est-field label output{font-family:var(--font-display);font-size:1.2rem;font-weight:500;color:var(--gold-deep);letter-spacing:0;text-transform:none;font-variant-numeric:tabular-nums}
+.est-select{display:flex;gap:8px;flex-wrap:wrap}
+.est-chip{
+  padding:11px 20px;border:1px solid var(--line-l);border-radius:100px;font-size:12px;font-weight:500;
+  color:var(--muted-l);transition:all .3s var(--ease-out);min-height:44px;
+}
+.est-chip:hover{border-color:var(--ink);color:var(--ink)}
+.est-chip.is-active{background:var(--ink);border-color:var(--ink);color:var(--ivory)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:var(--ivory-3);border-radius:2px;outline-offset:8px}
+input[type=range]::-webkit-slider-thumb{
+ -webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:var(--ivory);
+  border:6px solid var(--gold);cursor:grab;transition:transform .2s;
+}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+input[type=range]::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--ivory);border:6px solid var(--gold);cursor:grab}
+.est-result{
+  background:var(--ink);color:var(--ivory);padding:52px 48px;display:flex;flex-direction:column;justify-content:center;gap:8px;
+  position:relative;overflow:hidden;
+}
+.est-result::before{
+  content:"";position:absolute;top:-40%;right:-30%;width:80%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(194,160,92,.22),transparent 70%);
+}
+.est-result .label{position:relative}
+.est-value{
+  font-family:var(--font-display);font-weight:300;line-height:1;color:var(--ivory);
+  font-size:clamp(2.4rem,4.6vw,4rem);font-variant-numeric:tabular-nums;position:relative;margin:16px 0 4px;
+}
+.est-range{font-size:13px;color:var(--muted-d);position:relative}
+.est-note{font-size:11.5px;color:var(--muted-d);margin-top:26px;line-height:1.6;position:relative;border-top:1px solid var(--line-d);padding-top:18px}
+.est-note a{color:var(--gold);border-bottom:1px solid var(--gold)}
+
+/* ============ TEAM ============ */
+.team{padding:var(--space-7) 0;background:var(--ivory)}
+.team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:860px}
+.team-card{
+  position:relative;border-radius:8px;overflow:hidden;aspect-ratio:4/3;cursor:pointer;
+  background:linear-gradient(150deg,var(--ink),var(--ink-3));
+  display:flex;align-items:center;justify-content:center;
+}
+.team-ini{
+  font-family:var(--font-display);font-weight:300;font-style:italic;
+  font-size:clamp(4rem,8vw,7rem);color:var(--gold);opacity:.85;
+  transition:transform .8s var(--ease-expo),opacity .5s;
+}
+.team-card:hover .team-ini{transform:scale(1.12);opacity:1}
+.team-overlay{
+  position:absolute;inset:auto 0 0 0;padding:60px 22px 20px;
+  background:linear-gradient(to top,rgba(11,10,8,.9),transparent);color:var(--ivory);
+}
+.team-name{font-family:var(--font-display);font-size:1.3rem;font-weight:500}
+.team-role{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-top:4px}
+.team-links{display:flex;gap:14px;margin-top:12px;opacity:0;transform:translateY(8px);transition:opacity .4s .05s,transform .4s .05s var(--ease-out)}
+.team-card:hover .team-links{opacity:1;transform:translateY(0)}
+.team-links a{font-size:11px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--line-d);padding-bottom:2px}
+.team-links a:hover{color:var(--gold);border-color:var(--gold)}
+
+/* ============ TESTIMONIALS ============ */
+.testimonials{padding:var(--space-7) 0;background:var(--ink);color:var(--ivory);overflow:hidden}
+/* Muro de reseñas: columnas en bucle vertical continuo.
+   Un solo momento compositivo, enmascarado arriba y abajo. */
+.tst-wall{
+  display:flex;justify-content:center;gap:24px;margin-top:var(--space-5);
+  max-height:720px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 82%,transparent);
+  mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 82%,transparent);
+}
+.tst-col{flex:1;max-width:340px}
+.tst-col-inner{display:flex;flex-direction:column;gap:24px;padding-bottom:24px;will-change:transform;animation:tstLoop var(--dur,26s) linear infinite}
+.tst-wall:hover .tst-col-inner{animation-play-state:paused}
+@keyframes tstLoop{to{transform:translateY(-50%)}}
+.tst-card{
+  padding:34px 30px;border-radius:12px;border:1px solid var(--line-d);
+  background:linear-gradient(180deg,rgba(242,239,233,.045),rgba(242,239,233,.015));
+  backdrop-filter:blur(2px);
+}
+.tst-quote{font-size:15px;line-height:1.75;color:var(--ivory);letter-spacing:-.005em}
+.tst-who{display:flex;align-items:center;gap:13px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line-d)}
+.tst-ava{
+  width:42px;height:42px;border-radius:50%;flex:none;background:var(--ink-3);
+  border:1px solid rgba(192,154,110,.35);display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:600;font-size:.82rem;color:var(--gold);letter-spacing:.02em;
+}
+.tst-who b{display:block;font-size:14px;font-weight:600;line-height:1.3}
+.tst-who span{font-size:12.5px;color:var(--muted-d);line-height:1.35}
+@media (max-width:1024px){.tst-col:nth-child(3){display:none}}
+@media (max-width:760px){.tst-col:nth-child(2){display:none}.tst-col{max-width:none}.tst-wall{max-height:620px}}
+@media (prefers-reduced-motion:reduce){
+  .tst-col-inner{animation:none}
+  .tst-wall{max-height:none;overflow:visible;-webkit-mask-image:none;mask-image:none}
+  .tst-col:nth-child(2),.tst-col:nth-child(3){display:block}
+}
+
+/* ============ CONTACT ============ */
+.contact{padding:var(--space-7) 0;background:var(--ivory)}
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:80px;align-items:start}
+.contact-info h3{font-family:var(--font-display);font-weight:400;font-size:clamp(2.2rem,4.5vw,3.6rem);line-height:1.08;letter-spacing:-.02em;margin:20px 0 24px}
+.contact-info h3 em{color:var(--gold-deep);font-style:italic}
+.contact-info>p{color:var(--muted-l);max-width:40ch;font-size:15px;line-height:1.75}
+.contact-details{margin-top:44px;display:flex;flex-direction:column}
+.cd-row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;border-top:1px solid var(--line-l);font-size:14px}
+.cd-row:last-of-type{border-bottom:1px solid var(--line-l)}
+.cd-row span{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-l);flex:none}
+.cd-row a,.cd-row b{font-weight:500;color:var(--ink);text-align:right}
+.cd-row a:hover{color:var(--gold-deep)}
+.map{margin-top:24px;border-radius:8px;overflow:hidden;height:200px;border:1px solid var(--line-l)}
+.map iframe{width:100%;height:100%;border:0;filter:grayscale(.3) contrast(1.05)}
+.form-field{position:relative;border-top:1px solid var(--line-l);padding:26px 0 22px;display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start}
+.form-field:last-of-type{border-bottom:1px solid var(--line-l)}
+.ff-idx{font-size:12px;letter-spacing:.16em;color:var(--gold-deep);font-weight:600;padding-top:14px}
+.ff-main{position:relative}
+.ff-main label{
+  position:absolute;left:0;top:14px;font-size:16px;color:var(--muted-l);pointer-events:none;
+  transition:transform .35s var(--ease-out),font-size .35s,color .35s;transform-origin:left;
+}
+.ff-main.is-active label,.ff-main:focus-within label{transform:translateY(-22px);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep)}
+.ff-main input,.ff-main textarea{
+  width:100%;border:0;background:transparent;padding:14px 0 6px;font:inherit;font-size:16px;color:var(--ink);
+  outline:none;resize:none;
+}
+.ff-main textarea{min-height:90px}
+.ff-error{position:absolute;left:0;bottom:-16px;font-size:11px;color:#B4462E;opacity:0;transition:opacity .3s}
+.form-field.has-error .ff-error{opacity:1}
+.form-field.has-error .ff-main label{color:#B4462E}
+.form-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
+.form-note{margin-top:16px;font-size:12px;color:var(--muted-l)}
+
+/* ============ FOOTER ============ */
+.footer{background:var(--ink);color:var(--ivory);padding-top:var(--space-6);overflow:hidden}
+.footer-cta{padding:var(--space-6) 0;border-bottom:1px solid var(--line-d)}
+.footer-cta-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:32px}
+.footer-cta h2{font-family:var(--font-display);font-weight:300;font-size:clamp(2.4rem,6vw,5rem);line-height:1.02;letter-spacing:-.02em}
+.footer-cta h2 em{color:var(--gold);font-style:italic}
+.footer-mid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:48px;padding:var(--space-6) 0}
+.footer-mid h6{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-d);margin-bottom:20px;font-weight:600}
+.footer-mid ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.footer-mid a{font-size:14px;color:rgba(242,239,233,.7);transition:color .3s,padding-left .3s}
+.footer-mid a:hover{color:var(--gold);padding-left:6px}
+.footer-brand img{height:46px;width:auto}
+.footer-brand p{color:var(--muted-d);font-size:14px;line-height:1.7;max-width:34ch;margin-top:16px}
+.footer-giant{
+  font-family:var(--font-display);font-weight:300;text-transform:uppercase;line-height:.8;
+  font-size:clamp(2.6rem,11.5vw,11rem);letter-spacing:-.01em;text-align:center;
+  color:transparent;-webkit-text-stroke:1px rgba(242,239,233,.22);
+  padding:0 0 8px;white-space:nowrap;user-select:none;transition:color 1s var(--ease-out);
+}
+.footer-giant:hover{color:rgba(194,160,92,.9);-webkit-text-stroke:1px transparent}
+.footer-bottom{
+  display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;
+  padding:26px 0;border-top:1px solid var(--line-d);font-size:12px;color:var(--muted-d);
+}
+.footer-bottom .socials{display:flex;gap:24px}
+.footer-bottom .socials a{letter-spacing:.1em;text-transform:uppercase;font-size:11px}
+.footer-bottom .socials a:hover{color:var(--gold)}
+.to-top{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:12px 0}
+.to-top:hover{color:var(--gold)}
+
+/* ============ WHATSAPP FLOAT ============ */
+.wa-float{
+  position:fixed;bottom:22px;right:22px;z-index:890;width:58px;height:58px;border-radius:50%;
+  background:var(--gold);color:var(--ink);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 32px rgba(0,0,0,.35);transition:transform .3s var(--ease-out),background-color .3s;
+}
+.wa-float:hover{transform:translateY(-4px) scale(1.05);background:var(--ivory)}
+.wa-float svg{width:26px;height:26px}
+
+/* ============ REVEAL DEFAULTS ============ */
+.reveal{opacity:0;transform:translateY(48px)}
+html.reduce-motion .reveal,html.reduce-motion .char{opacity:1;transform:none}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1100px){
+  .props-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:0}
+  .stat:nth-child(-n+2){border-bottom:1px solid var(--line-d)}
+  .process-strip{grid-template-columns:repeat(2,1fr)}
+  .footer-mid{grid-template-columns:1fr 1fr;gap:40px}
+  .manifesto-side{grid-template-columns:1fr;gap:48px}
+  .manifesto-figure{max-width:420px}
+  .est-panel{grid-template-columns:1fr}
+  .modal-panel{overflow-y:auto;display:block}
+  .service-desc{display:none}
+  .service-row{grid-template-columns:56px 1fr auto}
+}
+@media (max-width:760px){
+  .container{width:calc(100% - 40px)}
+  .nav-links,.nav-cta{display:none}
+  .nav-right .lang{display:none}
+  .nav-burger{display:flex}
+  .props-grid{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr}
+  .process-strip{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr;gap:56px}
+  .est-form,.est-result{padding:36px 24px}
+  .footer-mid{grid-template-columns:1fr;gap:36px}
+  .stat{padding:32px 24px}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .service-preview{display:none}
+  .g-item{width:78vw}
+  .g-item.tall{width:62vw}
+  .preloader-count{right:24px;bottom:28px}
+}
+/* ============ HERO FRAME (zoom-out al scrollear) ============ */
+.hero{background:var(--ink)}
+.hero-frame{
+  position:relative;min-height:100dvh;display:flex;flex-direction:column;justify-content:flex-end;
+  overflow:hidden;will-change:transform,border-radius;transform-origin:center 65%;
+}
+
+/* ============ NOSOTROS -  imagen fija + capítulos ============ */
+
+/* ============================================================
+   HERO v2: composicion asimetrica + CardSwap 3D + sello circular
+   ============================================================ */
+.hero-grid{
+  position:relative;z-index:4;width:min(100% - 48px,1400px);margin-inline:auto;
+  min-height:100dvh;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  align-items:center;gap:40px;padding-top:88px;
+}
+.hero-left{position:relative;z-index:5}
+.hero-right{position:relative;height:min(74dvh,620px);perspective:1100px}
+/* --- CardSwap: pila de propiedades que rota en 3D --- */
+.cswap{position:absolute;inset:0;transform-style:preserve-3d}
+.cswap-card{
+  position:absolute;top:50%;left:50%;width:min(30vw,390px);aspect-ratio:4/5;
+  border-radius:16px;overflow:hidden;cursor:pointer;
+  border:1px solid rgba(242,239,233,.16);background:var(--ink-3);
+  transform-style:preserve-3d;will-change:transform;backface-visibility:hidden;
+  box-shadow:0 40px 90px rgba(8,13,16,.6);
+}
+.cswap-card img{width:100%;height:100%;object-fit:cover}
+.cswap-veil{
+  position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:24px;gap:6px;color:var(--ivory);
+  background:linear-gradient(to top,rgba(12,18,22,.94) 4%,rgba(12,18,22,.35) 42%,transparent 72%);
+}
+.cswap-op{
+  align-self:flex-start;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;
+  background:var(--gold);color:var(--ink);padding:6px 12px;border-radius:100px;margin-bottom:6px;
+}
+.cswap-price{font-family:var(--font-display);font-weight:600;font-size:clamp(1.5rem,2.6vw,2.1rem);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.cswap-name{font-size:14.5px;font-weight:500;line-height:1.3}
+.cswap-loc{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-d)}
+.cswap-hint{
+  position:absolute;bottom:-34px;right:0;font-size:10.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted-d);z-index:6;
+}
+/* --- Sello circular giratorio --- */
+.seal{
+  position:absolute;left:-18px;bottom:-26px;width:118px;height:118px;z-index:6;pointer-events:none;
+}
+.seal svg{width:100%;height:100%;animation:sealSpin 22s linear infinite}
+.seal text{
+  font-family:var(--font-body);font-size:10.4px;font-weight:600;letter-spacing:.24em;
+  text-transform:uppercase;fill:var(--gold);
+}
+.seal-core{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:600;font-size:1.05rem;color:var(--ivory);letter-spacing:-.02em;
+}
+@keyframes sealSpin{to{transform:rotate(360deg)}}
+@media (max-width:1040px){
+  .hero-grid{grid-template-columns:1fr;gap:26px;padding-top:104px;align-content:center}
+  .hero-right{height:min(46dvh,400px);order:2}
+  .cswap-card{width:min(64vw,300px)}
+  .seal{display:none}
+}
+@media (max-width:560px){.hero-right{height:38dvh}.cswap-card{width:min(72vw,260px)}}
+
+/* Tira de datos al pie del hero: etiqueta arriba, valor debajo */
+.hero-specs{
+  position:relative;z-index:4;display:grid;grid-template-columns:repeat(4,1fr);
+  width:min(100% - 48px,1400px);margin:0 auto;gap:24px;
+  border-top:1px solid var(--line-d);padding:22px 0 32px;
+}
+.hero-specs div{
+  display:flex;flex-direction:column;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-d);
+}
+.hero-specs b{
+  display:block;font-family:var(--font-display);font-weight:600;
+  font-size:clamp(1.1rem,1.9vw,1.6rem);color:var(--ivory);
+  letter-spacing:-.02em;margin-top:8px;text-transform:none;
+}
+@media (max-width:900px){
+  .hero-specs{grid-template-columns:1fr 1fr;gap:18px 24px;padding-bottom:26px}
+}
+@media (max-width:480px){
+  .hero-specs{width:calc(100% - 40px);gap:14px 18px}
+  .hero-specs div{font-size:10px}
+}
+
+/* ============================================================
+   DOCK MOVIL: barra flotante con magnificacion por proximidad
+   ============================================================ */
+.dock{
+  position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%);
+  z-index:920;display:none;align-items:flex-end;gap:10px;padding:9px 12px;border-radius:20px;
+  background:rgba(26,37,43,.82);backdrop-filter:blur(20px) saturate(150%);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(242,239,233,.13);box-shadow:0 16px 44px rgba(6,10,13,.55);
+}
+.dock-item{
+  position:relative;width:46px;height:46px;border-radius:14px;flex:none;
+  display:flex;align-items:center;justify-content:center;color:var(--ivory);
+  background:rgba(242,239,233,.06);border:1px solid rgba(242,239,233,.09);
+  will-change:width,height;touch-action:manipulation;
+}
+.dock-item svg{width:21px;height:21px;stroke-width:1.6}
+.dock-item.is-active{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.dock-label{
+  position:absolute;top:-30px;left:50%;transform:translateX(-50%) translateY(4px);
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;
+  background:var(--ink-2);color:var(--ivory);border:1px solid var(--line-d);
+  padding:5px 10px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;
+}
+.dock-item:active .dock-label,.dock-item:focus-visible .dock-label{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (max-width:900px){
+  .dock{display:flex}
+  .wa-float{bottom:calc(84px + env(safe-area-inset-bottom))}
+  .footer-bottom{padding-bottom:96px}
+}
+
+/* ============================================================
+   CURVED LOOP: marquee sobre trayectoria curva
+   ============================================================ */
+.curved{background:var(--ink-2);overflow:hidden;padding:8px 0 0;border-block:1px solid var(--line-d)}
+.curved svg{display:block;width:100%;aspect-ratio:100/17;overflow:visible;user-select:none}
+.curved text{
+  font-family:var(--font-display);font-weight:600;font-size:62px;letter-spacing:-.02em;
+  text-transform:uppercase;fill:var(--ivory);
+}
+.curved .cv-accent{fill:var(--gold)}
+@media (max-width:760px){.curved text{font-size:78px}}
+
+/* Chispas de click: lienzo global sobre todo el sitio */
+#sparkCanvas{position:fixed;inset:0;z-index:1500;pointer-events:none}
+@media (prefers-reduced-motion:reduce){#sparkCanvas{display:none}.seal svg{animation:none}}
+
+/* ============================================================
+   SMOOTH SCROLL HERO (hover.dev)
+   Imagen fija que se abre con clip-path mientras cuatro fotos
+   suben en parallax por encima, cada una a su ritmo.
+   ============================================================ */
+.ssh{position:relative;width:100%;background:var(--ink)}
+.ssh-sticky{position:sticky;top:0;height:100vh;height:100dvh;width:100%}
+.ssh-center{
+  position:absolute;inset:0;
+  background-position:center;background-repeat:no-repeat;background-size:170%;
+  will-change:clip-path,background-size,opacity;
+}
+.ssh-parallax{
+  position:relative;z-index:2;max-width:1100px;margin-inline:auto;
+  padding:200px 20px 0;display:flex;flex-direction:column;
+}
+.ssh-parallax img{
+  display:block;border-radius:10px;will-change:transform,opacity;
+  box-shadow:0 30px 70px rgba(6,10,13,.55);
+}
+.ssh-i1{width:33%}
+.ssh-i2{width:66%;margin-inline:auto}
+.ssh-i3{width:33%;margin-left:auto}
+.ssh-i4{width:42%;margin-left:96px}
+.ssh-fade{
+  position:absolute;left:0;right:0;bottom:0;height:384px;z-index:3;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(35,48,55,0),var(--ink));
+}
+.ssh-cap{
+  position:absolute;left:50%;bottom:14vh;transform:translateX(-50%);z-index:4;
+  text-align:center;color:var(--ivory);pointer-events:none;width:min(90%,760px);
+}
+.ssh-cap h2{
+  font-family:var(--font-display);font-weight:500;letter-spacing:-.04em;
+  font-size:clamp(2rem,5.4vw,4.4rem);line-height:1;text-transform:uppercase;
+}
+.ssh-cap h2 em{font-style:normal;font-weight:700;color:var(--gold)}
+.ssh-cap p{margin-top:14px;font-size:14.5px;color:var(--muted-d)}
+@media (max-width:760px){
+  .ssh-parallax{padding-top:130px;gap:14px}
+  .ssh-i1,.ssh-i3{width:52%}
+  .ssh-i2{width:82%}
+  .ssh-i4{width:62%;margin-left:32px}
+}
+
+/* ============================================================
+   TEXTURAS DE FONDO
+   Curvas de nivel topograficas: la marca vive en un valle
+   serrano, la textura cuenta eso sin decorar de mas.
+   ============================================================ */
+:root{
+  --topo-d:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420' viewBox='0 0 420 420'%3E%3Cg fill='none' stroke='%23C09A6E' stroke-opacity='.12' stroke-width='1'%3E%3Cpath d='M-40 300C60 250 120 330 210 285S360 200 460 250'/%3E%3Cpath d='M-40 260C60 210 120 290 210 245S360 160 460 210'/%3E%3Cpath d='M-40 220C60 170 120 250 210 205S360 120 460 170'/%3E%3Cpath d='M-40 180C60 130 120 210 210 165S360 80 460 130'/%3E%3Cpath d='M-40 140C60 90 120 170 210 125S360 40 460 90'/%3E%3Cpath d='M-40 100C60 50 120 130 210 85S360 0 460 50'/%3E%3Cpath d='M-40 340C60 290 120 370 210 325S360 240 460 290'/%3E%3Cpath d='M-40 380C60 330 120 410 210 365S360 280 460 330'/%3E%3C/g%3E%3C/svg%3E");
+  --topo-l:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420' viewBox='0 0 420 420'%3E%3Cg fill='none' stroke='%23233037' stroke-opacity='.09' stroke-width='1'%3E%3Cpath d='M-40 300C60 250 120 330 210 285S360 200 460 250'/%3E%3Cpath d='M-40 260C60 210 120 290 210 245S360 160 460 210'/%3E%3Cpath d='M-40 220C60 170 120 250 210 205S360 120 460 170'/%3E%3Cpath d='M-40 180C60 130 120 210 210 165S360 80 460 130'/%3E%3Cpath d='M-40 140C60 90 120 170 210 125S360 40 460 90'/%3E%3Cpath d='M-40 100C60 50 120 130 210 85S360 0 460 50'/%3E%3Cpath d='M-40 340C60 290 120 370 210 325S360 240 460 290'/%3E%3Cpath d='M-40 380C60 330 120 410 210 365S360 280 460 330'/%3E%3C/g%3E%3C/svg%3E");
+  --blueprint:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Cg fill='none' stroke='%23233037' stroke-opacity='.07'%3E%3Cpath d='M0 .5H72M.5 0V72'/%3E%3Cpath d='M0 36.5H72M36.5 0V72' stroke-opacity='.04'/%3E%3C/g%3E%3C/svg%3E");
+}
+/* Capa de textura reutilizable, siempre detras y sin capturar clicks */
+.tex{position:absolute;inset:0;z-index:0;pointer-events:none;background-repeat:repeat}
+.tex-topo-d{background-image:var(--topo-d);opacity:.5;
+  -webkit-mask-image:radial-gradient(ellipse 78% 62% at 50% 45%,#000 30%,transparent 78%);
+  mask-image:radial-gradient(ellipse 78% 62% at 50% 45%,#000 30%,transparent 78%)}
+.tex-topo-l{background-image:var(--topo-l);opacity:.75;
+  -webkit-mask-image:linear-gradient(180deg,#000,transparent 62%);
+  mask-image:linear-gradient(180deg,#000,transparent 62%)}
+.tex-grid{background-image:var(--blueprint);opacity:.9;
+  -webkit-mask-image:radial-gradient(ellipse 70% 70% at 30% 20%,#000,transparent 75%);
+  mask-image:radial-gradient(ellipse 70% 70% at 30% 20%,#000,transparent 75%)}
+.properties,.services,.team,.contact,.bridge,.testimonials,.morph{position:relative}
+.properties>*,.services>*,.team>*,.contact>*,.morph>*{position:relative;z-index:1}
+
+/* ============================================================
+   LENGUAJE DE FORMAS
+   Regla documentada: arco arriba para lo humano/arquitectonico,
+   esquina cortada para lo comercial, pastilla para lo interactivo.
+   ============================================================ */
+/* Arco: fotos del equipo y la imagen fija de Nosotros */
+.team-card{border-radius:190px 190px 14px 14px / 120px 120px 14px 14px;overflow:hidden}
+/* Esquina cortada: fichas de propiedad y tarjetas de reseña */
+.prop-card{border-radius:14px;clip-path:polygon(0 0,calc(100% - 26px) 0,100% 26px,100% 100%,0 100%)}
+.prop-card.is-lead{clip-path:polygon(0 0,calc(100% - 40px) 0,100% 40px,100% 100%,0 100%)}
+.tst-card{clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%)}
+/* Pastilla llena: paneles de proceso apilados */
+.stack-card{border-radius:20px}
+.est-panel{border-radius:20px;overflow:hidden}
+@media (max-width:700px){
+  .team-card{border-radius:130px 130px 14px 14px / 80px 80px 14px 14px}
+  .prop-card,.prop-card.is-lead{clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,0 100%)}
+}
+
+/* Lote 3D: columna derecha del encabezado de servicios, no elemento suelto */
+.serv-aside{display:flex;flex-direction:column;align-items:flex-end;gap:10px;max-width:380px}
+.serv-aside p{max-width:34ch;color:var(--muted-l);font-size:14.5px;line-height:1.75;text-align:right}
+.plot3d{width:min(26vw,300px);aspect-ratio:1;pointer-events:none;opacity:.9;margin-right:-14px}
+@media (max-width:1100px){
+  .serv-aside{align-items:flex-start;max-width:none}
+  .serv-aside p{text-align:left}
+  .plot3d{display:none}
+}
+
+/* ============================================================
+   HERO EDITORIAL: wordmark gigante + fotos satelite
+   El nombre ES el mensaje, por eso va centrado y a escala maxima.
+   Las fotos entran desde afuera y hacen parallax con el puntero.
+   ============================================================ */
+.hero-content{
+  position:relative;z-index:3;padding-bottom:0;
+  min-height:100dvh;display:flex;flex-direction:column;justify-content:center;
+  padding-top:96px;
+}
+.hero-title{
+  position:relative;z-index:4;
+  font-size:clamp(3rem,8.4vw,7.6rem);line-height:.86;text-transform:uppercase;
+  font-weight:500;letter-spacing:-.05em;
+}
+.hero-title .row{display:block;overflow:hidden;padding-bottom:.05em}
+.hero-title .row-2{display:flex;align-items:baseline;gap:.06em}
+.hero-title .amp{font-weight:700;color:var(--gold);text-transform:none}
+.hero-tagline{
+  position:relative;z-index:4;margin-top:clamp(18px,2.4vw,28px);
+  font-size:clamp(15px,1.45vw,18.5px);line-height:1.6;color:var(--ivory);
+  max-width:34ch;font-weight:400;
+}
+.hero-tagline span{display:block;color:var(--muted-d)}
+.hero-actions{position:relative;z-index:4;display:flex;gap:14px;flex-wrap:wrap;margin-top:clamp(24px,3vw,36px)}
+
+/* ============================================================
+   SISTEMA TIPOGRAFICO - Bricolage Grotesque (display, variable
+   con optical sizing) + Instrument Sans (texto).
+   Bricolage no tiene italica real: el enfasis es PESO + color,
+   nunca italica sintetica ni una segunda familia.
+   ============================================================ */
+.hero-title,.section-title,.prop-name,.service-name,.tc-name,.modal-title,
+.stat-num,.est-value,.tst-quote,.manifesto-text,.footer-cta h2,.footer-giant,
+.morph-arc h3,.val-name,.mcard-back .mb-t,.g-cap h5,
+.preloader-name,.preloader-count,.ps-num,.tc-name{
+  font-family:var(--font-display);
+  font-variation-settings:"opsz" 72;
+  font-synthesis:none;
+}
+.section-title,.hero-title,.footer-cta h2,.manifesto-text{
+  letter-spacing:-.035em;
+}
+.hero-title{font-variation-settings:"opsz" 96}
+.section-title{font-weight:400}
+/* Enfasis: mismo tipo, mas peso, color de marca. Cero italica. */
+.section-title em,.footer-cta h2 em,.morph-arc h3 em,
+.contact-info h3 em,.manifesto-text .gold-w>span,.hero-title .amp{
+  font-style:normal;font-weight:700;color:var(--gold);
+}
+.stat-num .suffix,.ps-num,.tc-name{font-style:normal}
+.stat-num .suffix{font-weight:600}
+.ps-num{font-weight:700}
+.prop-name,.service-name,.tc-name,.modal-title{font-weight:600;letter-spacing:-.02em}
+.manifesto-text{font-weight:400}
+/* Numeros: tabulares para que no bailen al animar */
+.stat-num,.est-value,.prop-price,.modal-price,.val-name{font-variant-numeric:tabular-nums lining-nums}
+
+/* ============================================================
+   MOTION - tokens de resorte unicos para toda la pagina
+   ============================================================ */
+:root{
+  --spring:linear(0,.006,.025 2.8%,.101 6.1%,.539 18.9%,.721 25.3%,.849 31.5%,
+    .937 38.1%,.968 41.8%,.991 45.7%,1.006 50.1%,1.015 55%,1.017 63.9%,1.001 100%);
+  --ease-soft:cubic-bezier(.22,1,.36,1);
+}
+/* Botones con relleno direccional: entra desde el lado del puntero */
+.btn{--fx:50%;--fy:50%}
+.btn .btn-fill{
+  transform:scale(0);transform-origin:var(--fx) var(--fy);border-radius:50%;
+  width:250%;height:800%;left:auto;top:auto;inset:auto;
+  translate:calc(var(--fx) - 125%) calc(var(--fy) - 400%);
+  transition:transform .55s var(--ease-soft);
+}
+.btn:hover .btn-fill,.btn:focus-visible .btn-fill{transform:scale(1)}
+.btn:active{transform:scale(.975)}
+/* Filas de servicio: subrayado que crece desde el lado del puntero */
+.service-row::after{
+  content:"";position:absolute;left:0;bottom:-1px;height:1px;width:100%;
+  background:var(--gold);transform:scaleX(0);transform-origin:var(--sx,0) 50%;
+  transition:transform .5s var(--ease-soft);
+}
+.service-row:hover::after{transform:scaleX(1)}
+/* Tarjetas de propiedad: borde que se ilumina bajo el puntero */
+.prop-card::after{
+  content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:inherit;
+  opacity:0;transition:opacity .35s;
+  background:radial-gradient(240px circle at var(--px,50%) var(--py,50%),rgba(192,154,110,.22),transparent 62%);
+}
+.prop-card:hover::after{opacity:1}
+@media (max-width:760px){
+  .stack-card{grid-template-columns:1fr;gap:10px;align-items:start}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.15s!important}
+}
+</style>
+<style>
+/* ============================================================
+   PALETA DEL FLYER -  slate petróleo + bronce
+   (variaciones de textura y color por sección)
+   ============================================================ */
+:root{
+ --ink:#233037; --ink-2:#2B3A42; --ink-3:#37474F;
+ --gold:#C09A6E; --gold-deep:#997349; --gold-soft:rgba(192,154,110,.14);
+ --ivory:#F2EFE9; --ivory-2:#E8E4D9; --ivory-3:#DCD6C8;
+ --muted-d:#9AA7AB; --muted-l:#6F7A75;
+ --line-d:rgba(242,239,233,.14); --line-l:rgba(35,48,55,.14);
+}
+/* Escenas oscuras: gradientes + brillos bronce + trama */
+.hero-vignette{background:
+  radial-gradient(ellipse 90% 70% at 50% 45%,transparent 40%,rgba(28,39,45,.75) 100%),
+  linear-gradient(to bottom,rgba(28,39,45,.4),transparent 30%,transparent 55%,rgba(35,48,55,.94))}
+.bridge{background:linear-gradient(180deg,var(--ink) 0%,var(--ink-2) 100%)}
+.stats{background:transparent}
+.manifesto{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52'%3E%3Cpath d='M0 52 52 0M-13 13 13 -13M39 65 65 39' stroke='%23C09A6E' stroke-opacity='.05' fill='none'/%3E%3C/svg%3E")}
+.gallery{background:linear-gradient(180deg,var(--ink-2),var(--ink))}
+.testimonials{background:radial-gradient(900px 520px at 10% 100%,rgba(192,154,110,.1),transparent 60%),var(--ink)}
+.footer{background:linear-gradient(180deg,var(--ink),#1B252B)}
+.modal-scrim{background:rgba(28,39,45,.8)}
+/* Secciones claras: alternancia de tono + tramas sutiles */
+.properties{
+  background-color:var(--ivory);
+  background-image:radial-gradient(rgba(35,48,55,.04) 1px,transparent 1px);
+  background-size:22px 22px;
+}
+.services{background:var(--ivory-2)}
+.estimator{background:var(--ivory)}
+.est-panel{background:#FBFAF6}
+.team{background:linear-gradient(180deg,var(--ivory),#E5E8E3)}
+.contact{
+  background-color:var(--ivory-2);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52'%3E%3Cpath d='M0 52 52 0' stroke='%23233037' stroke-opacity='.04' fill='none'/%3E%3C/svg%3E");
+}
+/* Equipo: fotos reales (con iniciales de respaldo si falta el archivo) */
+.team-card{aspect-ratio:3/4;background:linear-gradient(150deg,var(--ink),var(--ink-3))}
+.team-ini{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:0}
+.team-photo{
+  position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:cover;object-position:center top;
+  transition:transform .9s var(--ease-expo);filter:saturate(.95);
+}
+.team-card:hover .team-photo{transform:scale(1.06)}
+.team-overlay{z-index:2}
+
+/* ---- Propiedades: buscador y filtros avanzados ---- */
+.prop-tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:8px}
+.search-box{position:relative;flex:1;min-width:230px}
+.search-box svg{position:absolute;left:0;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--muted-l)}
+.search-box input{width:100%;padding:14px 6px 14px 28px;border:0;border-bottom:1px solid var(--line-l);background:transparent;font:inherit;font-size:15px;color:var(--ink);outline:none;transition:border-color .3s}
+.search-box input:focus{border-bottom-color:var(--gold-deep)}
+.search-box input::placeholder{color:var(--muted-l)}
+.select-wrap{position:relative}
+.select-wrap select{appearance:none;-webkit-appearance:none;background:transparent;border:1px solid var(--line-l);border-radius:100px;font:inherit;font-size:12px;font-weight:500;color:var(--ink);padding:12px 38px 12px 18px;cursor:pointer;outline-offset:3px}
+.select-wrap::after{content:"";position:absolute;right:16px;top:50%;width:7px;height:7px;border-right:1.5px solid var(--muted-l);border-bottom:1.5px solid var(--muted-l);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.price-inputs{display:flex;align-items:center;gap:8px;border:1px solid var(--line-l);border-radius:100px;padding:2px 16px}
+.price-inputs span{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-l)}
+.price-inputs input{width:74px;border:0;background:transparent;font:inherit;font-size:14px;color:var(--ink);padding:10px 2px;outline:none}
+.results-count{width:100%;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-l);margin-top:20px;border-top:1px solid var(--line-l);padding-top:16px}
+.props-grid{margin-top:28px}
+.prop-count{position:absolute;bottom:16px;right:16px;z-index:2;display:flex;align-items:center;gap:6px;font-size:11px;background:rgba(28,39,45,.65);color:var(--ivory);backdrop-filter:blur(8px);padding:7px 12px;border-radius:100px}
+.prop-count svg{width:13px;height:13px}
+
+/* ---- Modal: carrusel de imágenes ---- */
+.mcar{position:relative;width:100%;height:100%;overflow:hidden}
+.mcar-track{display:flex;height:100%;transition:transform .55s var(--ease-expo)}
+.mcar-track img{min-width:100%;height:100%;object-fit:cover}
+.mcar-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(242,239,233,.92);color:var(--ink);display:flex;align-items:center;justify-content:center;z-index:2;font-size:16px;transition:background-color .3s}
+.mcar-btn:hover{background:var(--gold)}
+.mcar-btn.prev{left:14px}.mcar-btn.next{right:14px}
+.mcar-dots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:2}
+.mcar-dots button{width:8px;height:8px;border-radius:100px;background:rgba(242,239,233,.55);padding:0;transition:all .3s}
+.mcar-dots button.is-active{background:var(--gold);width:22px}
+@media(max-width:1100px){.modal-media{aspect-ratio:16/9}}
+
+/* ---- El Valle interactivo (reemplaza tasación) ---- */
+#valleImg{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;margin-bottom:20px;position:relative}
+.val-name{font-family:var(--font-display);font-weight:400;font-size:clamp(1.6rem,3vw,2.3rem);position:relative;margin-bottom:6px}
+.val-row{display:flex;justify-content:space-between;gap:18px;border-top:1px solid var(--line-d);padding:13px 0;font-size:13px;position:relative}
+.val-row span{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-d);flex:none;padding-top:2px}
+.val-row b{font-weight:500;color:var(--ivory);text-align:right}
+.val-desc{color:var(--muted-l);font-size:15px;line-height:1.8;margin-top:26px;max-width:52ch;min-height:84px}
+.est-result .btn{margin-top:22px;position:relative;align-self:flex-start}
+
+/* ============================================================
+   OPTIMIZACIÓN + RECURSOS 3D/ANIMACIÓN EXTRA
+   ============================================================ */
+/* content-visibility: solo en secciones simples (NO en las que usan scroll pin/sticky,
+   porque rompe el cálculo de altura y provoca solapamientos) */
+.team,.testimonials,.contact{
+  content-visibility:auto;contain-intrinsic-size:auto 800px;
+}
+/* GPU: aurora suave animada en secciones oscuras (sin costo de layout) */
+.bridge::after,.testimonials::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background:
+    radial-gradient(40% 55% at 18% 12%,rgba(192,154,110,.16),transparent 70%),
+    radial-gradient(38% 50% at 85% 85%,rgba(120,150,160,.12),transparent 70%);
+  animation:aurora 18s ease-in-out infinite alternate;
+}
+.bridge,.testimonials{position:relative}
+.bridge>*,.testimonials>*{position:relative;z-index:1}
+@keyframes aurora{
+  0%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(2%,-1.5%,0) scale(1.08)}
+  100%{transform:translate3d(-2%,2%,0) scale(1.04)}
+}
+/* Tarjetas equipo: perspectiva 3D + brillo que sigue el cursor */
+.team-card{transform-style:preserve-3d;will-change:transform;transition:box-shadow .4s var(--ease-out)}
+.team-card::after{
+  content:"";position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;
+  background:radial-gradient(180px circle at var(--mx,50%) var(--my,50%),rgba(242,239,233,.18),transparent 60%);
+  transition:opacity .3s;
+}
+.team-card:hover{box-shadow:0 30px 60px rgba(11,10,8,.32)}
+.team-card:hover::after{opacity:1}
+/* Stats: leve profundidad 3D al pasar el mouse */
+.stat{transition:background-color .5s,transform .5s var(--ease-out)}
+.stat:hover{transform:translateY(-4px)}
+
+@media (prefers-reduced-motion:reduce){
+  .bridge::after,.testimonials::after{animation:none}
+  .team-card,.stat{transition:none}
+}
+
+/* ============================================================
+   FONDO DE LÍNEAS FLUIDAS (adaptación nativa de "Background Paths")
+   ============================================================ */
+.flow-paths{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.flow-paths svg{position:absolute;top:-8%;left:-8%;width:116%;height:116%}
+.flow-paths path{fill:none;will-change:stroke-dashoffset}
+@keyframes flowMove{from{stroke-dashoffset:1}to{stroke-dashoffset:-1}}
+.footer-cta{position:relative;overflow:hidden}
+.footer-cta .footer-cta-inner{position:relative;z-index:1}
+.contact{position:relative;overflow:hidden}
+.contact .contact-grid{position:relative;z-index:1}
+.stat-flow{position:relative;overflow:hidden}
+@media (prefers-reduced-motion:reduce){.flow-paths path{animation:none!important}}
+
+
+/* ============================================================
+   EQUIPO -  carrusel tipo "profile card" (foto + tarjeta superpuesta)
+   ============================================================ */
+.tc-wrap{width:100%;max-width:1100px;margin-inline:auto}
+.tc-desktop{display:flex;position:relative;align-items:center}
+.tc-photo{
+  width:470px;height:470px;flex:none;border-radius:24px;overflow:hidden;
+  background:var(--ink-3);position:relative;
+}
+.tc-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;position:absolute;inset:0;opacity:0;transition:opacity .4s ease}
+.tc-photo img.is-active{opacity:1}
+.tc-card{
+  background:#fff;border-radius:24px;box-shadow:0 30px 70px rgba(28,39,45,.22);
+  padding:40px;margin-left:-80px;z-index:2;flex:1;max-width:620px;
+}
+.tc-fade{transition:opacity .4s ease}
+.tc-name{font-family:var(--font-display);font-size:1.9rem;font-weight:500;color:var(--ink);margin-bottom:8px;line-height:1.1}
+.tc-role{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:22px}
+.tc-desc{color:var(--muted-l);font-size:15.5px;line-height:1.8;margin-bottom:30px}
+.tc-socials{display:flex;gap:14px;flex-wrap:wrap}
+.tc-soc{
+  width:48px;height:48px;border-radius:50%;background:var(--ink);color:var(--ivory);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .3s var(--ease-out),background-color .3s;
+}
+.tc-soc:hover{background:var(--gold);color:var(--ink);transform:translateY(-3px) scale(1.06)}
+.tc-soc svg{width:19px;height:19px}
+.tc-mobile{display:none;max-width:420px;margin-inline:auto;text-align:center}
+.tc-mobile .tc-photo{width:100%;height:auto;aspect-ratio:1/1;border-radius:24px}
+.tc-mobile .tc-card{margin:22px 0 0;padding:0;background:transparent;box-shadow:none;max-width:none}
+.tc-mobile .tc-socials{justify-content:center}
+.tc-nav{display:flex;justify-content:center;align-items:center;gap:24px;margin-top:36px}
+.tc-btn{
+  width:48px;height:48px;border-radius:50%;border:1px solid var(--line-l);background:#fff;color:var(--ink);
+  display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(28,39,45,.1);
+  transition:background-color .3s,transform .3s var(--ease-out);
+}
+.tc-btn:hover{background:var(--ink);color:var(--ivory);transform:scale(1.06)}
+.tc-btn svg{width:22px;height:22px}
+.tc-dots{display:flex;gap:9px}
+.tc-dot{width:12px;height:12px;border-radius:50%;background:#B9C0BC;transition:background-color .3s,transform .3s}
+.tc-dot.is-active{background:var(--ink);transform:scale(1.15)}
+@media (max-width:900px){
+  .tc-desktop{display:none}
+  .tc-mobile{display:block}
+}
+</style>
+</head>
+<body class="is-loading">
+<!-- PRELOADER -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="preloader-name" id="preloaderName"></div>
+  <div class="preloader-bar"><span id="preloaderBarFill"></span></div>
+  <div class="preloader-tag">Villa General Belgrano · Córdoba</div>
+  <div class="preloader-count" id="preloaderCount">0</div>
+</div>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#inicio" class="nav-logo" data-scrollto aria-label="Mirande Aybar -  inicio">
+      <img src="assets/logos/isologo-blanco.png" alt="Mirande Aybar">
+    </a>
+    <nav aria-label="Principal">
+      <ul class="nav-links">
+        <li><a href="#propiedades" data-scrollto data-i18n="nav_props">Propiedades</a></li>
+        <li><a href="#servicios" data-scrollto data-i18n="nav_services">Servicios</a></li>
+        <li><a href="#alrededores" data-scrollto data-i18n="mo_kicker">Los alrededores</a></li>
+        <li><a href="#equipo" data-scrollto data-i18n="nav_team">Equipo</a></li>
+      </ul>
+    </nav>
+    <div class="nav-right">
+      <div class="lang">
+        <button data-lang="es" class="active">ES</button>
+        <button data-lang="en">EN</button>
+      </div>
+      <a href="#" class="nav-cta wa-link" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.8-2.8-1.5-3.9-3.4-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5s-.7-1.7-1-2.3c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-1 1-1.3 2.4-.8 3.9.9 2.6 2.8 4.6 5.3 5.6 1.7.7 2.4.8 3.3.7.5-.1 1.7-.7 1.9-1.4.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 00-8.6 15l-1.4 5 5.2-1.4A10 10 0 1012 2z"/></svg>
+        <span data-i18n="nav_consult">Consultar</span>
+      </a>
+      <button class="nav-burger" id="navBurger" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="menu" id="menu" aria-hidden="true">
+  <ul class="menu-links">
+    <li><a href="#propiedades" data-scrollto><span class="idx">01</span><span data-i18n="nav_props">Propiedades</span></a></li>
+    <li><a href="#servicios" data-scrollto><span class="idx">02</span><span data-i18n="nav_services">Servicios</span></a></li>
+    <li><a href="#alrededores" data-scrollto><span class="idx">03</span><span data-i18n="mo_kicker">Los alrededores</span></a></li>
+    <li><a href="#equipo" data-scrollto><span class="idx">04</span><span data-i18n="nav_team">Equipo</span></a></li>
+    <li><a href="#contacto" data-scrollto><span class="idx">05</span><span data-i18n="nav_contact">Contacto</span></a></li>
+  </ul>
+  <div class="menu-foot">
+    <span>mirandeaybar@gmail.com</span>
+    <div class="lang">
+      <button data-lang="es" class="active">ES</button>
+      <button data-lang="en">EN</button>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+<!-- HERO -->
+<section class="hero" id="inicio">
+<div class="hero-frame" id="heroFrame">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-vignette" aria-hidden="true"></div>
+
+
+  <div class="hero-grid">
+    <div class="hero-left">
+    <h1 class="hero-title" id="heroTitle">
+      <span class="row" data-split>Mirande</span>
+      <span class="row row-2"><span class="amp" data-split>&amp;</span><span data-split>Aybar</span></span>
+    </h1>
+    <p class="hero-tagline" id="heroTagline" data-i18n-html="hero_tag">Casas, campos y terrenos.<span>Villa General Belgrano, Calamuchita.</span></p>
+    <div class="hero-actions">
+      <a href="#propiedades" class="btn btn-gold magnetic" data-scrollto><span class="btn-fill"></span><span data-i18n="hero_cta1">Ver propiedades</span> <span class="arr">→</span></a>
+      <a href="#" class="btn btn-ghost magnetic wa-link" target="_blank" rel="noopener"><span class="btn-fill"></span><span data-i18n="hero_cta2">Escribinos</span></a>
+    </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="cswap" id="cardSwap"></div>
+      <span class="cswap-hint" data-i18n="cs_hint">Tocá una tarjeta</span>
+      <div class="seal" aria-hidden="true">
+        <svg viewBox="0 0 120 120">
+          <defs><path id="sealPath" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"></path></defs>
+          <text><textPath href="#sealPath" startOffset="0%">VILLA GENERAL BELGRANO • CALAMUCHITA • </textPath></text>
+        </svg>
+        <span class="seal-core">M&amp;A</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-specs">
+    <div data-i18n-html="hs1">Experiencia<b>+15 años</b></div>
+    <div data-i18n-html="hs2">Operaciones<b>+200</b></div>
+    <div data-i18n-html="hs3">Localidades<b>5 del valle</b></div>
+    <div data-i18n-html="hs4">Atención<b>Personalizada</b></div>
+  </div>
+
+  
+</div>
+</section>
+
+<!-- CURVED LOOP: localidades sobre trayectoria curva -->
+<div class="curved" aria-hidden="true">
+  <svg viewBox="0 0 1440 240" preserveAspectRatio="xMidYMid slice">
+    <defs><path id="cvPath" d="M-120,120 Q720,320 1560,120" fill="none"></path></defs>
+    <text><textPath id="cvText" href="#cvPath" startOffset="0"></textPath></text>
+  </svg>
+</div>
+
+<!-- PROPERTIES -->
+<section class="light properties" id="propiedades">
+  <div class="tex tex-topo-l" aria-hidden="true"></div>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="label" data-i18n="props_kicker">El portafolio</span>
+        <h2 class="section-title reveal" data-reveal data-i18n-html="props_title">Elegidas <em>una por una.</em></h2>
+      </div>
+      <div class="filters" role="group" aria-label="Filtrar propiedades" id="filtersGroup">
+        <button class="filter-btn is-active" data-filter="all" data-i18n="f_all">Todas</button>
+        <button class="filter-btn" data-filter="casa" data-i18n="f_casa">Casas</button>
+        <button class="filter-btn" data-filter="terreno" data-i18n="f_terreno">Terrenos</button>
+        <button class="filter-btn" data-filter="departamento" data-i18n="f_depto">Departamentos</button>
+        <button class="filter-btn" data-filter="local" data-i18n="f_local">Comerciales</button>
+      </div>
+    </div>
+    <div class="prop-tools">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="propSearch" data-i18n-ph="search_ph" placeholder="Buscar por nombre, localidad...">
+      </div>
+      <div class="select-wrap"><select id="locFilter" aria-label="Localidad"></select></div>
+      <div class="select-wrap"><select id="bedFilter" aria-label="Dormitorios">
+        <option value="0" data-i18n="bed_any">Dormitorios: cualquiera</option>
+        <option value="1">1+</option><option value="2">2+</option><option value="3">3+</option>
+      </select></div>
+      <div class="select-wrap"><select id="sortSelect" aria-label="Ordenar">
+        <option value="featured" data-i18n="sort_featured">Destacadas primero</option>
+        <option value="price-asc" data-i18n="sort_asc">Precio: menor a mayor</option>
+        <option value="price-desc" data-i18n="sort_desc">Precio: mayor a menor</option>
+      </select></div>
+      <div class="price-inputs">
+        <span data-i18n="price_min">Mín</span><input type="number" id="priceMin" inputmode="numeric" placeholder="0">
+        <span data-i18n="price_max">Máx</span><input type="number" id="priceMax" inputmode="numeric" placeholder="∞">
+      </div>
+      <div class="results-count" id="resultsCount"></div>
+    </div>
+    <div class="props-grid" id="propsGrid"></div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="bridge" id="nosotros">
+  <div class="tex tex-topo-d" aria-hidden="true"></div>
+  <div class="manifesto">
+    <div class="container manifesto-side">
+      <p class="manifesto-text" id="manifestoText" data-i18n-split="man_text">Una casa en las sierras no es solo una dirección. Es la luz de la mañana sobre el Champaquí, el silencio del valle, la certeza de una buena decisión. Encontramos las pocas que importan.</p>
+      <figure class="manifesto-figure">
+        <img data-parallax src="assets/fotos/champaqui.jpg" alt="Cerro Champaquí, Sierras de Calamuchita" loading="lazy">
+        <figcaption>Cerro Champaquí · Calamuchita</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats stat-flow">
+    <div class="flow-paths" data-flow="gold" aria-hidden="true"></div>
+    <div class="container" style="position:relative;z-index:1">
+      <div class="stats-grid">
+        <div class="stat"><div class="stat-num"><span data-count="15">0</span><span class="suffix">+</span></div><div class="stat-label" data-i18n="stat1">Años en la región</div></div>
+        <div class="stat"><div class="stat-num"><span data-count="200">0</span><span class="suffix">+</span></div><div class="stat-label" data-i18n="stat2">Operaciones concretadas</div></div>
+        <div class="stat"><div class="stat-num"><span data-count="100">0</span><span class="suffix">%</span></div><div class="stat-label" data-i18n="stat3">Atención personalizada</div></div>
+        <div class="stat"><div class="stat-num"><span data-count="5">0</span><span class="suffix"></span></div><div class="stat-label" data-i18n="stat4">Localidades del valle</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOSOTROS -  sticky image + capítulos -->
+<!-- SERVICES -->
+<section class="light services" id="servicios">
+  <div class="tex tex-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title reveal" data-reveal data-i18n-html="serv_title">Todo. <em>Sin vueltas.</em></h2>
+      </div>
+      <div class="serv-aside">
+        <p class="reveal" data-reveal data-i18n="serv_sub">De la primera visita a la escritura: un solo equipo, cero fricción.</p>
+        <canvas class="plot3d" id="plot3d" aria-hidden="true"></canvas>
+      </div>
+    </div>
+
+    <div id="serviceRows">
+      <div class="service-row" data-preview="0" tabindex="0">
+        <span class="service-idx">/ 01</span>
+        <h3 class="service-name" data-i18n="s1_name">Comprá</h3>
+        <p class="service-desc" data-i18n="s1_desc">Acceso a propiedades dentro y fuera del mercado, visitas acompañadas y negociación que cuida tu bolsillo.</p>
+        <span class="service-arrow" aria-hidden="true">→</span>
+      </div>
+      <div class="service-row" data-preview="1" tabindex="0">
+        <span class="service-idx">/ 02</span>
+        <h3 class="service-name" data-i18n="s2_name">Vendé</h3>
+        <p class="service-desc" data-i18n="s2_desc">Tasación real, difusión profesional y una red de compradores que se mueve antes que el mercado.</p>
+        <span class="service-arrow" aria-hidden="true">→</span>
+      </div>
+      <div class="service-row" data-preview="2" tabindex="0">
+        <span class="service-idx">/ 03</span>
+        <h3 class="service-name" data-i18n="s3_name">Invertí</h3>
+        <p class="service-desc" data-i18n="s3_desc">Terrenos, cabañas de renta y oportunidades en el valle con proyección turística todo el año.</p>
+        <span class="service-arrow" aria-hidden="true">→</span>
+      </div>
+      <div class="service-row" data-preview="3" tabindex="0">
+        <span class="service-idx">/ 04</span>
+        <h3 class="service-name" data-i18n="s4_name">Alquiler temporario</h3>
+        <p class="service-desc" data-i18n="s4_desc">Gestión completa de tu cabaña o casa de renta: huéspedes, mantenimiento y ocupación.</p>
+        <span class="service-arrow" aria-hidden="true">→</span>
+      </div>
+    </div>
+
+    <div class="service-preview" id="servicePreview" aria-hidden="true">
+      <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=900&auto=format&fit=crop" onerror="this.onerror=null;this.src='assets/fotos/pueblo-aerea.jpg'" alt="">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=900&auto=format&fit=crop" onerror="this.onerror=null;this.src='assets/fotos/hero-base.jpg'" alt="">
+      <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=900&auto=format&fit=crop" onerror="this.onerror=null;this.src='assets/fotos/lago-embalse.jpg'" alt="">
+      <img src="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?q=80&w=900&auto=format&fit=crop" onerror="this.onerror=null;this.src='assets/fotos/pozo-verde.jpg'" alt="">
+    </div>
+
+    <div class="stack-zone" id="stackZone">
+      <div class="stack-card"><div class="ps-num">01</div><div><h4 data-i18n="p1_t">Escuchamos</h4><p data-i18n="p1_p">Una charla sin apuro sobre cómo querés vivir -  no un formulario.</p></div></div>
+      <div class="stack-card"><div class="ps-num">02</div><div><h4 data-i18n="p2_t">Seleccionamos</h4><p data-i18n="p2_p">Tres opciones justas, no treinta. Cada una ya visitada y tasada por nosotros.</p></div></div>
+      <div class="stack-card"><div class="ps-num">03</div><div><h4 data-i18n="p3_t">Negociamos</h4><p data-i18n="p3_p">Cerramos la distancia entre lo que piden y lo que vale, siempre a tu favor.</p></div></div>
+      <div class="stack-card"><div class="ps-num">04</div><div><h4 data-i18n="p4_t">Entregamos</h4><p data-i18n="p4_p">Llaves, escritura y servicios resueltos antes de que abras la puerta.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SMOOTH SCROLL HERO: el valle en parallax -->
+<section class="ssh" id="alrededores" aria-label="Villa General Belgrano y el valle">
+  <div class="ssh-sticky">
+    <div class="ssh-center" id="sshCenter" style="background-image:url('assets/fotos/pueblo-aerea.jpg')"></div>
+    <div class="ssh-cap" id="sshCap">
+    <h2 data-i18n-html="mo_title">Un valle que <em>se despliega.</em></h2>
+    <p data-i18n="mo_arc_p">Sierras, ríos y bosques a minutos de cada propiedad.</p>
+    </div>
+  </div>
+  <div class="ssh-parallax">
+    <img class="ssh-i1" data-ssh="-200,200" src="assets/fotos/champaqui.jpg" alt="Cerro Champaquí" loading="lazy" decoding="async">
+    <img class="ssh-i2" data-ssh="200,-250" src="assets/fotos/lago-embalse.jpg" alt="Lago Embalse" loading="lazy" decoding="async">
+    <img class="ssh-i3" data-ssh="-200,200" src="assets/fotos/los-reartes.jpg" alt="Río Los Reartes" loading="lazy" decoding="async">
+    <img class="ssh-i4" data-ssh="0,-500" src="assets/fotos/pozo-verde.jpg" alt="Pozo Verde" loading="lazy" decoding="async">
+  </div>
+  <div class="ssh-fade" aria-hidden="true"></div>
+</section>
+
+<!-- TEAM -->
+<section class="light team" id="equipo">
+  <div class="tex tex-topo-l" aria-hidden="true"></div>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="label" data-i18n="team_kicker">Quiénes somos</span>
+        <h2 class="section-title reveal" data-reveal data-i18n-html="team_title">Las personas <em>detrás del nombre.</em></h2>
+      </div>
+    </div>
+    <div class="tc-wrap">
+      <!-- Escritorio -->
+      <div class="tc-desktop">
+        <div class="tc-photo" id="tcPhotoD">
+          <img class="is-active" data-i="0" src="assets/equipo/sebastian.jpeg" alt="Sebastián Mirande" decoding="async">
+          <img data-i="1" src="assets/equipo/mario.jpeg" alt="Mario Gonzalo Aybar" loading="lazy" decoding="async">
+        </div>
+        <div class="tc-card">
+          <div class="tc-fade" id="tcCardD">
+            <h3 class="tc-name" id="tcNameD"></h3>
+            <p class="tc-role" id="tcRoleD"></p>
+            <p class="tc-desc" id="tcDescD"></p>
+            <div class="tc-socials" id="tcSocD"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Móvil -->
+      <div class="tc-mobile">
+        <div class="tc-photo" id="tcPhotoM">
+          <img class="is-active" data-i="0" src="assets/equipo/sebastian.jpeg" alt="Sebastián Mirande" decoding="async">
+          <img data-i="1" src="assets/equipo/mario.jpeg" alt="Mario Gonzalo Aybar" loading="lazy" decoding="async">
+        </div>
+        <div class="tc-card">
+          <div class="tc-fade" id="tcCardM">
+            <h3 class="tc-name" id="tcNameM"></h3>
+            <p class="tc-role" id="tcRoleM"></p>
+            <p class="tc-desc" id="tcDescM"></p>
+            <div class="tc-socials" id="tcSocM"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Navegación -->
+      <div class="tc-nav">
+        <button class="tc-btn" id="tcPrev" aria-label="Integrante anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <div class="tc-dots" id="tcDots" role="tablist" aria-label="Integrantes"></div>
+        <button class="tc-btn" id="tcNext" aria-label="Integrante siguiente">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="opiniones">
+  <div class="tex tex-topo-d" aria-hidden="true"></div>
+  <div class="container">
+    <h2 class="section-title reveal" data-reveal data-i18n-html="tst_title">Lo que dicen <em>nuestros clientes.</em></h2>
+    <div class="tst-wall" id="tstWall"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="light contact" id="contacto">
+  <div class="flow-paths" data-flow="ink" aria-hidden="true"></div>
+  <div class="container contact-grid">
+    <div class="contact-info">
+      <span class="label" data-i18n="ct_kicker">Empecemos la charla</span>
+      <h3 class="reveal" data-reveal data-i18n-html="ct_title">Toda gran dirección empieza con un <em>hola.</em></h3>
+      <p data-i18n="ct_sub">Contanos qué buscás -  o qué querés vender. Te respondemos personalmente a la brevedad.</p>
+      <div class="contact-details">
+        <div class="cd-row"><span>WhatsApp</span><a href="#" class="wa-link" target="_blank" rel="noopener">+54 9 3512 72-9721</a></div>
+        <div class="cd-row"><span>Email</span><a href="mailto:mirandeaybar@gmail.com">mirandeaybar@gmail.com</a></div>
+        <div class="cd-row"><span data-i18n="ct_addr">Dirección</span><b>Paseo Los Troncos, Av. J. A. Roca 95, Villa General Belgrano</b></div>
+        <div class="cd-row"><span>Instagram</span><a href="https://www.instagram.com/mirandeaybar/" target="_blank" rel="noopener">@mirandeaybar</a></div>
+      </div>
+      <div class="map">
+        <iframe loading="lazy" title="Ubicación Mirande Aybar" src="https://www.google.com/maps?q=Av.%20Julio%20Argentino%20Roca%2095%20Villa%20General%20Belgrano%20Cordoba&output=embed"></iframe>
+      </div>
+    </div>
+    <form class="contact-form" id="contactForm" novalidate>
+      <div class="form-field">
+        <span class="ff-idx">01</span>
+        <div class="ff-main">
+          <label for="fName" data-i18n="fm_name">Tu nombre *</label>
+          <input type="text" id="fName" name="nombre" autocomplete="name" required>
+          <span class="ff-error" data-i18n="fe_name">Contanos tu nombre.</span>
+        </div>
+      </div>
+      <div class="form-field">
+        <span class="ff-idx">02</span>
+        <div class="ff-main">
+          <label for="fEmail" data-i18n="fm_email">Tu email *</label>
+          <input type="email" id="fEmail" name="email" autocomplete="email" required>
+          <span class="ff-error" data-i18n="fe_email">Ingresá un email válido.</span>
+        </div>
+      </div>
+      <div class="form-field">
+        <span class="ff-idx">03</span>
+        <div class="ff-main">
+          <label for="fPhone" data-i18n="fm_phone">Teléfono (opcional)</label>
+          <input type="tel" id="fPhone" name="telefono" autocomplete="tel">
+          <span class="ff-error"></span>
+        </div>
+      </div>
+      <div class="form-field">
+        <span class="ff-idx">04</span>
+        <div class="ff-main">
+          <label for="fMsg" data-i18n="fm_msg">¿Qué estás buscando? *</label>
+          <textarea id="fMsg" name="mensaje" rows="3" required></textarea>
+          <span class="ff-error" data-i18n="fe_msg">Escribí tu mensaje.</span>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-dark magnetic" data-send="wa">
+          <span class="btn-fill"></span>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.8-2.8-1.5-3.9-3.4-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5s-.7-1.7-1-2.3c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-1 1-1.3 2.4-.8 3.9.9 2.6 2.8 4.6 5.3 5.6 1.7.7 2.4.8 3.3.7.5-.1 1.7-.7 1.9-1.4.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 00-8.6 15l-1.4 5 5.2-1.4A10 10 0 1012 2z"/></svg>
+          <span data-i18n="fm_send_wa">Enviar por WhatsApp</span>
+        </button>
+        <button type="submit" class="btn btn-ghost magnetic" style="border-color:var(--line-l);color:var(--ink)" data-send="mail">
+          <span class="btn-fill" style="background:var(--ink)"></span>
+          <span data-i18n="fm_send_mail">Enviar por Email</span>
+        </button>
+      </div>
+      <p class="form-note" data-i18n="fm_note">Se abrirá WhatsApp o tu correo con el mensaje ya escrito.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-cta">
+    <div class="flow-paths" data-flow="ivory" aria-hidden="true"></div>
+    <div class="footer-cta-inner">
+      <h2 class="reveal" data-reveal data-i18n-html="ft_cta">Listos cuando <em>vos digas.</em></h2>
+      <a href="#" class="btn btn-gold magnetic wa-link" target="_blank" rel="noopener"><span class="btn-fill"></span><span data-i18n="ft_cta_btn">Escribinos</span> <span class="arr">→</span></a>
+    </div>
+  </div>
+  <div class="container footer-mid">
+    <div class="footer-brand">
+      <img src="assets/logos/logotipo-crema.png" alt="Mirande Aybar">
+      <p data-i18n="ft_about">Inmobiliaria en Villa General Belgrano. Te ayudamos a encontrar o vender tu propiedad en las Sierras de Calamuchita.</p>
+    </div>
+    <div><h6 data-i18n="ft_nav">Navegación</h6><ul>
+      <li><a href="#propiedades" data-scrollto data-i18n="nav_props">Propiedades</a></li>
+      <li><a href="#servicios" data-scrollto data-i18n="nav_services">Servicios</a></li>
+      <li><a href="#alrededores" data-scrollto data-i18n="mo_kicker">Los alrededores</a></li>
+      <li><a href="#opiniones" data-scrollto data-i18n="nav_reviews">Opiniones</a></li>
+    </ul></div>
+    <div><h6 data-i18n="ft_agency">Inmobiliaria</h6><ul>
+      <li><a href="#nosotros" data-scrollto data-i18n="nav_about">Nosotros</a></li>
+      <li><a href="#equipo" data-scrollto data-i18n="nav_team">Equipo</a></li>
+      <li><a href="#opiniones" data-scrollto data-i18n="nav_reviews">Opiniones</a></li>
+      <li><a href="#contacto" data-scrollto data-i18n="nav_contact">Contacto</a></li>
+    </ul></div>
+    <div><h6 data-i18n="ft_contact">Contacto</h6><ul>
+      <li><a href="#" class="wa-link" target="_blank" rel="noopener">WhatsApp</a></li>
+      <li><a href="mailto:mirandeaybar@gmail.com">mirandeaybar@gmail.com</a></li>
+      <li><a href="https://www.instagram.com/mirandeaybar/" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="https://www.tiktok.com/@mirandeaybar" target="_blank" rel="noopener">TikTok</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-giant" aria-hidden="true">MIRANDE&amp;AYBAR</div>
+  <div class="container footer-bottom">
+    <span>© <span id="year"></span> Mirande Aybar. <span data-i18n="ft_rights">Todos los derechos reservados.</span></span>
+    <div class="socials">
+      <a href="https://www.instagram.com/mirandeaybar/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@mirandeaybar" target="_blank" rel="noopener">TikTok</a>
+    </div>
+    <button class="to-top" id="toTop"><span data-i18n="ft_top">Volver arriba</span> ↑</button>
+  </div>
+</footer>
+
+<a class="wa-float wa-link" href="#" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.8-2.8-1.5-3.9-3.4-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5s-.7-1.7-1-2.3c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-1 1-1.3 2.4-.8 3.9.9 2.6 2.8 4.6 5.3 5.6 1.7.7 2.4.8 3.3.7.5-.1 1.7-.7 1.9-1.4.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 00-8.6 15l-1.4 5 5.2-1.4A10 10 0 1012 2z"/></svg>
+</a>
+
+<!-- PROPERTY MODAL -->
+<div class="modal" id="propModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+  <div class="modal-scrim" id="modalScrim"></div>
+  <div class="modal-panel" id="modalPanel">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar">✕</button>
+    <div class="modal-media">
+      <div class="mcar">
+        <div class="mcar-track" id="mcarTrack"></div>
+        <button class="mcar-btn prev" id="mcarPrev" aria-label="Foto anterior">←</button>
+        <button class="mcar-btn next" id="mcarNext" aria-label="Foto siguiente">→</button>
+        <div class="mcar-dots" id="mcarDots"></div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <span class="modal-kicker" id="modalKicker"></span>
+      <h3 class="modal-title" id="modalTitle"></h3>
+      <div class="modal-loc" id="modalLoc"></div>
+      <div class="modal-price" id="modalPrice"></div>
+      <div class="modal-specrow" id="modalSpecs"></div>
+      <p class="modal-desc" id="modalDesc"></p>
+      <a href="#" class="btn btn-dark magnetic" target="_blank" rel="noopener" id="modalCta"><span class="btn-fill"></span><span data-i18n="modal_cta">Consultar por WhatsApp</span> <span class="arr">→</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- DOCK MOVIL -->
+<nav class="dock" id="dock" aria-label="Navegación rápida">
+  <a class="dock-item" href="#inicio" data-scrollto aria-label="Inicio"><span class="dock-label">Inicio</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg></a>
+  <a class="dock-item" href="#propiedades" data-scrollto aria-label="Propiedades"><span class="dock-label">Propiedades</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="8" height="7" rx="1"/><rect x="13" y="4" width="8" height="12" rx="1"/><rect x="3" y="13" width="8" height="7" rx="1"/></svg></a>
+  <a class="dock-item" href="#servicios" data-scrollto aria-label="Servicios"><span class="dock-label">Servicios</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M6 20V9l6-5 6 5v11"/><path d="M10 20v-5h4v5"/></svg></a>
+  <a class="dock-item" href="#equipo" data-scrollto aria-label="Equipo"><span class="dock-label">Equipo</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M16 5.5a3 3 0 0 1 0 5.6"/><path d="M18.5 20c0-2.4-1-4.2-2.6-5.2"/></svg></a>
+  <a class="dock-item" href="#contacto" data-scrollto aria-label="Contacto"><span class="dock-label">Contacto</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3.5 7 8.5 5.5L20.5 7"/></svg></a>
+</nav>
+<canvas id="sparkCanvas" aria-hidden="true"></canvas>
+
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+"use strict";
+/* =====================================================
+   MIRANDE & AYBAR -  nuevo diseño
+   GSAP + ScrollTrigger + Three.js · ES/EN
+===================================================== */
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+/* =====================================================
+   LENIS: scroll suave con inercia en toda la pagina.
+   Es lo que hace que las animaciones se sientan liquidas.
+===================================================== */
+let lenis = null;
+if (window.Lenis && !window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+  lenis = new Lenis({ lerp:.075, wheelMultiplier:1, smoothWheel:true });
+  lenis.on("scroll", ScrollTrigger.update);
+  gsap.ticker.add(time => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+}
+/* Un solo punto de navegacion: usa Lenis si esta, si no GSAP */
+function goTo(target, offset = 0){
+  if (lenis) lenis.scrollTo(target, { offset, duration:1.25 });
+  else gsap.to(window, { scrollTo:{ y:target, offsetY:-offset, autoKill:true }, duration:1.1, ease:"power3.inOut" });
+}
+
+const REDUCE = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const TOUCH  = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+if (REDUCE) document.documentElement.classList.add("reduce-motion");
+
+const $  = (s, c=document) => c.querySelector(s);
+const $$ = (s, c=document) => [...c.querySelectorAll(s)];
+
+/* ---------- Config (usa config.js si existe) ---------- */
+const CFG = window.CONFIG || {};
+const WA_NUM = (CFG.whatsapp || "5493512729721").replace(/\D/g, "");
+const EMAIL  = CFG.email || "mirandeaybar@gmail.com";
+const waLink = msg => `https://wa.me/${WA_NUM}${msg ? "?text=" + encodeURIComponent(msg) : ""}`;
+const mailLink = (subj, body) => `mailto:${EMAIL}?subject=${encodeURIComponent(subj||"")}&body=${encodeURIComponent(body||"")}`;
+$("#year").textContent = new Date().getFullYear();
+
+/* ---------- Cliente Supabase (si está configurado en config.js) ---------- */
+let SB = null;
+if (CFG.supabaseUrl && CFG.supabaseKey && window.supabase){
+  try { SB = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseKey); }
+  catch(e){ console.warn("Supabase no inicializado:", e.message); }
+}
+
+/* =====================================================
+   I18N -  ES / EN
+===================================================== */
+const I18N = {
+  es: {
+    nav_props:"Propiedades", nav_services:"Servicios", nav_estimate:"El Valle", nav_team:"Equipo",
+    nav_contact:"Contacto", nav_consult:"Consultar", nav_gallery:"Galería", nav_about:"Nosotros", nav_reviews:"Opiniones",
+    hero_label:"Estudio Jurídico e Inversiones Inmobiliarias",
+    hero_tag:"Casas, campos y terrenos.<span>Villa General Belgrano, Calamuchita.</span>",
+    hs1:"Experiencia<b>+15 años</b>", hs2:"Operaciones<b>+200</b>", hs3:"Localidades<b>5 del valle</b>", hs4:"Atención<b>Personalizada</b>",
+    hero_cta1:"Ver propiedades", hero_cta2:"Escribinos", scroll:"Deslizá",
+    hm1:"Experiencia<b>+15 años en la región</b>", hm2:"Zona<b>Valle de Calamuchita</b>", hm3:"Operaciones<b>+200 concretadas</b>",
+    man_text:"Una casa en las sierras no es solo una dirección. Es la luz de la mañana sobre el Champaquí, el silencio del valle, la certeza de una buena decisión. Encontramos las pocas que importan.",
+    stat1:"Años en la región", stat2:"Operaciones concretadas", stat3:"Atención personalizada", stat4:"Localidades del valle",
+    props_kicker:"El portafolio", props_title:"Elegidas <em>una por una.</em>",
+    f_all:"Todas", f_casa:"Casas", f_terreno:"Terrenos", f_depto:"Departamentos", f_local:"Comerciales",
+    serv_kicker:"Qué hacemos", serv_title:"Todo. <em>Sin vueltas.</em>",
+    serv_sub:"De la primera visita a la escritura: un solo equipo, cero fricción.",
+    s1_name:"Comprá", s1_desc:"Acceso a propiedades dentro y fuera del mercado, visitas acompañadas y negociación que cuida tu bolsillo.",
+    s2_name:"Vendé", s2_desc:"Tasación real, difusión profesional y una red de compradores que se mueve antes que el mercado.",
+    s3_name:"Invertí", s3_desc:"Terrenos, cabañas de renta y oportunidades en el valle con proyección turística todo el año.",
+    s4_name:"Alquiler temporario", s4_desc:"Gestión completa de tu cabaña o casa de renta: huéspedes, mantenimiento y ocupación.",
+    p1_t:"Escuchamos", p1_p:"Una charla sin apuro sobre cómo querés vivir -  no un formulario.",
+    p2_t:"Seleccionamos", p2_p:"Tres opciones justas, no treinta. Cada una ya visitada y tasada por nosotros.",
+    p3_t:"Negociamos", p3_p:"Cerramos la distancia entre lo que piden y lo que vale, siempre a tu favor.",
+    p4_t:"Entregamos", p4_p:"Llaves, escritura y servicios resueltos antes de que abras la puerta.",
+    gal_kicker:"El valle", gal_title:"Paisajes que <em>rodean tu casa</em>",
+    est_kicker:"Tasación estimada", est_title:"¿Cuánto vale <em>tu propiedad?</em>",
+    est_loc:"Localidad", est_area:"Superficie cubierta", est_beds:"Dormitorios", est_type:"Tipo de propiedad", est_cond:"Estado",
+    t_casa:"Casa", t_cabana:"Cabaña", t_depto:"Departamento", t_local:"Local comercial",
+    c_refac:"A refaccionar", c_bueno:"Bueno", c_muybueno:"Muy bueno", c_premium:"Premium",
+    est_result:"Valor estimado de mercado", est_range:"Rango",
+    est_note:"Estimación orientativa basada en operaciones comparables de la zona. Para una tasación formal y sin cargo,",
+    est_note_cta:"escribinos por WhatsApp",
+    team_kicker:"Quiénes somos", team_title:"Las personas <em>detrás del nombre.</em>", team_role:"Asesor Inmobiliario",
+    tst_kicker:"Opiniones", tst_title:"Lo que dicen <em>nuestros clientes.</em>",
+    ct_kicker:"Empecemos la charla", ct_title:"Toda gran dirección empieza con un <em>hola.</em>",
+    ct_sub:"Contanos qué buscás -  o qué querés vender. Te respondemos personalmente a la brevedad.",
+    ct_addr:"Dirección",
+    fm_name:"Tu nombre *", fm_email:"Tu email *", fm_phone:"Teléfono (opcional)", fm_msg:"¿Qué estás buscando? *",
+    fe_name:"Contanos tu nombre.", fe_email:"Ingresá un email válido.", fe_msg:"Escribí tu mensaje.",
+    fm_send_wa:"Enviar por WhatsApp", fm_send_mail:"Enviar por Email",
+    fm_note:"Se abrirá WhatsApp o tu correo con el mensaje ya escrito.",
+    fm_err:"Completá los campos marcados.",
+    ft_cta:"Listos cuando <em>vos digas.</em>", ft_cta_btn:"Escribinos",
+    ft_about:"Inmobiliaria en Villa General Belgrano. Te ayudamos a encontrar o vender tu propiedad en las Sierras de Calamuchita.",
+    ft_nav:"Navegación", ft_agency:"Inmobiliaria", ft_contact:"Contacto",
+    ft_rights:"Todos los derechos reservados.", ft_top:"Volver arriba",
+    modal_cta:"Consultar por WhatsApp",
+    op_venta:"Venta", op_alquiler:"Alquiler", op_temporario:"Alq. temporario",
+    badge_destacada:"Destacada", badge_nuevo:"Nuevo",
+    sp_beds:"dorm.", sp_baths:"baños", sp_area:"m² cub.", sp_lote:"m² lote",
+    search_ph:"Buscar por nombre, localidad...", bed_any:"Dormitorios: cualquiera",
+    sort_featured:"Destacadas primero", sort_asc:"Precio: menor a mayor", sort_desc:"Precio: mayor a menor",
+    loc_all:"Todas las localidades", price_min:"Mín", price_max:"Máx",
+    res_one:"propiedad encontrada", res_many:"propiedades encontradas", prop_cta:"Ver ficha", cs_hint:"Tocá una tarjeta",
+    val_kicker:"El valle interactivo", val_title:"Elegí <em>tu lugar</em>",
+    val_sub:"Cinco localidades, cinco formas de vivir el valle. Tocá cada una y descubrí cuál va con vos.",
+    val_dist:"Distancia", val_ideal:"Ideal para", val_cta:"Ver opciones en esta zona",
+    wa_valle:"Hola Mirande Aybar, me interesan propiedades en {z}. ¿Qué opciones tienen?",
+    mo_kicker:"Los alrededores", mo_title:"Un valle que <em>se despliega.</em>", mo_hint:"Deslizá para explorar",
+    mo_arc_t:"Villa General Belgrano <em>y su entorno</em>",
+    mo_arc_p:"Sierras, ríos, lagos y bosques a minutos de cada propiedad. Pasá el cursor sobre cada lugar.",
+    wa_default:"Hola Mirande Aybar, quería hacerles una consulta.",
+    wa_prop:'Hola Mirande Aybar, me interesa la propiedad "{t}" ({l}). ¿Me dan más información?',
+    cursor_view:"Ver", cursor_drag:"Deslizá"
+  },
+  en: {
+    nav_props:"Properties", nav_services:"Services", nav_estimate:"The Valley", nav_team:"Team",
+    nav_contact:"Contact", nav_consult:"Contact", nav_gallery:"Gallery", nav_about:"About", nav_reviews:"Reviews",
+    hero_label:"Legal Practice & Real Estate Investments",
+    hero_tag:"Homes, land and country estates.<span>Villa General Belgrano, Calamuchita.</span>",
+    hs1:"Experience<b>15+ years</b>", hs2:"Deals closed<b>200+</b>", hs3:"Towns<b>5 in the valley</b>", hs4:"Service<b>Personal</b>",
+    hero_cta1:"View properties", hero_cta2:"Message us", scroll:"Scroll",
+    hm1:"Experience<b>15+ years in the region</b>", hm2:"Area<b>Calamuchita Valley</b>", hm3:"Deals<b>200+ closed</b>",
+    man_text:"A home in the hills is never just an address. It is the morning light over the Champaquí, the silence of the valley, the certainty of a good decision. We find the few that matter.",
+    stat1:"Years in the region", stat2:"Closed deals", stat3:"Personalized service", stat4:"Valley towns",
+    props_kicker:"The portfolio", props_title:"Chosen <em>one by one.</em>",
+    f_all:"All", f_casa:"Houses", f_terreno:"Land", f_depto:"Apartments", f_local:"Commercial",
+    serv_kicker:"What we do", serv_title:"Everything. <em>No friction.</em>",
+    serv_sub:"From first visit to final deed: one team, zero friction.",
+    s1_name:"Buy", s1_desc:"Access to on- and off-market properties, guided visits and negotiation that protects your budget.",
+    s2_name:"Sell", s2_desc:"Honest valuation, professional marketing and a buyer network that moves before the market does.",
+    s3_name:"Invest", s3_desc:"Land, rental cabins and valley opportunities with year-round tourism upside.",
+    s4_name:"Short-term rentals", s4_desc:"Full management of your rental cabin or home: guests, maintenance and occupancy.",
+    p1_t:"We listen", p1_p:"An unhurried conversation about how you want to live -  not a form.",
+    p2_t:"We curate", p2_p:"Three right options, not thirty. Each one already visited and valued by us.",
+    p3_t:"We negotiate", p3_p:"We close the gap between asking and worth -  always in your favour.",
+    p4_t:"We deliver", p4_p:"Keys, deed and utilities sorted before you open the door.",
+    gal_kicker:"The valley", gal_title:"Landscapes that <em>surround your home</em>",
+    est_kicker:"Instant valuation", est_title:"What is your <em>property worth?</em>",
+    est_loc:"Location", est_area:"Covered area", est_beds:"Bedrooms", est_type:"Property type", est_cond:"Condition",
+    t_casa:"House", t_cabana:"Cabin", t_depto:"Apartment", t_local:"Commercial unit",
+    c_refac:"Needs work", c_bueno:"Good", c_muybueno:"Very good", c_premium:"Premium",
+    est_result:"Estimated market value", est_range:"Range",
+    est_note:"Indicative estimate based on comparable sales in the area. For a formal, free valuation,",
+    est_note_cta:"message us on WhatsApp",
+    team_kicker:"Who we are", team_title:"The people <em>behind the name.</em>", team_role:"Real Estate Advisor",
+    tst_kicker:"Reviews", tst_title:"What <em>our clients say.</em>",
+    ct_kicker:"Let's start talking", ct_title:"Every great address starts with a <em>hello.</em>",
+    ct_sub:"Tell us what you're looking for -  or what you want to sell. We reply personally, promptly.",
+    ct_addr:"Address",
+    fm_name:"Your name *", fm_email:"Your email *", fm_phone:"Phone (optional)", fm_msg:"What are you looking for? *",
+    fe_name:"Please tell us your name.", fe_email:"Please enter a valid email.", fe_msg:"Please write your message.",
+    fm_send_wa:"Send via WhatsApp", fm_send_mail:"Send via Email",
+    fm_note:"WhatsApp or your email will open with the message ready.",
+    fm_err:"Please complete the highlighted fields.",
+    ft_cta:"Ready when <em>you are.</em>", ft_cta_btn:"Message us",
+    ft_about:"Real estate in Villa General Belgrano. We help you find or sell your property in the Calamuchita Hills.",
+    ft_nav:"Navigation", ft_agency:"Agency", ft_contact:"Contact",
+    ft_rights:"All rights reserved.", ft_top:"Back to top",
+    modal_cta:"Enquire on WhatsApp",
+    op_venta:"For sale", op_alquiler:"For rent", op_temporario:"Short-term",
+    badge_destacada:"Featured", badge_nuevo:"New",
+    sp_beds:"bd", sp_baths:"ba", sp_area:"m²", sp_lote:"m² lot",
+    search_ph:"Search by name, location...", bed_any:"Bedrooms: any",
+    sort_featured:"Featured first", sort_asc:"Price: low to high", sort_desc:"Price: high to low",
+    loc_all:"All locations", price_min:"Min", price_max:"Max",
+    res_one:"property found", res_many:"properties found", prop_cta:"View details", cs_hint:"Tap a card",
+    val_kicker:"The valley, interactive", val_title:"Choose <em>your place</em>",
+    val_sub:"Five towns, five ways to live the valley. Tap each one and find yours.",
+    val_dist:"Distance", val_ideal:"Best for", val_cta:"See options in this area",
+    wa_valle:"Hi Mirande Aybar, I'm interested in properties in {z}. What options do you have?",
+    mo_kicker:"The surroundings", mo_title:"A valley that <em>unfolds.</em>", mo_hint:"Scroll to explore",
+    mo_arc_t:"Villa General Belgrano <em>and around</em>",
+    mo_arc_p:"Hills, rivers, lakes and forests minutes from every property. Hover over each place.",
+    wa_default:"Hi Mirande Aybar, I'd like to make an enquiry.",
+    wa_prop:'Hi Mirande Aybar, I\'m interested in the property "{t}" ({l}). Could you send me more info?',
+    cursor_view:"View", cursor_drag:"Drag"
+  }
+};
+let LANG = localStorage.getItem("ma_lang") || "es";
+const t = k => (I18N[LANG] && I18N[LANG][k] !== undefined) ? I18N[LANG][k] : k;
+const GOLD_WORDS = { es:["luz","silencio","certeza","importan"], en:["light","silence","certainty","matter"] };
+
+function applyLang(lang){
+  LANG = lang; localStorage.setItem("ma_lang", lang);
+  document.documentElement.lang = lang;
+  $$("[data-i18n]").forEach(el => { const k = el.dataset.i18n; if (I18N[lang][k] !== undefined) el.textContent = I18N[lang][k]; });
+  $$("[data-i18n-html]").forEach(el => { const k = el.dataset.i18nHtml; if (I18N[lang][k] !== undefined) el.innerHTML = I18N[lang][k]; });
+  $$("[data-i18n-ph]").forEach(el => { const k = el.dataset.i18nPh; if (I18N[lang][k] !== undefined) el.placeholder = I18N[lang][k]; });
+  $$(".lang button").forEach(b => b.classList.toggle("active", b.dataset.lang === lang));
+  $$(".wa-link").forEach(a => a.href = waLink(t("wa_default")));
+  buildLocOptions(); renderProps(); renderTesti(); renderTeam(); rebuildManifesto();
+  if (window.__buildCardSwap) window.__buildCardSwap();
+}
+$$(".lang button").forEach(b => b.addEventListener("click", () => applyLang(b.dataset.lang)));
+
+/* =====================================================
+   PROPIEDADES -  datos reales de la inmobiliaria
+===================================================== */
+const F = "assets/fotos/";
+const DEMO_PROPS = [
+  { id:1, tipo:"casa", operacion:"venta", destacada:true, nuevo:false,
+    titulo:"Casa serrana con vista", titulo_en:"Hillside home with a view",
+    precio:145000, moneda:"USD", localidad:"Villa General Belgrano", dorm:3, banos:2, sup:180, lote:600,
+    desc:"Amplia casa de estilo serrano con living comedor, cocina integrada, galería con parrilla y hermoso jardín con árboles. Excelente ubicación a minutos del centro.",
+    desc_en:"Spacious hillside-style home with living-dining room, open kitchen, gallery with grill and a beautiful tree-filled garden. Great location, minutes from downtown.",
+    imgs:[F+"champaqui.jpg",F+"los-reartes.jpg",F+"pozo-verde.jpg"] },
+  { id:2, tipo:"terreno", operacion:"venta", destacada:false, nuevo:true,
+    titulo:"Lote en barrio residencial", titulo_en:"Lot in residential neighborhood",
+    precio:38000, moneda:"USD", localidad:"La Cumbrecita", dorm:0, banos:0, sup:0, lote:800,
+    desc:"Terreno en zona tranquila y arbolada, ideal para construir tu casa de fin de semana. Con todos los servicios disponibles.",
+    desc_en:"Lot in a quiet, tree-lined area, ideal to build your weekend home. All utilities available.",
+    imgs:[F+"los-reartes.jpg",F+"cerro-virgen.jpg"] },
+  { id:3, tipo:"departamento", operacion:"alquiler", destacada:false, nuevo:false,
+    titulo:"Departamento céntrico", titulo_en:"Downtown apartment",
+    precio:320000, moneda:"ARS", localidad:"Villa General Belgrano", dorm:2, banos:1, sup:65, lote:0,
+    desc:"Departamento luminoso a metros de la Avenida principal. Ideal para vivienda permanente o inversión de renta.",
+    desc_en:"Bright apartment steps from the main avenue. Ideal as a permanent home or rental investment.",
+    imgs:[F+"lago-embalse.jpg",F+"los-molinos.jpg"] },
+  { id:4, tipo:"casa", operacion:"temporario", destacada:true, nuevo:false,
+    titulo:"Cabaña para renta temporaria", titulo_en:"Cabin for short-term rental",
+    precio:55000, moneda:"ARS", localidad:"Los Reartes", dorm:2, banos:1, sup:70, lote:400,
+    desc:"Encantadora cabaña totalmente equipada, con parque propio y quincho. Excelente historial de ocupación turística.",
+    desc_en:"Charming fully-equipped cabin with its own park and BBQ area. Excellent tourism occupancy history.",
+    imgs:[F+"pozo-verde.jpg",F+"rumipal.jpg",F+"champaqui.jpg"] },
+  { id:5, tipo:"local", operacion:"venta", destacada:false, nuevo:false,
+    titulo:"Local comercial sobre avenida", titulo_en:"Commercial unit on main avenue",
+    precio:98000, moneda:"USD", localidad:"Villa General Belgrano", dorm:0, banos:1, sup:90, lote:0,
+    desc:"Local a la calle en zona de alto tránsito comercial y turístico. Gran oportunidad de inversión.",
+    desc_en:"Street-front unit in a high-traffic commercial and tourist area. Great investment opportunity.",
+    imgs:[F+"los-molinos.jpg",F+"lago-embalse.jpg"] },
+  { id:6, tipo:"terreno", operacion:"venta", destacada:false, nuevo:true,
+    titulo:"Terreno con vista al valle", titulo_en:"Lot with valley views",
+    precio:52000, moneda:"USD", localidad:"Villa General Belgrano", dorm:0, banos:0, sup:0, lote:1000,
+    desc:"Excelente lote en altura con vista panorámica al valle y las sierras. Entorno natural privilegiado.",
+    desc_en:"Excellent elevated lot with panoramic views of the valley and hills. Privileged natural setting.",
+    imgs:[F+"rumipal.jpg",F+"cerro-virgen.jpg"] }
+];
+let PROPERTIES = DEMO_PROPS;
+
+/* ---------- Cargar propiedades reales desde Supabase ---------- */
+function mapRow(r){
+  const imgs = (typeof r.imagenes === "string" && r.imagenes.trim())
+    ? r.imagenes.split(/[\n,]+/).map(s => s.trim()).filter(Boolean)
+    : (r.imagen ? [r.imagen] : [F+"champaqui.jpg"]);
+  return {
+    id:r.id, tipo:r.tipo || "casa", operacion:r.operacion || "venta",
+    destacada:!!r.destacada, nuevo:!!r.nuevo,
+    titulo:r.titulo || "", titulo_en:r.titulo_en || "",
+    precio:+r.precio || 0, moneda:r.moneda || "USD", localidad:r.localidad || "",
+    dorm:r.dormitorios || 0, banos:r.banos || 0, sup:r.superficie || 0, lote:r.lote || 0,
+    desc:r.descripcion || "", desc_en:r.descripcion_en || "", imgs
+  };
+}
+async function loadProps(){
+  if (!SB) return;
+  try{
+    const { data, error } = await SB.from("propiedades")
+      .select("*").eq("publicada", true).order("created_at", { ascending:false });
+    if (error) throw error;
+    if (data && data.length){
+      PROPERTIES = data.map(mapRow);
+      buildLocOptions(); renderProps();
+    }
+  }catch(err){ console.warn("Supabase no disponible, usando propiedades de ejemplo:", err.message); }
+}
+const pTitle = p => (LANG === "en" && p.titulo_en) ? p.titulo_en : p.titulo;
+const pDesc  = p => (LANG === "en" && p.desc_en) ? p.desc_en : p.desc;
+const fmtPrice = p => `${p.moneda} ${new Intl.NumberFormat(LANG === "es" ? "es-AR" : "en-US").format(p.precio)}`;
+function specsTxt(p){
+  const s = [];
+  if (p.dorm)  s.push(`<span><b>${p.dorm}</b> ${t("sp_beds")}</span>`);
+  if (p.banos) s.push(`<span><b>${p.banos}</b> ${t("sp_baths")}</span>`);
+  if (p.sup)   s.push(`<span><b>${p.sup}</b> ${t("sp_area")}</span>`);
+  if (!p.sup && p.lote) s.push(`<span><b>${p.lote}</b> ${t("sp_lote")}</span>`);
+  return s.join("");
+}
+
+let currentFilter = "all";
+function buildLocOptions(){
+  const sel = $("#locFilter");
+  const cur = sel.value;
+  const locs = [...new Set(PROPERTIES.map(p => p.localidad))].sort();
+  sel.innerHTML = `<option value="all">${t("loc_all")}</option>` +
+    locs.map(l => `<option value="${l}">${l}</option>`).join("");
+  if ([...sel.options].some(o => o.value === cur)) sel.value = cur;
+}
+function getFiltered(){
+  const q = ($("#propSearch").value || "").toLowerCase().trim();
+  const loc = $("#locFilter").value || "all";
+  const minBed = +$("#bedFilter").value || 0;
+  const pMin = parseFloat($("#priceMin").value) || 0;
+  const pMax = parseFloat($("#priceMax").value) || Infinity;
+  const sort = $("#sortSelect").value;
+  const list = PROPERTIES.filter(p => {
+    if (currentFilter !== "all" && p.tipo !== currentFilter) return false;
+    if (loc !== "all" && p.localidad !== loc) return false;
+    if (minBed && (p.dorm || 0) < minBed) return false;
+    if (p.precio < pMin || p.precio > pMax) return false;
+    if (q){
+      const hay = `${p.titulo} ${p.titulo_en || ""} ${p.localidad} ${p.desc}`.toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  list.sort((a,b) => {
+    if (sort === "price-asc")  return a.precio - b.precio;
+    if (sort === "price-desc") return b.precio - a.precio;
+    return ((b.destacada?2:0)+(b.nuevo?1:0)) - ((a.destacada?2:0)+(a.nuevo?1:0)) || b.id - a.id;
+  });
+  return list;
+}
+const CAM_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>';
+function renderProps(){
+  const grid = $("#propsGrid");
+  if (!grid) return;
+  const list = getFiltered();
+  $("#resultsCount").textContent = `${list.length} ${list.length === 1 ? t("res_one") : t("res_many")}`;
+  grid.innerHTML = list.map((p, i) => `
+    <article class="prop-card${i === 0 ? " is-lead" : ""}" data-id="${p.id}" tabindex="0" aria-label="${pTitle(p)}, ${p.localidad}, ${fmtPrice(p)}">
+      <div class="prop-media">
+        ${p.destacada ? `<span class="prop-badge hot">${t("badge_destacada")}</span>` : (p.nuevo ? `<span class="prop-badge">${t("badge_nuevo")}</span>` : "")}
+        <img src="${p.imgs[0]}" alt="${pTitle(p)} - ${p.localidad}" loading="${i === 0 ? "eager" : "lazy"}" decoding="async">
+        ${p.imgs.length > 1 ? `<span class="prop-count">${CAM_ICON}${p.imgs.length}</span>` : ""}
+        <span class="prop-price">${fmtPrice(p)}</span>
+        <span class="prop-cta">${t("prop_cta")} <span aria-hidden="true">→</span></span>
+      </div>
+      <div class="prop-body">
+        <h3 class="prop-name">${pTitle(p)}</h3>
+        <div class="prop-loc">${t("op_"+p.operacion)} · ${p.localidad}</div>
+        <div class="prop-specs">${specsTxt(p)}</div>
+      </div>
+    </article>`).join("");
+  bindCards();
+}
+["propSearch","locFilter","bedFilter","sortSelect","priceMin","priceMax"].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener(el.tagName === "SELECT" ? "change" : "input", renderProps);
+});
+function bindCards(){
+  const grid = $("#propsGrid");
+  if (!TOUCH && !REDUCE) $$(".prop-card", grid).forEach(card => {
+    card.addEventListener("mousemove", e => {
+      const r = card.getBoundingClientRect();
+      gsap.to(card, {
+        rotateY:((e.clientX - r.left)/r.width - .5) * 7,
+        rotateX:((e.clientY - r.top)/r.height - .5) * -7,
+        transformPerspective:900, duration:.5, ease:"power2.out"
+      });
+    });
+    card.addEventListener("mouseleave", () =>
+      gsap.to(card, { rotateX:0, rotateY:0, duration:.8, ease:"elastic.out(1,.5)" }));
+  });
+}
+$("#propsGrid").addEventListener("click", e => {
+  const card = e.target.closest(".prop-card");
+  if (card) openModal(+card.dataset.id);
+});
+$("#propsGrid").addEventListener("keydown", e => {
+  const card = e.target.closest(".prop-card");
+  if (card && (e.key === "Enter" || e.key === " ")){ e.preventDefault(); openModal(+card.dataset.id); }
+});
+$$(".filter-btn").forEach(btn => btn.addEventListener("click", () => {
+  $$(".filter-btn").forEach(b => b.classList.remove("is-active"));
+  btn.classList.add("is-active");
+  currentFilter = btn.dataset.filter;
+  const grid = $("#propsGrid");
+  if (REDUCE){ renderProps(); ScrollTrigger.refresh(); return; }
+  gsap.to(grid.children, { opacity:0, y:24, duration:.25, ease:"power2.in", onComplete(){
+    renderProps();
+    gsap.fromTo(grid.children, { opacity:0, y:32 }, { opacity:1, y:0, duration:.6, ease:"power3.out", stagger:.06 });
+    ScrollTrigger.refresh();
+  }});
+}));
+
+/* ---------- modal + carrusel ---------- */
+let lastFocus = null, carIdx = 0, carImgs = [];
+function carGo(n){
+  carIdx = (n + carImgs.length) % carImgs.length;
+  $("#mcarTrack").style.transform = `translateX(-${carIdx*100}%)`;
+  $$("#mcarDots button").forEach((d,i) => d.classList.toggle("is-active", i === carIdx));
+}
+$("#mcarPrev").addEventListener("click", () => carGo(carIdx-1));
+$("#mcarNext").addEventListener("click", () => carGo(carIdx+1));
+function openModal(id){
+  const p = PROPERTIES.find(x => x.id === id);
+  if (!p) return;
+  lastFocus = document.activeElement;
+  carImgs = p.imgs;
+  $("#mcarTrack").innerHTML = carImgs.map(src => `<img src="${src}" alt="${pTitle(p)} -  ${p.localidad}">`).join("");
+  $("#mcarDots").innerHTML = carImgs.map((_,i) => `<button aria-label="Foto ${i+1}"></button>`).join("");
+  $$("#mcarDots button").forEach((d,i) => d.addEventListener("click", () => carGo(i)));
+  const multi = carImgs.length > 1;
+  $("#mcarPrev").style.display = multi ? "flex" : "none";
+  $("#mcarNext").style.display = multi ? "flex" : "none";
+  $("#mcarDots").style.display = multi ? "flex" : "none";
+  carGo(0);
+  $("#modalKicker").textContent = `${t("f_"+(p.tipo==="departamento"?"depto":p.tipo)) || p.tipo} · ${t("op_"+p.operacion)}`;
+  $("#modalTitle").textContent = pTitle(p);
+  $("#modalLoc").textContent = p.localidad;
+  $("#modalPrice").textContent = fmtPrice(p);
+  const specs = [];
+  if (p.dorm)  specs.push(`<div><b>${p.dorm}</b>${t("sp_beds")}</div>`);
+  if (p.banos) specs.push(`<div><b>${p.banos}</b>${t("sp_baths")}</div>`);
+  if (p.sup)   specs.push(`<div><b>${p.sup}</b>${t("sp_area")}</div>`);
+  if (p.lote)  specs.push(`<div><b>${p.lote}</b>${t("sp_lote")}</div>`);
+  $("#modalSpecs").innerHTML = specs.join("");
+  $("#modalDesc").textContent = pDesc(p);
+  $("#modalCta").href = waLink(t("wa_prop").replace("{t}", pTitle(p)).replace("{l}", p.localidad));
+  const modal = $("#propModal");
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+  if (lenis) lenis.stop();
+  gsap.timeline()
+    .to("#modalScrim", { opacity:1, duration:.4 })
+    .to("#modalPanel", { y:0, opacity:1, duration: REDUCE ? .15 : .6, ease:"power4.out" }, "-=.2");
+  $("#modalClose").focus();
+}
+function closeModal(){
+  const modal = $("#propModal");
+  gsap.timeline({ onComplete(){
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden","true");
+    document.body.style.overflow = "";
+    if (lenis) lenis.start();
+    if (lastFocus) lastFocus.focus();
+  }})
+    .to("#modalPanel", { y:40, opacity:0, duration:.35, ease:"power2.in" })
+    .to("#modalScrim", { opacity:0, duration:.3 }, "-=.15");
+}
+$("#modalClose").addEventListener("click", closeModal);
+$("#modalScrim").addEventListener("click", closeModal);
+addEventListener("keydown", e => {
+  if (!$("#propModal").classList.contains("is-open")) return;
+  if (e.key === "Escape") closeModal();
+  if (e.key === "ArrowLeft" && carImgs.length > 1) carGo(carIdx-1);
+  if (e.key === "ArrowRight" && carImgs.length > 1) carGo(carIdx+1);
+});
+
+/* =====================================================
+   EQUIPO -  carrusel de perfiles
+   (para cambiar links de redes: editá "socials" de cada integrante)
+===================================================== */
+const ICON = {
+  whatsapp:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.8-2.8-1.5-3.9-3.4-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5s-.7-1.7-1-2.3c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-1 1-1.3 2.4-.8 3.9.9 2.6 2.8 4.6 5.3 5.6 1.7.7 2.4.8 3.3.7.5-.1 1.7-.7 1.9-1.4.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 00-8.6 15l-1.4 5 5.2-1.4A10 10 0 1012 2z"/></svg>',
+  instagram:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>',
+  linkedin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>',
+  mail:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>'
+};
+const TEAM = [
+  {
+    name:"Sebastián Mirande",
+    photo:"assets/equipo/sebastian.jpeg",
+    es:{ role:"Abogado", desc:"Socio fundador y abogado del estudio. Acompaña cada operación desde lo legal: escrituras, contratos, sucesiones y due diligence, para que comprar o vender sea un proceso seguro y sin sorpresas." },
+    en:{ role:"Attorney", desc:"Founding partner and the firm's attorney. He handles the legal side of every deal -  deeds, contracts, estates and due diligence -  so buying or selling is a safe, surprise-free process." },
+    socials:[
+      { k:"whatsapp", url:"https://wa.me/5493546436653", label:"WhatsApp" },
+      { k:"instagram", url:"https://www.instagram.com/mirandeaybar/", label:"Instagram" },
+      { k:"linkedin", url:"#", label:"LinkedIn" },
+      { k:"mail", url:"mailto:mirandeaybar@gmail.com", label:"Email" }
+    ]
+  },
+  {
+    name:"Mario Gonzalo Aybar",
+    photo:"assets/equipo/mario.jpeg",
+    es:{ role:"Representante y Vendedor", desc:"Socio fundador, representante y vendedor. Conoce cada barrio y cada camino del valle: se ocupa de mostrar las propiedades, negociar y encontrar el lugar que realmente va con vos." },
+    en:{ role:"Agent & Sales", desc:"Founding partner, agent and salesperson. He knows every neighbourhood and road in the valley: he shows the properties, negotiates and finds the place that truly fits you." },
+    socials:[
+      { k:"whatsapp", url:"https://wa.me/5493512729721", label:"WhatsApp" },
+      { k:"instagram", url:"https://www.instagram.com/mirandeaybar/", label:"Instagram" },
+      { k:"linkedin", url:"#", label:"LinkedIn" },
+      { k:"mail", url:"mailto:mirandeaybar@gmail.com", label:"Email" }
+    ]
+  }
+];
+let tcIdx = 0;
+function tcPaint(animate){
+  const m = TEAM[tcIdx], d = m[LANG] || m.es;
+  const socHtml = m.socials.map(s =>
+    `<a class="tc-soc" href="${s.url}" ${s.url.startsWith("http") ? 'target="_blank" rel="noopener"' : ""} aria-label="${s.label} de ${m.name}">${ICON[s.k]}</a>`).join("");
+  const apply = () => {
+    ["D","M"].forEach(sfx => {
+      const n = $("#tcName"+sfx); if (!n) return;
+      n.textContent = m.name;
+      $("#tcRole"+sfx).textContent = d.role;
+      $("#tcDesc"+sfx).textContent = d.desc;
+      $("#tcSoc"+sfx).innerHTML = socHtml;
+    });
+    $$("#tcPhotoD img, #tcPhotoM img").forEach(im => im.classList.toggle("is-active", +im.dataset.i === tcIdx));
+    $$("#tcDots .tc-dot").forEach((dot,i) => {
+      dot.classList.toggle("is-active", i === tcIdx);
+      dot.setAttribute("aria-selected", i === tcIdx);
+    });
+  };
+  const cards = $$("#tcCardD, #tcCardM");
+  if (animate && !REDUCE && cards.length){
+    gsap.to(cards, { opacity:0, duration:.2, ease:"power2.in", onComplete(){
+      apply();
+      gsap.to(cards, { opacity:1, duration:.4, ease:"power2.out" });
+    }});
+  } else apply();
+}
+function tcGo(n){ tcIdx = (n + TEAM.length) % TEAM.length; tcPaint(true); }
+function renderTeam(){
+  const dots = $("#tcDots");
+  if (!dots) return;
+  if (!dots.children.length){
+    dots.innerHTML = TEAM.map((_,i) =>
+      `<button class="tc-dot" role="tab" aria-label="Integrante ${i+1}"></button>`).join("");
+    $$(".tc-dot", dots).forEach((d,i) => d.addEventListener("click", () => tcGo(i)));
+    $("#tcPrev").addEventListener("click", () => tcGo(tcIdx-1));
+    $("#tcNext").addEventListener("click", () => tcGo(tcIdx+1));
+  }
+  tcPaint(false);
+}
+
+/* =====================================================
+   TESTIMONIOS
+===================================================== */
+const TESTI = [
+  { ini:"LR", es:{name:"Laura R.", loc:"Compró una casa en VGB", text:"Nos acompañaron en todo el proceso con mucha paciencia. Encontramos la casa ideal para la familia. ¡Gracias por la dedicación!"},
+             en:{name:"Laura R.", loc:"Bought a home in VGB", text:"They guided us through the whole process very patiently. We found the ideal home for our family. Thank you for the dedication!"} },
+  { ini:"MG", es:{name:"Martín G.", loc:"Invirtió en un terreno", text:"Muy profesionales y transparentes. Conocen la zona como nadie y me asesoraron muy bien para invertir. Recomendados totalmente."},
+             en:{name:"Martín G.", loc:"Invested in land", text:"Very professional and transparent. They know the area like no one and advised me really well to invest. Totally recommended."} },
+  { ini:"CP", es:{name:"Carolina P.", loc:"Vendió su propiedad", text:"Vendí mi propiedad en tiempo récord y al valor que esperaba. Atención cálida y siempre disponibles para responder mis dudas."},
+             en:{name:"Carolina P.", loc:"Sold her property", text:"I sold my property in record time and at the value I expected. Warm service and always available to answer my questions."} }
+];
+/* Muro de reseñas en 3 columnas con bucle vertical continuo.
+   Reparte las reseñas reales disponibles; al agregar más, se llena solo.
+   El duplicado interno es lo que hace el bucle imperceptible. */
+function renderTesti(){
+  const wall = $("#tstWall");
+  if (!wall) return;
+  const cols = [[], [], []];
+  TESTI.forEach((x, i) => cols[i % 3].push(x));
+  const DUR = [26, 34, 30];   // ritmos distintos por columna, no sincronizados
+  const card = x => {
+    const d = x[LANG] || x.es;
+    return `<figure class="tst-card">
+      <blockquote class="tst-quote">${d.text}</blockquote>
+      <figcaption class="tst-who">
+        <div class="tst-ava" aria-hidden="true">${x.ini}</div>
+        <div><b>${d.name}</b><span>${d.loc}</span></div>
+      </figcaption>
+    </figure>`;
+  };
+  wall.innerHTML = cols.map((col, i) => {
+    if (!col.length) return "";
+    const set = col.map(card).join("");
+    return `<div class="tst-col">
+      <div class="tst-col-inner" style="--dur:${DUR[i]}s">${set}${set}</div>
+    </div>`;
+  }).join("");
+}
+
+/* =====================================================
+   FORMULARIO → WhatsApp / Email
+===================================================== */
+(function(){
+  const form = $("#contactForm");
+  const fields = $$(".ff-main input, .ff-main textarea", form);
+  let sendMode = "wa";
+  $$("button[data-send]", form).forEach(b => b.addEventListener("click", () => sendMode = b.dataset.send));
+
+  fields.forEach(f => {
+    const sync = () => f.parentElement.classList.toggle("is-active", !!f.value.trim());
+    f.addEventListener("input", () => { sync(); f.closest(".form-field").classList.remove("has-error"); });
+    f.addEventListener("blur", sync);
+  });
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const nombre = $("#fName").value.trim();
+    const email = $("#fEmail").value.trim();
+    const telefono = $("#fPhone").value.trim();
+    const mensaje = $("#fMsg").value.trim();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    let ok = true, first = null;
+    [[$("#fName"), nombre.length > 1], [$("#fEmail"), emailOk], [$("#fMsg"), mensaje.length > 3]].forEach(([el, valid]) => {
+      el.closest(".form-field").classList.toggle("has-error", !valid);
+      if (!valid && !first) first = el;
+      ok = ok && valid;
+    });
+    if (!ok){ first.focus(); return; }
+
+    // Guardar la consulta en Supabase si está configurado (no bloquea el envío)
+    if (SB) SB.from("consultas").insert({ nombre, email, telefono, mensaje, idioma: LANG }).then(() => {});
+
+    if (sendMode === "wa"){
+      const txt = (LANG === "es"
+        ? `Hola Mirande Aybar!\n\nNombre: ${nombre}\nEmail: ${email}${telefono ? `\nTeléfono: ${telefono}` : ""}\n\nMensaje: ${mensaje}`
+        : `Hello Mirande Aybar!\n\nName: ${nombre}\nEmail: ${email}${telefono ? `\nPhone: ${telefono}` : ""}\n\nMessage: ${mensaje}`);
+      window.open(waLink(txt), "_blank");
+    } else {
+      const subj = LANG === "es" ? `Consulta web de ${nombre}` : `Web enquiry from ${nombre}`;
+      const body = (LANG === "es"
+        ? `Nombre: ${nombre}\nEmail: ${email}${telefono ? `\nTeléfono: ${telefono}` : ""}\n\nMensaje:\n${mensaje}`
+        : `Name: ${nombre}\nEmail: ${email}${telefono ? `\nPhone: ${telefono}` : ""}\n\nMessage:\n${mensaje}`);
+      window.location.href = mailLink(subj, body);
+    }
+  });
+})();
+
+/* =====================================================
+   PRELOADER + INTRO
+===================================================== */
+function splitChars(el){
+  const text = el.textContent;
+  el.textContent = "";
+  el.setAttribute("aria-label", text);
+  [...text].forEach(ch => {
+    const s = document.createElement("span");
+    s.className = "char"; s.textContent = ch === " " ? " " : ch;
+    s.setAttribute("aria-hidden","true");
+    el.appendChild(s);
+  });
+  return $$(".char", el);
+}
+const heroChars = $$("#heroTitle [data-split]").flatMap(el => splitChars(el));
+function heroIntro(){
+  if (REDUCE){
+    gsap.set(heroChars, { y:0 });
+    gsap.set("[data-reveal]", { opacity:1, y:0 });
+    gsap.set(".cswap-card, .seal, .hero-specs div", { opacity:1 });
+    return;
+  }
+  gsap.timeline({ delay:.45 })
+    .to(heroChars, { y:0, duration:1.2, ease:"power4.out", stagger:.03 })
+    .fromTo("#heroTagline", { opacity:0, y:20 }, { opacity:1, y:0, duration:.85, ease:"power3.out" }, "-=.8")
+    .fromTo(".hero-actions .btn", { opacity:0, y:16 }, { opacity:1, y:0, duration:.7, ease:"power3.out", stagger:.07 }, "-=.6")
+    .fromTo(".cswap-card",
+      { opacity:0, scale:.82, yPercent:20 },
+      { opacity:1, scale:1, yPercent:-50, duration:1.15, ease:"power3.out", stagger:.11 }, "-=.95")
+    .fromTo(".seal", { opacity:0, scale:.7 }, { opacity:1, scale:1, duration:.8, ease:"back.out(1.7)" }, "-=.5")
+    .fromTo(".hero-specs div", { opacity:0, y:14 }, { opacity:1, y:0, duration:.65, ease:"power3.out", stagger:.06 }, "-=.6")
+    .fromTo(".cswap-hint", { opacity:0 }, { opacity:1, duration:.5 }, "-=.4");
+}
+
+(function preloader(){
+  const wrap = $("#preloaderName");
+  "MIRANDE & AYBAR".split("").forEach(ch => {
+    const s = document.createElement("span");
+    s.className = "pl-ch" + (ch === "&" ? " amp" : "");
+    s.textContent = ch === " " ? " " : ch;
+    wrap.appendChild(s);
+  });
+  const finish = () => {
+    document.body.classList.remove("is-loading");
+    heroIntro();
+    gsap.to("#preloader", {
+      yPercent:-100, duration: REDUCE ? .2 : .9, ease:"power4.inOut", delay:.15,
+      onComplete: () => { $("#preloader").remove(); ScrollTrigger.refresh(); }
+    });
+  };
+  if (REDUCE){ finish(); return; }
+  const count = { v: 0 };
+  gsap.timeline({ onComplete: finish })
+    .to(".pl-ch", { y:0, duration:.9, ease:"power4.out", stagger:.045 }, .1)
+    .to("#preloaderBarFill", { scaleX:1, duration:1.6, ease:"power2.inOut" }, .3)
+    .to(count, { v:100, duration:1.6, ease:"power2.inOut",
+      onUpdate: () => $("#preloaderCount").textContent = Math.round(count.v) }, .3)
+    .to(".pl-ch", { y:"-110%", duration:.7, ease:"power4.in", stagger:.025 }, "+=.25");
+})();
+
+/* =====================================================
+   MAGNÉTICOS / TILT / NAV
+===================================================== */
+/* Tarjetas de equipo: tilt 3D + brillo que sigue el puntero */
+if (!TOUCH && !REDUCE) $$(".team-card").forEach(card => {
+  const inner = card.querySelector(".team-photo, .team-ini");
+  card.addEventListener("mousemove", e => {
+    const r = card.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+    card.style.setProperty("--mx", px*100 + "%");
+    card.style.setProperty("--my", py*100 + "%");
+    gsap.to(card, { rotateY:(px - .5)*9, rotateX:(py - .5)*-9, transformPerspective:900, duration:.4, ease:"power2.out" });
+    if (inner) gsap.to(inner, { x:(px - .5)*14, y:(py - .5)*14, duration:.5, ease:"power2.out" });
+  });
+  card.addEventListener("mouseleave", () => {
+    gsap.to(card, { rotateX:0, rotateY:0, duration:.7, ease:"elastic.out(1,.5)" });
+    if (inner) gsap.to(inner, { x:0, y:0, duration:.7, ease:"elastic.out(1,.5)" });
+  });
+});
+
+if (!TOUCH && !REDUCE) $$(".magnetic").forEach(btn => {
+  btn.addEventListener("mousemove", e => {
+    const r = btn.getBoundingClientRect();
+    gsap.to(btn, { x:(e.clientX - r.left - r.width/2)*.28, y:(e.clientY - r.top - r.height/2)*.28, duration:.4, ease:"power3.out" });
+  });
+  btn.addEventListener("mouseleave", () => gsap.to(btn, { x:0, y:0, duration:.6, ease:"elastic.out(1,.4)" }));
+});
+
+(function nav(){
+  const nav = $("#nav");
+  let lastY = 0, menuOpen = false;
+  addEventListener("scroll", () => {
+    const y = scrollY;
+    nav.classList.toggle("is-solid", y > 60);
+    nav.classList.toggle("is-hidden", y > 480 && y > lastY && !menuOpen);
+    lastY = y;
+    $("#progressBar").style.transform =
+      `scaleX(${y / (document.documentElement.scrollHeight - innerHeight)})`;
+  }, { passive:true });
+
+  const burger = $("#navBurger"), menu = $("#menu");
+  const menuLinks = $$(".menu-links li > a");
+  burger.addEventListener("click", () => {
+    menuOpen = !menuOpen;
+    burger.classList.toggle("is-open", menuOpen);
+    burger.setAttribute("aria-expanded", menuOpen);
+    menu.setAttribute("aria-hidden", !menuOpen);
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    if (lenis) menuOpen ? lenis.stop() : lenis.start();
+    if (menuOpen){
+      gsap.set(menu, { visibility:"visible" });
+      gsap.timeline()
+        .to(menu, { clipPath:"inset(0 0 0% 0)", duration:.7, ease:"power4.inOut" })
+        .to(menuLinks, { y:0, duration:.8, ease:"power4.out", stagger:.07 }, "-=.25");
+    } else {
+      gsap.timeline({ onComplete: () => gsap.set(menu, { visibility:"hidden" }) })
+        .to(menuLinks, { y:"110%", duration:.4, ease:"power3.in", stagger:.03 })
+        .to(menu, { clipPath:"inset(0 0 100% 0)", duration:.6, ease:"power4.inOut" }, "-=.15");
+    }
+  });
+
+  document.addEventListener("click", e => {
+    const link = e.target.closest("[data-scrollto]");
+    if (!link) return;
+    const target = $(link.getAttribute("href"));
+    if (!target) return;
+    e.preventDefault();
+    if (menuOpen) burger.click();
+    if ($("#propModal").classList.contains("is-open")) closeModal();
+    if (REDUCE) target.scrollIntoView(); else goTo(target);
+  });
+  $("#toTop").addEventListener("click", () => {
+    if (REDUCE) scrollTo(0,0); else goTo(0);
+  });
+})();
+
+/* =====================================================
+   ESCENA 3D DEL VALLE
+   Relieve real con sombreado por altura, niebla volumetrica,
+   sol bajo y polvo en suspension. La camara desciende con el
+   scroll: el usuario "baja al valle".
+===================================================== */
+(function heroScene(){
+  const canvas = $("#hero-canvas");
+  if (!window.THREE){ canvas.style.background = "radial-gradient(ellipse at 50% 62%,#2B3A42,#1A252B)"; return; }
+
+  const lowPower = (navigator.hardwareConcurrency || 4) <= 4;
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias:!lowPower, alpha:true, powerPreference:"high-performance" });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, lowPower ? 1.25 : 1.6));
+
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x1d2930, 0.033);
+  const camera = new THREE.PerspectiveCamera(52, 1, .1, 260);
+  camera.position.set(0, 12, 42);
+
+  // Ruido de valor con interpolacion suave: da cordones montanosos creibles
+  function vnoise(x, z){
+    const xi = Math.floor(x), zi = Math.floor(z);
+    const xf = x - xi, zf = z - zi;
+    const r = (a,b) => { const s = Math.sin(a*127.1 + b*311.7) * 43758.5453; return s - Math.floor(s); };
+    const u = xf*xf*(3-2*xf), v = zf*zf*(3-2*zf);
+    return (r(xi,zi)*(1-u) + r(xi+1,zi)*u)*(1-v) + (r(xi,zi+1)*(1-u) + r(xi+1,zi+1)*u)*v;
+  }
+  function ridge(x, z){
+    let a = 0, amp = 1, f = .045;
+    for (let o = 0; o < 4; o++){ a += (1 - Math.abs(vnoise(x*f, z*f)*2 - 1)) * amp; amp *= .5; f *= 2.1; }
+    return a;
+  }
+
+  const SEG = lowPower ? 96 : 150;
+  const geo = new THREE.PlaneGeometry(300, 220, SEG, SEG);
+  const pos = geo.attributes.position;
+  const colors = new Float32Array(pos.count * 3);
+  const cLow  = new THREE.Color(0x24333b);   // piso del valle
+  const cMid  = new THREE.Color(0x33474f);   // ladera
+  const cHigh = new THREE.Color(0xC09A6E);   // cumbre en bronce de marca
+  const tmp = new THREE.Color();
+  let maxH = 0;
+  for (let i = 0; i < pos.count; i++){
+    const x = pos.getX(i), y = pos.getY(i);
+    const corridor = Math.min(1, Math.abs(x) / 34);          // valle abierto en el centro
+    const far = Math.min(1, Math.max(0, (-y + 40) / 150));   // mas alto hacia el fondo
+    const hgt = ridge(x + 200, y + 200) * 11 * corridor * (.35 + far * 1.25);
+    pos.setZ(i, hgt);
+    if (hgt > maxH) maxH = hgt;
+  }
+  for (let i = 0; i < pos.count; i++){
+    const t = Math.min(1, pos.getZ(i) / (maxH * .82));
+    tmp.copy(cLow).lerp(cMid, Math.min(1, t * 1.7));
+    if (t > .62) tmp.lerp(cHigh, (t - .62) / .38 * .75);
+    colors[i*3] = tmp.r; colors[i*3+1] = tmp.g; colors[i*3+2] = tmp.b;
+  }
+  geo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+  geo.computeVertexNormals();
+
+  const terrain = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ vertexColors:true, flatShading:true }));
+  terrain.rotation.x = -Math.PI / 2;
+  terrain.position.y = -6;
+  scene.add(terrain);
+
+  // Retícula de contorno: lectura tecnica sobre el relieve
+  const wire = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({
+    color:0xC09A6E, wireframe:true, transparent:true, opacity:.055
+  }));
+  wire.rotation.x = -Math.PI / 2;
+  wire.position.y = -5.88;
+  scene.add(wire);
+
+  scene.add(new THREE.HemisphereLight(0x9fb4bd, 0x141d22, .95));
+  const sun = new THREE.DirectionalLight(0xE8C79A, 1.5);
+  sun.position.set(-42, 26, -30);
+  scene.add(sun);
+  const rim = new THREE.DirectionalLight(0x5C7D8C, .55);
+  rim.position.set(38, 14, 26);
+  scene.add(rim);
+
+  // Disco solar bajo, detras de los cordones
+  const sunDisc = new THREE.Mesh(
+    new THREE.CircleGeometry(13, 48),
+    new THREE.MeshBasicMaterial({ color:0xE3B682, transparent:true, opacity:.2 })
+  );
+  sunDisc.position.set(-46, 14, -108);
+  scene.add(sunDisc);
+
+  // Polvo en suspension
+  const N = lowPower ? 260 : 520;
+  const pPos = new Float32Array(N * 3);
+  for (let i = 0; i < N; i++){
+    pPos[i*3]   = (Math.random() - .5) * 190;
+    pPos[i*3+1] = Math.random() * 44 - 2;
+    pPos[i*3+2] = (Math.random() - .5) * 170 - 20;
+  }
+  const pGeo = new THREE.BufferGeometry();
+  pGeo.setAttribute("position", new THREE.BufferAttribute(pPos, 3));
+  const dust = new THREE.Points(pGeo, new THREE.PointsMaterial({
+    color:0xD8C6AC, size:.42, transparent:true, opacity:.5, depthWrite:false
+  }));
+  scene.add(dust);
+
+  const mouse = { x:0, y:0 }, sm = { x:0, y:0 };
+  if (!TOUCH) addEventListener("mousemove", e => {
+    mouse.x = (e.clientX / innerWidth - .5) * 2;
+    mouse.y = (e.clientY / innerHeight - .5) * 2;
+  }, { passive:true });
+
+  let sp = 0;
+  ScrollTrigger.create({
+    trigger:"#inicio", start:"top top", end:"bottom top", scrub:true,
+    onUpdate: st => sp = st.progress
+  });
+
+  function resize(){
+    const w = canvas.clientWidth, hgt = canvas.clientHeight;
+    renderer.setSize(w, hgt, false);
+    camera.aspect = w / hgt;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  addEventListener("resize", resize, { passive:true });
+
+  let visible = true, t = 0;
+  new IntersectionObserver(([e]) => visible = e.isIntersecting, { threshold:0 }).observe($("#inicio"));
+
+  function frame(){
+    requestAnimationFrame(frame);
+    if (!visible || document.hidden) return;
+    t += .0022;
+    sm.x += (mouse.x - sm.x) * .04;
+    sm.y += (mouse.y - sm.y) * .04;
+    // El scroll hace descender la camara hacia el piso del valle
+    camera.position.x = Math.sin(t * .38) * 3.4 + sm.x * 5.5;
+    camera.position.y = 12 - sp * 7.4 + sm.y * -2.4;
+    camera.position.z = 42 - sp * 20;
+    camera.lookAt(0, 1.5 - sp * 2.6, -46);
+    dust.rotation.y = t * .1;
+    dust.position.y = Math.sin(t * .7) * .9;
+    wire.material.opacity = .055 + sp * .05;
+    renderer.render(scene, camera);
+  }
+  if (REDUCE){ camera.lookAt(0, 1.5, -46); renderer.render(scene, camera); }
+  else frame();
+})();
+
+/* =====================================================
+   CARDSWAP - pila 3D de propiedades destacadas en el hero
+   La tarjeta de adelante cae, las de atras ascienden.
+===================================================== */
+(function cardSwap(){
+  const host = $("#cardSwap");
+  if (!host) return;
+  const DIST_X = 46, DIST_Y = 52, SKEW = 5, DELAY = 4200;
+  let cards = [], order = [], timer = null, tl = null;
+
+  const slot = (i, total) => ({ x:i*DIST_X, y:-i*DIST_Y, z:-i*DIST_X*1.6, zi:total-i });
+  const place = (el, s) => gsap.set(el, {
+    x:s.x, y:s.y, z:s.z, xPercent:-50, yPercent:-50, skewY:SKEW,
+    transformOrigin:"center center", zIndex:s.zi, force3D:true
+  });
+
+  function build(){
+    const list = (typeof PROPERTIES !== "undefined" ? PROPERTIES : []).filter(p => p.destacada).slice(0,3);
+    const src = list.length ? list : (typeof PROPERTIES !== "undefined" ? PROPERTIES.slice(0,3) : []);
+    if (!src.length) return;
+    host.innerHTML = src.map(p => `
+      <article class="cswap-card" data-id="${p.id}" tabindex="0" aria-label="${pTitle(p)}, ${fmtPrice(p)}">
+        <img src="${p.imgs[0]}" alt="${pTitle(p)}" decoding="async">
+        <div class="cswap-veil">
+          <span class="cswap-op">${t("op_"+p.operacion)}</span>
+          <span class="cswap-price">${fmtPrice(p)}</span>
+          <span class="cswap-name">${pTitle(p)}</span>
+          <span class="cswap-loc">${p.localidad}</span>
+        </div>
+      </article>`).join("");
+    cards = $$(".cswap-card", host);
+    order = cards.map((_,i) => i);
+    cards.forEach((el,i) => {
+      place(el, slot(i, cards.length));
+      el.addEventListener("click", () => openModal(+el.dataset.id));
+      el.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " "){ e.preventDefault(); openModal(+el.dataset.id); }
+      });
+    });
+    if (REDUCE) return;
+    start();
+  }
+
+  function swap(){
+    if (order.length < 2) return;
+    const [front, ...rest] = order;
+    const el = cards[front];
+    tl = gsap.timeline();
+    tl.to(el, { y:"+=420", opacity:.35, duration:1.5, ease:"power2.in" });
+    tl.addLabel("up", "-=1.15");
+    rest.forEach((idx, i) => {
+      const s = slot(i, cards.length);
+      tl.set(cards[idx], { zIndex:s.zi }, "up");
+      tl.to(cards[idx], { x:s.x, y:s.y, z:s.z, duration:1.5, ease:"elastic.out(0.62,0.92)" }, `up+=${i*0.12}`);
+    });
+    const back = slot(cards.length - 1, cards.length);
+    tl.addLabel("back", "up+=0.1");
+    tl.call(() => gsap.set(el, { zIndex:back.zi }), null, "back");
+    tl.to(el, { x:back.x, y:back.y, z:back.z, opacity:1, duration:1.5, ease:"elastic.out(0.62,0.92)" }, "back");
+    tl.call(() => { order = [...rest, front]; });
+  }
+  function start(){ clearInterval(timer); timer = setInterval(swap, DELAY); }
+  host.addEventListener("mouseenter", () => { tl && tl.pause(); clearInterval(timer); });
+  host.addEventListener("mouseleave", () => { tl && tl.play(); start(); });
+
+  window.__buildCardSwap = build;
+})();
+
+
+/* =====================================================
+   SCROLL FX -  reveals, contadores, manifiesto, galería
+===================================================== */
+function splitWords(el, goldWords){
+  const text = el.textContent.trim();
+  el.textContent = "";
+  el.setAttribute("aria-label", text);
+  text.split(/\s+/).forEach(w => {
+    const wrap = document.createElement("span");
+    wrap.className = "word";
+    if (goldWords.some(g => w.replace(/[.,¿?¡!]/g,"").toLowerCase() === g)) wrap.classList.add("gold-w");
+    const inner = document.createElement("span");
+    inner.textContent = w;
+    inner.setAttribute("aria-hidden","true");
+    wrap.appendChild(inner);
+    el.appendChild(wrap);
+  });
+  return $$(".word > span", el);
+}
+let manifestoTween = null;
+function rebuildManifesto(){
+  const el = $("#manifestoText");
+  if (!el) return;
+  el.textContent = t("man_text");
+  const words = splitWords(el, GOLD_WORDS[LANG]);
+  if (manifestoTween){ if (manifestoTween.scrollTrigger) manifestoTween.scrollTrigger.kill(); manifestoTween.kill(); manifestoTween = null; }
+  if (REDUCE){ words.forEach(s => s.style.opacity = 1); return; }
+  gsap.set(words, { opacity:.14 });
+  manifestoTween = gsap.to(words, {
+    opacity:1, stagger:.6, ease:"none",
+    scrollTrigger:{ trigger:el, start:"top 78%", end:"bottom 45%", scrub:.6 }
+  });
+  ScrollTrigger.refresh();
+}
+
+(function scrollFx(){
+  if (REDUCE){
+    gsap.set("[data-reveal]", { opacity:1, y:0 });
+    $$("[data-count]").forEach(el => el.textContent = el.dataset.count);
+    return;
+  }
+  // Reveals con fisica de resorte, no easing lineal (Seccion 5)
+  $$("[data-reveal]").forEach(el => {
+    if (el.closest(".hero")) return;
+    gsap.to(el, {
+      opacity:1, y:0, duration:1.2, ease:"elastic.out(0.55,0.75)",
+      scrollTrigger:{ trigger:el, start:"top 88%" }
+    });
+  });
+  // Titulos de seccion: revelado con mascara, escalonado 40ms
+  $$(".section-title").forEach(h2 => {
+    gsap.from(h2, {
+      yPercent:38, opacity:0, duration:1.05, ease:"power4.out",
+      scrollTrigger:{ trigger:h2, start:"top 90%" }
+    });
+  });
+  $$("[data-count]").forEach(el => {
+    const target = +el.dataset.count;
+    const obj = { v:0 };
+    ScrollTrigger.create({
+      trigger:el, start:"top 88%", once:true,
+      onEnter: () => gsap.to(obj, {
+        v:target, duration:2, ease:"power2.out",
+        onUpdate: () => el.textContent = Math.round(obj.v)
+      })
+    });
+  });
+  $$("[data-parallax]").forEach(img => {
+    gsap.fromTo(img, { yPercent:-10 }, {
+      yPercent:2, ease:"none",
+      scrollTrigger:{ trigger:img.parentElement, start:"top bottom", end:"bottom top", scrub:true }
+    });
+  });
+})();
+
+/* hero: zoom-out hacia un marco (Webild style) */
+(function heroZoom(){
+  if (REDUCE) return;
+  gsap.fromTo("#heroFrame", { scale:1, borderRadius:0 }, {
+    scale:.92, borderRadius:28, ease:"none",
+    scrollTrigger:{ trigger:"#inicio", start:"top top", end:"bottom 35%", scrub:true }
+  });
+})();
+
+/* proceso: tarjetas apiladas -  la anterior se hunde al ser tapada */
+(function stack(){
+  if (REDUCE) return;
+  const cards = $$("#stackZone .stack-card");
+  cards.forEach((card, i) => {
+    if (i === cards.length - 1) return;
+    gsap.to(card, {
+      scale:.95, filter:"brightness(.94)", transformOrigin:"center top", ease:"none",
+      scrollTrigger:{ trigger:cards[i+1], start:"top 85%", end:"top 30%", scrub:true }
+    });
+  });
+})();
+
+/* preview de servicios */
+(function servicePreview(){
+  if (TOUCH) return;
+  const box = $("#servicePreview"), imgs = $$("img", box);
+  const rows = $("#serviceRows");
+  let raf = null, tx = 0, ty = 0;
+  rows.addEventListener("mousemove", e => {
+    tx = e.clientX + 28; ty = e.clientY - 90;
+    if (!raf) raf = requestAnimationFrame(() => {
+      box.style.left = tx + "px"; box.style.top = ty + "px"; raf = null;
+    });
+  });
+  rows.addEventListener("mouseover", e => {
+    const row = e.target.closest(".service-row");
+    if (!row) return;
+    imgs.forEach((im,i) => im.classList.toggle("is-active", i === +row.dataset.preview));
+    box.classList.add("is-visible");
+  });
+  rows.addEventListener("mouseleave", () => box.classList.remove("is-visible"));
+})();
+
+/* =====================================================
+   MICROINTERACCIONES DIRECCIONALES
+   El relleno del boton y el subrayado entran por el lado real
+   del puntero: feedback fisico, no decoracion.
+===================================================== */
+(function directionalHover(){
+  if (TOUCH) return;
+  $$(".btn").forEach(btn => {
+    btn.addEventListener("pointerenter", e => {
+      const r = btn.getBoundingClientRect();
+      btn.style.setProperty("--fx", ((e.clientX - r.left) / r.width * 100).toFixed(1) + "%");
+      btn.style.setProperty("--fy", ((e.clientY - r.top) / r.height * 100).toFixed(1) + "%");
+    });
+  });
+  $$(".service-row").forEach(row => {
+    row.addEventListener("pointerenter", e => {
+      const r = row.getBoundingClientRect();
+      row.style.setProperty("--sx", e.clientX < r.left + r.width/2 ? "0%" : "100%");
+    });
+  });
+  const grid = $("#propsGrid");
+  if (grid) grid.addEventListener("pointermove", e => {
+    const card = e.target.closest(".prop-card");
+    if (!card) return;
+    const r = card.getBoundingClientRect();
+    card.style.setProperty("--px", ((e.clientX - r.left) / r.width * 100).toFixed(1) + "%");
+    card.style.setProperty("--py", ((e.clientY - r.top) / r.height * 100).toFixed(1) + "%");
+  });
+})();
+
+/* =====================================================
+   FONDO DE LÍNEAS FLUIDAS - "Background Paths" en SVG nativo
+   (mismo trazo que el componente React, adaptado a la paleta)
+===================================================== */
+(function flowingPaths(){
+  const COLORS = { ivory:"242,239,233", ink:"35,48,55", gold:"192,154,110" };
+  $$("[data-flow]").forEach(host => {
+    const rgb = COLORS[host.dataset.flow] || COLORS.gold;
+    let svg = '<svg viewBox="0 0 696 316" fill="none" preserveAspectRatio="xMidYMid slice" aria-hidden="true">';
+    [1, -1].forEach(pos => {
+      for (let i = 0; i < 18; i++){
+        const d = `M-${380 - i*5*pos} -${189 + i*6}C-${380 - i*5*pos} -${189 + i*6} -${312 - i*5*pos} ${216 - i*6} ${152 - i*5*pos} ${343 - i*6}C${616 - i*5*pos} ${470 - i*6} ${684 - i*5*pos} ${875 - i*6} ${684 - i*5*pos} ${875 - i*6}`;
+        const w = (0.5 + i*0.06).toFixed(2);
+        const op = (0.06 + i*0.02).toFixed(3);
+        const dur = (18 + Math.random()*12).toFixed(1);
+        const delay = (-Math.random()*20).toFixed(1);
+        svg += `<path d="${d}" stroke="rgba(${rgb},${op})" stroke-width="${w}" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1;animation:flowMove ${dur}s linear ${delay}s infinite"></path>`;
+      }
+    });
+    host.innerHTML = svg + "</svg>";
+  });
+})();
+
+/* =====================================================
+   FIRMAS DE SCROLL
+   Cada seccion entra distinto. La variedad evita el efecto
+   "todo aparece desde abajo" que hace monotona una pagina.
+===================================================== */
+(function scrollSignatures(){
+  if (REDUCE) return;
+  const inView = (trg, start = "top 85%") => ({ trigger:trg, start, once:true });
+
+  // PROPIEDADES: las fichas llegan girando desde el fondo, en perspectiva
+  ScrollTrigger.batch(".prop-card", {
+    start:"top 90%",
+    onEnter: b => gsap.from(b, {
+      opacity:0, yPercent:14, rotateX:-16, z:-140, transformPerspective:1000,
+      transformOrigin:"50% 100%", duration:1, ease:"power3.out", stagger:.07, overwrite:true
+    })
+  });
+
+  // ESTADISTICAS: cada panel gira sobre su eje vertical, como una ficha que se da vuelta
+  gsap.from(".stat", {
+    rotateY:-62, opacity:0, transformOrigin:"left center", transformPerspective:900,
+    duration:1, ease:"power3.out", stagger:.09,
+    scrollTrigger: inView(".stats-grid", "top 88%")
+  });
+
+  // SERVICIOS: las filas derivan desde lados alternos
+  $$(".service-row").forEach((row, i) => {
+    gsap.from(row, {
+      xPercent: i % 2 ? 7 : -7, opacity:0, duration:.95, ease:"power3.out",
+      scrollTrigger: inView(row, "top 90%")
+    });
+  });
+
+
+  // EQUIPO: la ficha entra en foco desde el desenfoque
+  gsap.from(".tc-wrap", {
+    opacity:0, scale:.94, filter:"blur(14px)", duration:1.15, ease:"power3.out",
+    scrollTrigger: inView(".tc-wrap", "top 86%")
+  });
+
+  // RESEÑAS: las columnas suben desfasadas
+  $$(".tst-col").forEach((c, i) => {
+    gsap.from(c, {
+      yPercent:12, opacity:0, duration:1, ease:"power3.out", delay:i * .08,
+      scrollTrigger: inView(".tst-wall", "top 84%")
+    });
+  });
+
+  // CONTACTO: los campos caen en cascada; el mapa se revela con barrido lateral
+  gsap.from(".form-field", {
+    opacity:0, x:26, duration:.7, ease:"power3.out", stagger:.07,
+    scrollTrigger: inView(".contact-form", "top 84%")
+  });
+  gsap.from(".map", {
+    clipPath:"inset(0 100% 0 0)", duration:1.2, ease:"power4.inOut",
+    scrollTrigger: inView(".map", "top 88%")
+  });
+  gsap.from(".cd-row", {
+    opacity:0, x:-20, duration:.6, ease:"power3.out", stagger:.06,
+    scrollTrigger: inView(".contact-details", "top 86%")
+  });
+
+  // PROCESO: los paneles llegan con un leve rebote
+  gsap.from(".stack-card", {
+    opacity:0, y:40, duration:.85, ease:"back.out(1.5)", stagger:.08,
+    scrollTrigger: inView("#stackZone", "top 84%")
+  });
+
+  // Deriva continua de las texturas: profundidad sin costo de layout
+  $$(".tex").forEach(tx => {
+    gsap.to(tx, {
+      backgroundPositionY:"180px", ease:"none",
+      scrollTrigger:{ trigger:tx.parentElement, start:"top bottom", end:"bottom top", scrub:true }
+    });
+  });
+})();
+
+/* =====================================================
+   LOTE 3D: parcela con relieve que gira en la seccion
+   de servicios. Refuerza "terrenos" sin ser decorativo.
+===================================================== */
+(function plot3d(){
+  const cv = $("#plot3d");
+  if (!cv || !window.THREE) return;
+  const r = new THREE.WebGLRenderer({ canvas:cv, antialias:true, alpha:true });
+  r.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+  const sc = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(38, 1, .1, 100);
+  cam.position.set(0, 7.2, 11);
+  cam.lookAt(0, 0, 0);
+
+  const g = new THREE.PlaneGeometry(11, 11, 34, 34);
+  const pos = g.attributes.position;
+  for (let i = 0; i < pos.count; i++){
+    const x = pos.getX(i), y = pos.getY(i);
+    pos.setZ(i, Math.sin(x * .55) * Math.cos(y * .5) * .85 + Math.sin(x * 1.4 + y) * .18);
+  }
+  g.computeVertexNormals();
+
+  const grp = new THREE.Group();
+  const solid = new THREE.Mesh(g, new THREE.MeshLambertMaterial({ color:0x2C3D45, flatShading:true }));
+  solid.rotation.x = -Math.PI / 2;
+  grp.add(solid);
+  const mesh = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ color:0xC09A6E, wireframe:true, transparent:true, opacity:.4 }));
+  mesh.rotation.x = -Math.PI / 2;
+  mesh.position.y = .04;
+  grp.add(mesh);
+  // Estacas del lote: marcan los vertices de la parcela
+  const stake = new THREE.CylinderGeometry(.05, .05, 1.5, 6);
+  const stakeMat = new THREE.MeshBasicMaterial({ color:0xC09A6E });
+  [[-5,-5],[5,-5],[5,5],[-5,5]].forEach(([x,z]) => {
+    const s = new THREE.Mesh(stake, stakeMat);
+    s.position.set(x, .55, z);
+    grp.add(s);
+  });
+  sc.add(grp);
+  sc.add(new THREE.HemisphereLight(0xE8DCCB, 0x1A252B, 1.15));
+  const key = new THREE.DirectionalLight(0xE8C79A, .9);
+  key.position.set(-6, 9, 5);
+  sc.add(key);
+
+  function size(){
+    const w = cv.clientWidth, hh = cv.clientHeight;
+    if (!w || !hh) return;
+    r.setSize(w, hh, false);
+    cam.aspect = w / hh;
+    cam.updateProjectionMatrix();
+  }
+  size();
+  addEventListener("resize", size, { passive:true });
+
+  let vis = false, t = 0;
+  new IntersectionObserver(([e]) => vis = e.isIntersecting, { threshold:0 }).observe(cv);
+  // El scroll inclina la parcela: se pasa de plano a vista aerea
+  let sp = 0;
+  ScrollTrigger.create({
+    trigger:"#servicios", start:"top bottom", end:"bottom top", scrub:true,
+    onUpdate: st => sp = st.progress
+  });
+  function loop(){
+    requestAnimationFrame(loop);
+    if (!vis || document.hidden) return;
+    t += .006;
+    grp.rotation.y = t;
+    grp.rotation.x = -.12 + sp * .5;
+    r.render(sc, cam);
+  }
+  if (REDUCE){ size(); r.render(sc, cam); }
+  else loop();
+})();
+
+/* =====================================================
+   SMOOTH SCROLL HERO
+   La imagen fija se abre desde un recorte central mientras
+   cuatro fotos suben en parallax, cada una a su ritmo.
+===================================================== */
+(function smoothScrollHero(){
+  const sec = $(".ssh"), center = $("#sshCenter"), cap = $("#sshCap");
+  if (!sec || !center) return;
+  const H = 1500;                                  // recorrido del efecto, igual al original
+  sec.style.height = `calc(${H}px + 100vh)`;
+
+  if (REDUCE){
+    center.style.clipPath = "polygon(0% 0%,100% 0%,100% 100%,0% 100%)";
+    center.style.backgroundSize = "cover";
+    return;
+  }
+
+  // Apertura del recorte: de un rectangulo centrado al encuadre completo
+  const st = { p:0 };
+  ScrollTrigger.create({
+    trigger:sec, start:"top top", end:`+=${H}`, scrub:true,
+    onUpdate: s => {
+      const p = s.progress;
+      const a = 25 - 25 * p;                       // 25% -> 0%
+      const b = 75 + 25 * p;                       // 75% -> 100%
+      center.style.clipPath = `polygon(${a}% ${a}%,${b}% ${a}%,${b}% ${b}%,${a}% ${b}%)`;
+      center.style.backgroundSize = (170 - 70 * Math.min(1, p * (H / (H + 500)) * 1.4)) + "%";
+      if (cap) cap.style.opacity = String(Math.max(0, 1 - p * 1.6));
+    }
+  });
+  // Desvanecido final de la imagen fija
+  gsap.to(center, {
+    opacity:0, ease:"none",
+    scrollTrigger:{ trigger:sec, start:`top+=${H} top`, end:`+=500`, scrub:true }
+  });
+
+  // Parallax individual: cada foto viaja de su valor inicial al final
+  $$("[data-ssh]").forEach(img => {
+    const [start, end] = img.dataset.ssh.split(",").map(Number);
+    gsap.fromTo(img, { y:start }, {
+      y:end, ease:"none",
+      scrollTrigger:{ trigger:img, start:`top bottom`, end:`bottom top`, scrub:true }
+    });
+    gsap.to(img, {
+      opacity:0, scale:.85, ease:"none",
+      scrollTrigger:{ trigger:img, start:"bottom 45%", end:"bottom top", scrub:true }
+    });
+  });
+})();
+
+/* =====================================================
+   CURVED LOOP: las localidades corren sobre una curva
+===================================================== */
+(function curvedLoop(){
+  const tp = $("#cvText");
+  if (!tp) return;
+  const TOWNS = ["Villa General Belgrano","La Cumbrecita","Los Reartes","Villa Berna","Santa Rosa"];
+  const unit = TOWNS.map(t => `${t}  ✦  `).join("");
+  tp.textContent = unit.repeat(4);
+  if (REDUCE) return;
+  let off = 0, len = 0, raf = 0, vis = true;
+  try { len = tp.getComputedTextLength() / 4; } catch(e){ len = 2400; }
+  new IntersectionObserver(([e]) => {
+    vis = e.isIntersecting;
+    if (vis && !raf) raf = requestAnimationFrame(step);
+  }, { threshold:0 }).observe($(".curved"));
+  function step(){
+    raf = 0;
+    if (!vis || document.hidden) return;
+    off -= .85;
+    if (off <= -len) off += len;
+    tp.setAttribute("startOffset", off);
+    raf = requestAnimationFrame(step);
+  }
+  raf = requestAnimationFrame(step);
+})();
+
+/* =====================================================
+   DOCK MOVIL: magnificacion por proximidad del dedo
+   y marcado de la seccion visible
+===================================================== */
+(function dock(){
+  const dk = $("#dock");
+  if (!dk) return;
+  const items = $$(".dock-item", dk);
+  const BASE = 46, MAG = 66, RANGE = 110;
+  if (!REDUCE){
+    dk.addEventListener("pointermove", e => {
+      items.forEach(it => {
+        const r = it.getBoundingClientRect();
+        const d = Math.abs(e.clientX - (r.left + r.width/2));
+        const k = Math.max(0, 1 - d / RANGE);
+        const s = BASE + (MAG - BASE) * k;
+        it.style.width = it.style.height = s.toFixed(1) + "px";
+      });
+    }, { passive:true });
+    dk.addEventListener("pointerleave", () => {
+      items.forEach(it => { it.style.width = it.style.height = BASE + "px"; });
+    });
+  }
+  // Seccion activa
+  const ids = items.map(a => a.getAttribute("href").slice(1));
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      const i = ids.indexOf(en.target.id);
+      if (i < 0) return;
+      items.forEach((it,k) => it.classList.toggle("is-active", k === i));
+    });
+  }, { rootMargin:"-45% 0px -45% 0px", threshold:0 });
+  ids.forEach(id => { const s = document.getElementById(id); if (s) io.observe(s); });
+})();
+
+/* =====================================================
+   CLICK SPARK: confirmacion tactil en cada click
+===================================================== */
+(function clickSpark(){
+  if (REDUCE) return;
+  const cv = $("#sparkCanvas");
+  if (!cv) return;
+  const ctx = cv.getContext("2d");
+  const DPR = Math.min(devicePixelRatio || 1, 2);
+  let sparks = [], raf = 0;
+  function size(){
+    cv.width = innerWidth * DPR; cv.height = innerHeight * DPR;
+    cv.style.width = innerWidth + "px"; cv.style.height = innerHeight + "px";
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+  }
+  size();
+  addEventListener("resize", size, { passive:true });
+  addEventListener("pointerdown", e => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    const now = performance.now();
+    for (let i = 0; i < 9; i++)
+      sparks.push({ x:e.clientX, y:e.clientY, a:(2*Math.PI*i)/9 + Math.random()*.2, t:now });
+    if (!raf) raf = requestAnimationFrame(draw);
+  }, { passive:true });
+  function draw(now){
+    raf = 0;
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    const DUR = 480, R = 26, L = 13;
+    sparks = sparks.filter(s => {
+      const p = (now - s.t) / DUR;
+      if (p >= 1) return false;
+      const e = p * (2 - p);                       // ease-out
+      const d = e * R, l = L * (1 - e);
+      ctx.strokeStyle = `rgba(192,154,110,${(1 - e).toFixed(3)})`;
+      ctx.lineWidth = 1.6; ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(s.x + Math.cos(s.a)*d, s.y + Math.sin(s.a)*d);
+      ctx.lineTo(s.x + Math.cos(s.a)*(d+l), s.y + Math.sin(s.a)*(d+l));
+      ctx.stroke();
+      return true;
+    });
+    if (sparks.length) raf = requestAnimationFrame(draw);
+  }
+})();
+
+/* =====================================================
+   INICIO
+===================================================== */
+applyLang(LANG);
+loadProps();
+addEventListener("load", () => ScrollTrigger.refresh());
+</script>
+</body>
+</html>
