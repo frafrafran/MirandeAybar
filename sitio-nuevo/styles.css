@@ -1,0 +1,967 @@
+/* ============================================================
+   Mirande Aybar — Villa General Belgrano, Calamuchita
+   Marca real (ivory / ink / gold, Bricolage + Instrument Sans)
+   sobre la arquitectura de pines y la escala tipografica MONO.
+   ============================================================ */
+
+:root{
+  /* ================= PALETA REAL, MUESTREADA DEL LOGO =================
+     isologo-principal.png tiene exactamente dos colores:
+       #2B3A42 navy   59.3% del isologo  <- color dominante de la marca
+       #A68364 bronce 40.7%
+     isotipo-crema.png -> #EFE3D2 ; isotipo-blanco.png -> #FFFFFF
+     El navy coincide con --navy:#2B3A42 comentado como "marca (logo)"
+     en index-anterior.html: dos fuentes independientes lo confirman.
+
+     Restriccion medida: el bronce da 2.78:1 sobre crema y 3.32:1 sobre
+     navy. No sirve como texto en NINGUN fondo de marca. Por eso hay tres
+     variantes: una para claro, una para oscuro, y la de marca solo para
+     rellenos y filetes.
+
+     El navy hace de papel Y tinta: 9.25:1 en los dos sentidos contra la
+     crema. Asi la marca es la estructura, no una decoracion encima.
+     ==================================================================== */
+  --navy:#2B3A42;                 /* marca, tal cual el logo */
+  --bronze:#A68364;               /* marca, tal cual el logo */
+  --cream:#EFE3D2;                /* marca, tal cual el logo */
+
+  --ink:#2B3A42;                  /* texto sobre claro y fondo oscuro, 9.25:1 */
+  --ink-2:#1F2B31;                /* panel elevado sobre oscuro */
+  --ink-3:#161E23;                /* fondo mas profundo */
+  --ivory:#EFE3D2;
+  --ivory-2:#E4D7C4;
+  --ivory-3:#D8C9B2;
+
+  --gold:#C9A87E;                 /* acento sobre OSCURO, 5.25:1 */
+  --gold-l:#7A5E40;               /* acento sobre CLARO, 4.74:1 */
+  --gold-deep:#8A6A4C;
+  --gold-graphic:#A68364;
+  --alerta:#9E3B2E;      /* error de formulario, 5.32:1 sobre --ivory */         /* bronce de marca: solo filetes y rellenos */
+  --gold-soft:rgba(166,131,100,.14);
+
+  --muted-d:#9AA6AC;              /* 6.7:1 sobre oscuro, con tinte navy */
+  --muted-l:#58646A;              /* 4.8:1 sobre crema, con tinte navy */
+  --line-d:rgba(239,227,210,.16);
+  --line-l:rgba(43,58,66,.16);
+
+  --display:"Bricolage Grotesque","Instrument Sans",system-ui,sans-serif;
+  --body:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+
+  --px:clamp(1rem,4vw,5rem);
+  --band:clamp(4rem,8vw,9rem);
+  --maxw:1320px;
+  --maxw-nav:920px;
+
+  --e-out:cubic-bezier(.22,1,.36,1);
+  --e-expo:cubic-bezier(.16,1,.3,1);
+  --e-tw:cubic-bezier(.4,0,.2,1);
+
+  --r:18px;
+
+  --t-hero:300vh; --t-thesis:200vh; --t-serv:400vh;
+}
+
+
+/* ============================================================
+   [hidden] tiene que ganar SIEMPRE.
+
+   La hoja del navegador trae [hidden]{display:none}, pero cualquier
+   declaracion de autor le gana por origen, sin importar especificidad.
+   Como .ficha, .drawer y .btn declaran display, los elementos con el
+   atributo hidden se seguian mostrando. La ficha quedaba como un panel
+   invisible a pantalla completa en z-index 1100 que se comia todos los
+   clics y el scroll de la pagina.
+   ============================================================ */
+[hidden]{display:none!important;}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;
+  /* reserva el ancho de la barra de scroll: sin esto, al abrir la vista
+     de propiedad (que bloquea el scroll) la pagina de atras salta 15px */
+  scrollbar-gutter:stable;}
+body{
+  margin:0;background:var(--ivory);color:var(--ink);
+  font-family:var(--body);font-size:1.0625rem;line-height:1.6;font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  /* clip y no hidden: hidden convierte el body en contenedor de scroll
+     y rompe todos los position:sticky de la pagina */
+  overflow-x:clip;
+}
+img,svg,canvas,video{display:block;max-width:100%;}
+/* los atributos width/height (necesarios contra el CLS) fijan tambien el
+   alto usado; sin height:auto la imagen se estira a su alto natural */
+img{height:auto;}
+h1,h2,h3,p,dl,dd,figure,blockquote,ol,ul{margin:0;}
+ol,ul{padding:0;list-style:none;}
+a{color:inherit;text-decoration:none;}
+button,input,select,textarea{font:inherit;color:inherit;}
+a,button,summary,[role="button"]{touch-action:manipulation;}
+:focus-visible{outline:2px solid var(--gold-deep);outline-offset:3px;border-radius:3px;}
+.pin--dark :focus-visible,.band--dark :focus-visible{outline-color:var(--gold);}
+
+.skip{position:fixed;top:.5rem;left:.5rem;z-index:5000;transform:translateY(-200%);
+  background:var(--ink);color:var(--ivory);padding:.6rem 1.1rem;border-radius:99px;
+  font-size:.875rem;transition:transform .3s var(--e-out);}
+.skip:focus{transform:none;}
+
+/* ---------------- escala tipografica ---------------- */
+.d1{font-family:var(--display);font-weight:500;text-wrap:balance;
+  font-size:clamp(2.6rem,1.4rem + 5.4vw,4.75rem);line-height:1.04;letter-spacing:-.035em;}
+.d2{font-family:var(--display);font-weight:500;
+  font-size:clamp(1.65rem,.9rem + 3.4vw,3.6rem);line-height:1.16;letter-spacing:-.035em;}
+.h2{font-family:var(--display);font-weight:500;text-wrap:balance;
+  font-size:clamp(1.75rem,1.2rem + 2.2vw,2.85rem);line-height:1.1;letter-spacing:-.03em;}
+.stat{font-family:var(--display);font-weight:600;
+  font-size:clamp(2.1rem,1.4rem + 2.8vw,3.2rem);line-height:1;letter-spacing:-.035em;
+  font-variant-numeric:tabular-nums;}
+.stat--word{font-size:clamp(1.3rem,1rem + 1.1vw,1.75rem);letter-spacing:-.025em;}
+.label{font-family:var(--body);font-size:.72rem;line-height:1.35;letter-spacing:.14em;
+  text-transform:uppercase;font-weight:500;}
+.note{color:var(--muted-l);max-width:62ch;}
+.num{font-variant-numeric:tabular-nums;}
+.gold{color:var(--gold);}
+.gold-l{color:var(--gold-l);}
+
+/* ---------------- layout ---------------- */
+.wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--px);}
+/* el nav fijo mide 76px: sin esto, al saltar por ancla el titulo queda tapado */
+section[id],[id]{scroll-margin-top:96px;}
+.band{padding-block:var(--band);}
+.band--tight{padding-block:clamp(2.5rem,5vw,5rem);}
+.band--ivory2{background:var(--ivory-2);}
+.band--dark{background:var(--ink);color:var(--ivory);}
+.band--dark .note{color:var(--muted-d);}
+.sec-head{display:grid;gap:.9rem;margin-bottom:clamp(2.25rem,4.5vw,3.75rem);}
+.sec-head .h2{max-width:18ch;}
+
+.grain{position:fixed;inset:0;z-index:2000;pointer-events:none;opacity:.3;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");}
+
+/* ============================ NAV ============================ */
+.nav{position:fixed;top:calc(16px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:900;
+  width:92%;max-width:var(--maxw-nav);transition:transform .35s var(--e-out);}
+.nav__pill{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:8px 8px 8px 18px;border-radius:999px;min-height:54px;
+  background:transparent;
+  transition:background-color .35s var(--e-out),box-shadow .35s var(--e-out),color .35s var(--e-out);}
+.nav.is-stuck .nav__pill{
+  background:rgba(239,227,210,.82);backdrop-filter:blur(16px) saturate(150%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 12px 36px -18px rgba(43,58,66,.5);}
+.nav.on-dark .nav__pill{color:var(--ivory);}
+.nav.on-dark.is-stuck .nav__pill{
+  background:rgba(43,58,66,.6);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 12px 36px -18px rgba(0,0,0,.7);}
+
+.mark{display:inline-flex;align-items:center;gap:.6rem;white-space:nowrap;}
+.mark__ico{width:26px;height:26px;object-fit:contain;opacity:.9;
+  filter:invert(1) brightness(.15);transition:filter .35s var(--e-out);}
+.nav.on-dark .mark__ico{filter:none;}
+.mark__txt{font-family:var(--display);font-weight:600;font-size:1.02rem;letter-spacing:-.02em;}
+.mark__txt em{font-style:normal;color:var(--gold-l);transition:color .35s var(--e-out);}
+.nav.on-dark .mark__txt em{color:var(--gold);}
+
+.nav__links{display:none;gap:1.6rem;}
+.nav__links a{font-size:.875rem;color:var(--muted-l);transition:color .3s var(--e-tw);}
+.nav.on-dark .nav__links a{color:var(--muted-d);}
+.nav__links a:hover,.nav__links a.is-on{color:inherit;}
+@media (min-width:900px){.nav__links{display:flex;}}
+
+/* ---------------- botones ---------------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:var(--body);font-size:.875rem;font-weight:500;cursor:pointer;
+  border:1px solid transparent;padding:.72rem 1.3rem;border-radius:999px;
+  transition:background .35s var(--e-out),color .35s var(--e-out),border-color .35s var(--e-out),transform .2s var(--e-out);
+  white-space:nowrap;}
+.btn:active{transform:scale(.98);}
+.btn[disabled]{opacity:.5;pointer-events:none;}
+.btn--pill{background:var(--ink);color:var(--ivory);padding:.6rem 1.2rem;}
+.btn--pill:hover{background:var(--gold-deep);color:var(--ink);}
+.nav.on-dark .btn--pill{background:var(--gold);color:var(--ink);}
+.nav.on-dark .btn--pill:hover{background:var(--ivory);}
+/* el CTA primario es navy, no dorado: 9.25:1 contra su texto crema, y
+   esquiva el boton dorado que tiene toda inmobiliaria "de lujo" */
+.btn--primary{background:var(--ink);color:var(--ivory);font-weight:600;}
+.btn--primary:hover{background:var(--ink-3);}
+.btn--ivory{background:var(--ivory);color:var(--ink);}
+.btn--ivory:hover{background:#fff;}
+.btn--ghost{border-color:currentColor;background:transparent;}
+.band--dark .btn--ghost:hover,.pin--dark .btn--ghost:hover{background:var(--ivory);color:var(--ink);border-color:var(--ivory);}
+.btn--wide{width:100%;}
+.btn.is-pending{pointer-events:none;position:relative;overflow:hidden;}
+.btn.is-pending::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(100deg,transparent 20%,rgba(255,255,255,.35) 50%,transparent 80%);
+  background-size:220% 100%;animation:shimmer 1.05s linear infinite;}
+@keyframes shimmer{from{background-position:120% 0}to{background-position:-120% 0}}
+
+.burger{width:42px;height:42px;border:0;background:none;border-radius:999px;
+  display:grid;place-content:center;gap:5px;cursor:pointer;}
+.burger span{display:block;width:17px;height:1.5px;background:currentColor;transition:transform .35s var(--e-out);}
+.burger[aria-expanded="true"] span:first-child{transform:translateY(3.25px) rotate(45deg);}
+.burger[aria-expanded="true"] span:last-child{transform:translateY(-3.25px) rotate(-45deg);}
+@media (min-width:900px){.burger{display:none;}}
+
+.drawer{position:fixed;inset:0;z-index:890;background:var(--ink);color:var(--ivory);
+  overscroll-behavior:contain;padding-top:env(safe-area-inset-top);
+  display:grid;align-content:center;gap:.2rem;padding:var(--px);animation:fade .35s var(--e-out) both;}
+.drawer a{font-family:var(--display);font-size:clamp(2rem,9vw,3rem);font-weight:500;
+  letter-spacing:-.04em;padding-block:.45rem;border-bottom:1px solid var(--line-d);
+  animation:up .55s var(--e-out) both;}
+.drawer a:nth-child(1){animation-delay:.04s}.drawer a:nth-child(2){animation-delay:.09s}
+.drawer a:nth-child(3){animation-delay:.14s}.drawer a:nth-child(4){animation-delay:.19s}
+.drawer a:nth-child(5){animation-delay:.24s;color:var(--gold);}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@media (min-width:900px){.drawer{display:none!important;}}
+
+/* ============================ PINES ============================ */
+.track{position:relative;}
+.track--hero{height:var(--t-hero);}
+.track--thesis{height:var(--t-thesis);}
+.track--serv{height:var(--t-serv);}
+.pin{position:sticky;top:0;height:100dvh;overflow:hidden;display:flex;flex-direction:column;}
+.pin--center{align-items:center;justify-content:center;}
+.pin--dark{background:var(--ink);color:var(--ivory);}
+.pin--ivory{background:var(--ivory);}
+.pin--dark .note{color:var(--muted-d);}
+
+/* ============================ HERO ============================ */
+.track--hero .pin{background:linear-gradient(180deg,#101A22,#2A2A28 55%,#161E23);}
+#gl{position:absolute;inset:0;width:100%;height:100%;}
+.pin__fallback{position:absolute;inset:0;}
+.pin__fallback img{width:100%;height:100%;object-fit:cover;}
+.pin__scrim{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to top,rgba(43,58,66,.9),rgba(43,58,66,.1) 46%,rgba(43,58,66,.6));}
+
+.hero__body{position:relative;z-index:2;margin:auto 0 0;width:100%;max-width:var(--maxw);
+  margin-inline:auto;padding:0 var(--px) clamp(1.75rem,4vh,3rem);color:var(--ivory);
+  display:grid;gap:1.15rem;justify-items:start;will-change:transform,opacity;}
+.hero__eyebrow{color:var(--gold);}
+.hero__lede{font-size:1.0625rem;color:rgba(239,227,210,.88);max-width:44ch;}
+.hero__cta{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:.4rem;}
+
+.hero__foot{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin-inline:auto;
+  padding:1.1rem var(--px) clamp(1.25rem,3.5vh,2rem);color:var(--ivory);
+  border-top:1px solid var(--line-d);display:flex;flex-wrap:wrap;align-items:flex-end;gap:1rem 2rem;}
+.hero__stats{flex:1 1 22rem;display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem 1.5rem;}
+@media (min-width:760px){.hero__stats{grid-template-columns:repeat(4,1fr);}}
+.hero__stats dt{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted-d);margin-bottom:.25rem;}
+.hero__stats dd{font-family:var(--display);font-weight:600;font-size:1.12rem;letter-spacing:-.02em;}
+.hero__sun{text-align:right;}
+.hero__sun .label{color:var(--muted-d);margin-bottom:.2rem;}
+.hero__sunval{font-family:var(--display);font-weight:600;font-size:1.12rem;color:var(--gold);}
+.hero__prog{flex:1 1 100%;height:1px;background:var(--line-d);}
+.hero__prog i{display:block;height:100%;width:100%;background:var(--gold-graphic);transform:scaleX(0);transform-origin:left;}
+
+/* ============================ MANIFIESTO ============================ */
+.thesis__frame{position:absolute;width:min(64vw,660px);aspect-ratio:4/3;
+  border:1px solid var(--line-l);will-change:transform;}
+.thesis__in{position:relative;z-index:2;width:100%;max-width:1000px;margin-inline:auto;
+  padding-inline:var(--px);display:grid;gap:1.6rem;justify-items:center;text-align:center;}
+.words{max-width:20ch;}
+.words span{display:inline-block;opacity:0;filter:blur(12px);
+  transition:opacity .55s var(--e-out),filter .55s var(--e-out);will-change:opacity,filter;}
+.words span.is-lit{opacity:1;filter:blur(0);}
+.thesis__by{color:var(--muted-l);}
+
+/* ============================ BENTO ============================ */
+.bento{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-auto-rows:172px;gap:12px;grid-auto-flow:dense;}
+@media (min-width:768px){.bento{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:216px;gap:16px;}}
+.tile{position:relative;overflow:hidden;border-radius:var(--r);background:var(--ivory-2);
+  padding:clamp(.9rem,1.6vw,1.35rem);display:flex;flex-direction:column;
+  transition:transform .5s var(--e-out),box-shadow .5s var(--e-out);}
+.tile--2x2{grid-column:span 2;grid-row:span 2;}
+.tile--2x1{grid-column:span 2;}
+.tile--photo{padding:0;justify-content:flex-end;color:var(--ivory);background:var(--ink);}
+.tile--photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transition:transform 1.1s var(--e-out);}
+.tile--photo:hover img{transform:scale(1.06);}
+.tile__grad{position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(43,58,66,.95) 4%,rgba(43,58,66,.55) 38%,rgba(43,58,66,.08) 72%);}
+.tile__body{position:relative;z-index:2;padding:clamp(.95rem,1.7vw,1.4rem);display:grid;gap:.3rem;}
+.tile__tag{color:var(--gold);}
+.tile__body h3{font-family:var(--display);font-weight:500;font-size:clamp(1.05rem,.9rem + .5vw,1.4rem);
+  letter-spacing:-.025em;line-height:1.15;margin-top:.15rem;}
+.tile__loc{font-size:.875rem;color:rgba(239,227,210,.82);}
+.tile__specs{display:flex;flex-wrap:wrap;gap:.3rem .5rem;margin-top:.35rem;}
+.tile__specs li{font-size:.7rem;letter-spacing:.04em;padding:.2rem .5rem;border-radius:99px;
+  border:1px solid rgba(239,227,210,.3);color:rgba(239,227,210,.92);}
+.tile__price{font-family:var(--display);font-weight:600;font-size:1.15rem;color:var(--gold);margin-top:.5rem;}
+.tile__per{font-family:var(--body);font-weight:400;font-size:.8rem;color:rgba(239,227,210,.75);}
+.tile__flag{position:absolute;top:.9rem;left:.9rem;z-index:3;padding:.28rem .6rem;border-radius:99px;
+  background:var(--gold);color:var(--ink);font-size:.62rem;}
+.tile__flag--new{background:var(--ivory);}
+.tile--stat{justify-content:space-between;background:var(--ink-2);color:var(--ivory);}
+.tile--stat .label{color:var(--muted-d);}
+.tile--stat .stat{color:var(--gold);}
+.tile--cta{background:var(--gold);color:var(--ink);justify-content:space-between;gap:.8rem;}
+.tile--cta .label{color:var(--ink);}
+.cta__copy{font-family:var(--display);font-weight:500;font-size:clamp(1.1rem,.95rem + .7vw,1.5rem);
+  line-height:1.22;letter-spacing:-.025em;}
+.tile--cta .btn{align-self:start;}
+
+/* ============ EL VALLE SE ABRE (media que se expande con el scroll) ============
+   Port del ScrollExpandMedia. La ventana crece con clip-path en vez de animar
+   width/height: no toca el layout y lo compone la GPU. Ademas el video queda
+   quieto y lo que se abre es el encuadre, en vez de reencuadrarse a cada cuadro. */
+.track--reveal{height:260vh;}
+.track--reveal .pin{background:var(--ink);}
+
+.rv__bg{position:absolute;inset:0;z-index:0;will-change:opacity;}
+.rv__bg img{width:100%;height:100%;object-fit:cover;}
+.rv__bgtint{position:absolute;inset:0;background:rgba(43,58,66,.42);}
+
+.rv__media{position:absolute;inset:0;z-index:1;
+  clip-path:inset(50% 50% round 18px);will-change:clip-path;}
+.rv__media video{width:100%;height:100%;object-fit:cover;
+  transform:scale(1.06);will-change:transform;}
+.rv__tint{position:absolute;inset:0;background:rgba(43,58,66,.45);}
+
+.rv__head{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:1.5rem;
+  padding-inline:var(--px);pointer-events:none;text-align:center;}
+.rv__title{display:flex;flex-direction:column;align-items:center;gap:.1em;
+  /* el texto se invierte contra el video: se lee sobre cielo claro y sobre sierra oscura */
+  mix-blend-mode:difference;}
+.rv__t{display:block;font-family:var(--display);font-weight:600;color:var(--ivory);
+  font-size:clamp(2.4rem,1.1rem + 6vw,6rem);line-height:.98;letter-spacing:-.045em;
+  will-change:transform;}
+.rv__meta{display:grid;gap:.45rem;color:var(--ivory);will-change:opacity;}
+.rv__meta .label{color:rgba(239,227,210,.82);}
+@keyframes cue{0%,100%{transform:scaleX(.25)}50%{transform:scaleX(1)}}
+
+.rv__after{display:grid;gap:clamp(1.5rem,4vw,3.5rem);}
+@media (min-width:900px){.rv__after{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(2.5rem,6vw,6rem);}}
+.rv__aftercopy{display:grid;gap:1.1rem;}
+
+/* ============================ SERVICIOS 3D ============================ */
+.serv__kicker{position:absolute;top:clamp(5rem,12vh,7rem);left:0;right:0;text-align:center;
+  color:var(--muted-d);padding-inline:var(--px);font-size:.72rem;}
+.stage{position:relative;width:100%;max-width:1040px;margin-inline:auto;padding-inline:var(--px);
+  height:clamp(330px,52vh,460px);perspective:1150px;transform-style:preserve-3d;}
+.face{position:absolute;inset:0;padding-inline:var(--px);display:flex;flex-direction:column;
+  justify-content:center;gap:.85rem;transform-origin:center center;backface-visibility:hidden;
+  will-change:transform,opacity;}
+.face__n{font-family:var(--body);font-size:.78rem;letter-spacing:.14em;color:var(--gold);}
+.face__t{font-family:var(--display);font-weight:600;
+  font-size:clamp(2.4rem,1.1rem + 6.2vw,6.2rem);line-height:.98;letter-spacing:-.045em;}
+.face__p{font-size:clamp(1rem,.92rem + .45vw,1.35rem);line-height:1.42;
+  color:rgba(239,227,210,.82);max-width:44ch;}
+.serv__rail{position:absolute;bottom:clamp(2.5rem,7vh,4rem);left:50%;transform:translateX(-50%);
+  display:flex;gap:10px;}
+.serv__rail i{display:block;width:48px;height:2px;background:rgba(239,227,210,.22);position:relative;overflow:hidden;}
+.serv__rail i::after{content:'';position:absolute;inset:0;background:var(--gold-graphic);
+  transform:scaleX(var(--p,0));transform-origin:left;}
+
+/* ============================ PROCESO ============================ */
+.steps{display:grid;}
+.step{display:grid;gap:.5rem 2rem;padding-block:clamp(1.5rem,3vw,2.4rem);
+  border-top:1px solid var(--line-l);position:relative;grid-template-columns:1fr;}
+.step:last-child{border-bottom:1px solid var(--line-l);}
+@media (min-width:820px){.step{grid-template-columns:6rem minmax(0,1fr);align-items:start;gap:2.5rem;}}
+.step__n{font-family:var(--display);font-weight:600;font-size:1.05rem;color:var(--gold-l);padding-top:.2rem;}
+.step h3{font-family:var(--display);font-weight:500;
+  font-size:clamp(1.3rem,1.1rem + .8vw,1.85rem);letter-spacing:-.03em;line-height:1.1;margin-bottom:.35rem;}
+.step::after{content:'';position:absolute;left:0;top:-1px;height:1px;width:100%;background:var(--gold-deep);
+  transform:scaleX(0);transform-origin:left;transition:transform .8s var(--e-out);}
+.step:hover::after{transform:scaleX(1);}
+
+/* ==================== EL VALLE — cinta infinita (port de InfiniteSlider) ====================
+   El original mide el track con useMeasure y anima una motion value con
+   framer-motion. Aca es una animacion CSS sobre transform: la compone la
+   GPU, no cuesta JS por cuadro, y se puede pausar con animation-play-state.
+
+   Detalle que importa: el gap va como margin DENTRO del set, no como gap
+   del flex. Asi el track mide exactamente dos sets y translateX(-50%) cae
+   justo en la costura; con gap del flex quedaria un arrastre de medio hueco
+   por vuelta.
+
+   Tres cosas que el componente no trae y necesita:
+   1. Pausa. WCAG 2.2.2 exige poder detener cualquier movimiento que dure
+      mas de 5 s. Se agrega boton, pausa al pasar el mouse y al enfocar.
+   2. Respeto por prefers-reduced-motion.
+   3. Si el JS no corre, la cinta queda scrolleable a mano en vez de
+      recortada e inalcanzable.
+   ========================================================================================= */
+.valle{overflow:hidden;}
+
+.slider{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;}
+.slider::-webkit-scrollbar{display:none;}
+.js .slider{overflow:hidden;}
+.slider + .slider{margin-top:clamp(.75rem,1.4vw,1rem);}
+
+.slider__track{display:flex;width:max-content;}
+.js .slider__track{animation:cinta var(--dur,60s) linear infinite;will-change:transform;}
+.slider--rev .slider__track{animation-direction:reverse;}
+@keyframes cinta{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+
+/* pausa: por fila al apuntarla o enfocarla, y global desde el boton */
+.slider:hover .slider__track,
+.slider:focus-within .slider__track,
+.valle.is-paused .slider__track{animation-play-state:paused;}
+
+.slider__set{display:flex;margin:0;padding:0;list-style:none;}
+
+.place{position:relative;flex:0 0 auto;
+  width:clamp(186px,23vw,248px);aspect-ratio:4/5;
+  margin-right:clamp(.75rem,1.4vw,1rem);
+  border-radius:var(--r);overflow:hidden;background:var(--ink-2);}
+.place img{width:100%;height:100%;object-fit:cover;
+  transition:transform 1.1s var(--e-out);}
+.place:hover img{transform:scale(1.06);}
+.place__cap{position:absolute;inset:auto 0 0 0;padding:1rem;z-index:2;
+  background:linear-gradient(to top,rgba(11,14,16,.94),rgba(11,14,16,.45) 55%,transparent);}
+.place__cap h3{font-family:var(--display);font-weight:500;font-size:1.08rem;
+  letter-spacing:-.025em;color:var(--ivory);}
+.place__cap .label{color:var(--gold);margin-top:.15rem;}
+
+.valle__foot{display:flex;justify-content:center;
+  margin-top:clamp(1.25rem,2.5vw,2rem);}
+.rbtn--wide{width:auto;height:44px;padding:0 1.1rem;gap:.55rem;
+  display:inline-flex;align-items:center;border-radius:999px;
+  font-size:.78rem;letter-spacing:.06em;color:var(--muted-d);}
+.rbtn--wide svg{width:16px;height:16px;fill:none;stroke:currentColor;
+  stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.rbtn--wide:hover{color:var(--ink);}
+.rbtn--wide .ico-play{display:none;}
+.rbtn--wide[aria-pressed="true"] .ico-pausa{display:none;}
+.rbtn--wide[aria-pressed="true"] .ico-play{display:block;fill:currentColor;stroke:none;}
+
+/* ============================ EQUIPO (port de TeamSection) ============================
+   Fiel al original en estructura y movimiento: rejilla de fondo al 5%,
+   encabezado partido, fila de redes, tarjetas con onda que sube desde
+   abajo, retrato circular con borde que aparece, y enlaces que se revelan.
+
+   Tres cambios deliberados:
+   1. Dos columnas, no tres. Son dos socios; una rejilla de 3 dejaria una
+      celda vacia.
+   2. Los tintes por indice del original usan --destructive y --warning
+      (rojo y amarillo de sistema). Aca son lavados de bronce y navy.
+   3. Los enlaces del original solo aparecen en hover: invisibles para
+      teclado y para tactil. Se agrega :focus-within y se muestran siempre
+      donde no hay hover real.
+   ================================================================================= */
+.team{position:relative;overflow:hidden;}
+.team__grid-bg{position:absolute;inset:0;z-index:0;opacity:.05;pointer-events:none;
+  background-image:linear-gradient(to right,var(--ink) 1px,transparent 1px),
+                   linear-gradient(to bottom,var(--ink) 1px,transparent 1px);
+  background-size:20px 20px;}
+.team__in{position:relative;z-index:1;}
+
+.team__head{display:grid;gap:2rem;align-items:start;
+  margin-bottom:clamp(2rem,4vw,3rem);}
+@media (min-width:820px){.team__head{grid-template-columns:minmax(0,1.5fr) auto;gap:3rem;}}
+.team__headline{display:grid;gap:.6rem;}
+.team__our{font-family:var(--body);font-size:clamp(.9rem,.8rem + .5vw,1.15rem);
+  font-weight:500;letter-spacing:.42em;color:var(--gold-l);}
+.team__aside{display:flex;flex-direction:column;gap:1.1rem;align-items:flex-start;}
+@media (min-width:820px){.team__aside{align-items:flex-end;}}
+.team__logo{width:132px;}
+
+.team__social{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;
+  padding-block:1.25rem;margin-bottom:clamp(2rem,4vw,3rem);
+  border-top:1px solid var(--line-l);border-bottom:1px solid var(--line-l);}
+.team__social a{display:grid;place-content:center;width:44px;height:44px;
+  color:var(--muted-l);border-radius:999px;
+  transition:color .3s var(--e-tw),background-color .3s var(--e-tw);}
+.team__social a svg{width:22px;height:22px;}
+.team__social a:hover{color:var(--ink);background:var(--ivory-2);}
+.team__site{color:var(--muted-l);margin-left:auto;}
+
+.team__members{display:grid;gap:clamp(1rem,2.5vw,2rem);}
+@media (min-width:760px){.team__members{grid-template-columns:repeat(2,minmax(0,1fr));}}
+
+.tm{position:relative;overflow:hidden;isolation:isolate;
+  /* el tinte baja el fondo efectivo de la crema (239,227,210) a ~(227,212,192),
+     y ahi los tokens de pagina caen a 4.1. Se redefinen dentro de la tarjeta
+     en vez de oscurecer el sitio entero. */
+  --muted-l:#4E595E;
+  --gold-l:#6B5133;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:clamp(1.5rem,3vw,2.25rem);border-radius:var(--r);
+  background:var(--tint);
+  transition:transform .3s var(--e-out),box-shadow .3s var(--e-out);}
+.tm:hover{transform:scale(1.02);box-shadow:0 30px 60px -32px rgba(43,58,66,.5);}
+
+/* la onda del original: sube desde abajo, con retardo por tarjeta */
+.tm__wave{position:absolute;left:0;right:0;bottom:0;height:50%;z-index:-1;
+  border-radius:50% 50% 0 0 / 100% 100% 0 0;
+  background:linear-gradient(to top,rgba(43,58,66,.18),transparent);
+  transform:scaleY(0);transform-origin:bottom;
+  transition:transform .5s var(--e-out);
+  transition-delay:calc(var(--d,0) * 50ms);}
+.tm:hover .tm__wave,.tm:focus-within .tm__wave{transform:scaleY(1);}
+
+.tm__ph{width:144px;height:144px;border-radius:999px;overflow:hidden;
+  border:4px solid transparent;background:var(--ivory-2);
+  transition:border-color .5s var(--e-out),transform .5s var(--e-out);
+  transition-delay:calc(var(--d,0) * 100ms);}
+.tm:hover .tm__ph,.tm:focus-within .tm__ph{border-color:var(--ink);transform:scale(1.05);}
+.tm__ph img{width:100%;height:100%;object-fit:cover;object-position:center top;
+  filter:grayscale(1) contrast(1.03);
+  transition:transform .5s var(--e-out),filter .5s var(--e-out);}
+.tm:hover .tm__ph img{transform:scale(1.1);filter:grayscale(0);}
+
+.tm__name{font-family:var(--display);font-weight:600;margin-top:1.1rem;
+  font-size:clamp(1.25rem,1.05rem + .7vw,1.6rem);letter-spacing:-.03em;}
+.tm__role{color:var(--gold-l);margin-top:.3rem;}
+.tm__bio{color:var(--muted-l);font-size:.95rem;line-height:1.55;
+  margin-top:.9rem;max-width:38ch;}
+
+.tm__links{display:flex;gap:.5rem;margin-top:1.2rem;}
+.tm__links a{display:grid;place-content:center;width:44px;height:44px;
+  border-radius:999px;color:var(--muted-l);border:1px solid var(--line-l);
+  transition:color .3s var(--e-tw),background-color .3s var(--e-tw),border-color .3s var(--e-tw);}
+.tm__links a svg{width:19px;height:19px;}
+.tm__links a:hover{background:var(--ink);color:var(--ivory);border-color:var(--ink);}
+/* solo se esconden donde el hover existe de verdad; en tactil quedan visibles */
+@media (hover:hover) and (pointer:fine){
+  .tm__links{opacity:0;transition:opacity .3s var(--e-tw);}
+  .tm:hover .tm__links,.tm:focus-within .tm__links{opacity:1;}
+}
+
+/* ============================ OPINIONES (stagger) ============================
+   Port del StaggerTestimonials. Geometria identica al original:
+   tarjeta 365px (290 en movil), desplazamiento cardSize/1.5 por posicion,
+   chaflan de 50px arriba a la derecha y sombra dura de 8px.
+   Los tokens shadcn se mapean a la marca:
+     --primary -> gold   --card -> ivory   --border -> ink
+     --muted -> ivory-2  --background -> ivory
+   ============================================================================ */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+
+.stg{position:relative;width:100%;height:600px;overflow:hidden;
+  background:rgba(228,215,196,.34);}
+.stg__deck{position:absolute;inset:0;}
+
+.stg__card{
+  position:absolute;left:50%;top:50%;
+  cursor:pointer;border:2px solid var(--ink);padding:2rem;
+  background:var(--ivory);color:var(--ink);
+  transition:transform .5s ease-in-out,background-color .5s ease-in-out,
+              color .5s ease-in-out,border-color .5s ease-in-out,box-shadow .5s ease-in-out;
+  /* solo se corta la esquina superior derecha: los puntos de abajo del
+     poligono original son colineales y no recortan nada */
+  clip-path:polygon(50px 0%, calc(100% - 50px) 0%, 100% 50px, 100% 100%,
+                    calc(100% - 50px) 100%, 50px 100%, 0 100%, 0 0);
+  will-change:transform;
+}
+.stg__card:hover{border-color:var(--gold-deep);}
+.stg__card.is-center{
+  z-index:10;background:var(--gold);color:var(--ink);border-color:var(--gold);
+  box-shadow:0 8px 0 4px var(--ink);
+}
+.stg__card.is-center:hover{border-color:var(--gold);}
+.stg__card:focus-visible{outline:2px solid var(--ink);outline-offset:4px;}
+
+/* el borde del chaflan, que el clip-path elimina */
+.stg__edge{position:absolute;display:block;right:-2px;top:48px;
+  width:70.7107px;height:2px;background:var(--ink);
+  transform-origin:top right;transform:rotate(45deg);}
+.stg__card.is-center .stg__edge{background:var(--ink);}
+
+/* mismo hueco 48x56 y misma sombra dura que el <img> original.
+   Va con iniciales de marca y no con fotos de personas reales de un
+   servicio de avatares: son clientes inventados, no caras ajenas. */
+.stg__ph{width:48px;height:56px;margin-bottom:1rem;flex:none;
+  display:grid;place-content:center;
+  background:var(--ink);color:var(--gold);
+  font-family:var(--display);font-weight:600;font-size:1rem;letter-spacing:.02em;
+  /* como el original: la sombra es del color del fondo de pagina, asi que
+     desaparece en las tarjetas claras y solo se ve sobre la del centro */
+  box-shadow:3px 3px 0 var(--ivory);}
+
+.stg__quote{font-family:var(--display);font-weight:500;
+  font-size:1rem;line-height:1.3;letter-spacing:-.02em;}
+@media (min-width:640px){.stg__quote{font-size:1.25rem;}}
+.stg__by{position:absolute;bottom:2rem;left:2rem;right:2rem;margin-top:.5rem;
+  font-size:.875rem;font-style:italic;color:var(--muted-l);}
+.stg__card.is-center .stg__by{color:var(--ink);}
+
+.stg__nav{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);
+  display:flex;gap:.5rem;z-index:20;}
+.stg__btn{width:56px;height:56px;display:grid;place-content:center;cursor:pointer;
+  background:var(--ivory);border:2px solid var(--ink);color:var(--ink);
+  transition:background .2s var(--e-tw),color .2s var(--e-tw);}
+.stg__btn svg{width:26px;height:26px;}
+.stg__btn:hover{background:var(--gold);color:var(--ink);}
+.stg__btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
+
+/* ============================ CONTACTO ============================ */
+.enq{display:grid;gap:clamp(2.5rem,5vw,4.5rem);}
+@media (min-width:960px){.enq{grid-template-columns:minmax(0,.95fr) minmax(0,1fr);gap:clamp(3rem,6vw,6rem);align-items:start;}}
+.enq__copy{display:grid;gap:1.1rem;align-content:start;}
+.enq__data{display:grid;gap:1rem;margin-top:.6rem;}
+.enq__data li{display:grid;gap:.2rem;padding-bottom:.9rem;border-bottom:1px solid var(--line-d);}
+.enq__data .label{color:var(--gold);}
+.enq__data a{transition:color .3s var(--e-tw);}
+.enq__data a:hover{color:var(--gold);}
+
+.form{display:grid;gap:1.1rem;background:var(--ink-2);border:1px solid var(--line-d);
+  border-radius:var(--r);padding:clamp(1.35rem,3vw,2.25rem);}
+.field{display:grid;gap:.4rem;}
+.field label{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-d);
+  display:flex;align-items:center;gap:.5rem;}
+.fnum{color:var(--gold);font-size:.66rem;}
+.req{color:var(--gold);}
+.opt{text-transform:none;letter-spacing:normal;color:var(--muted-d);}
+.field input,.field textarea{width:100%;background:transparent;border:0;
+  border-bottom:1px solid var(--line-d);padding:.62rem 0;border-radius:0;
+  font-size:1.0625rem;color:var(--ivory);transition:border-color .3s var(--e-tw);}
+.field textarea{resize:vertical;min-height:4.4rem;line-height:1.5;}
+.field input::placeholder,.field textarea::placeholder{color:#7C8A91;}
+.field input:focus,.field textarea:focus{outline:0;border-bottom-color:var(--gold);}
+.field.is-bad input,.field.is-bad textarea{border-bottom-color:#E9927F;}
+.err{font-size:.75rem;color:#F0A895;}
+.help{font-size:.75rem;color:var(--muted-d);text-align:center;}
+/* el mismo texto de ayuda sobre fondo claro necesita otro tono:
+   --muted-d esta calculado contra el oscuro y aca daba 1.97:1 */
+.busc .help{color:var(--muted-l);text-align:left;}
+.form__actions{display:grid;gap:.7rem;margin-top:.3rem;}
+@media (min-width:520px){.form__actions{grid-template-columns:1fr 1fr;}}
+
+/* ============================ FOOTER ============================ */
+.sheet{background:var(--ink);color:var(--ivory);padding-block:clamp(3rem,6vw,5rem) 1.5rem;}
+.sheet__top{display:grid;gap:2.5rem;}
+@media (min-width:860px){.sheet__top{grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);gap:clamp(2.5rem,5vw,5rem);}}
+.sheet__logo{width:170px;margin-bottom:1rem;}
+.sheet .note{color:var(--muted-d);}
+.sheet__cols{display:grid;gap:2rem 2.5rem;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));}
+.sheet__cols>div:last-child{grid-column:span 2;}
+@media (min-width:520px){.sheet__cols>div:last-child{grid-column:auto;}}
+.sheet__cols>div{display:grid;gap:.45rem;align-content:start;font-size:.9rem;}
+.sheet__cols .label{color:var(--gold);margin-bottom:.3rem;}
+.sheet__cols a{color:var(--muted-d);transition:color .3s var(--e-tw);
+  overflow-wrap:anywhere;}
+.sheet__cols a:hover{color:var(--ivory);}
+.sheet__foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem 1.5rem;
+  margin-top:clamp(2.5rem,5vw,4rem);padding-top:1.25rem;border-top:1px solid var(--line-d);color:var(--muted-d);}
+
+/* WhatsApp flotante */
+.wa{position:fixed;
+  right:calc(clamp(1rem,3vw,1.75rem) + env(safe-area-inset-right));
+  bottom:calc(clamp(1rem,3vw,1.75rem) + env(safe-area-inset-bottom));z-index:880;
+  width:54px;height:54px;border-radius:999px;background:var(--gold);color:var(--ink);
+  display:grid;place-content:center;box-shadow:0 12px 30px -12px rgba(43,58,66,.7);
+  transition:transform .35s var(--e-out),background .35s var(--e-out);}
+.wa svg{width:26px;height:26px;fill:currentColor;}
+.wa:hover{transform:scale(1.07);background:var(--ivory);}
+
+
+/* ==================== PROPIEDADES DESDE LA BASE ==================== */
+.tile--prop{cursor:pointer;}
+.tile--prop:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+
+/* sin foto no se pone una imagen generica del valle: daria a entender que es
+   la foto de ESA propiedad. Panel tipografico, honesto y legible. */
+.tile__nofoto{position:absolute;inset:0;display:grid;place-content:center;
+  gap:.5rem;text-align:center;padding:1.5rem;background:var(--ink-2);
+  background-image:linear-gradient(135deg,rgba(239,227,210,.05) 25%,transparent 25%,
+    transparent 50%,rgba(239,227,210,.05) 50%,rgba(239,227,210,.05) 75%,transparent 75%);
+  background-size:14px 14px;}
+.tile__nofoto-tipo{font-family:var(--display);font-weight:600;
+  font-size:clamp(1.1rem,1rem + .6vw,1.5rem);letter-spacing:-.02em;color:var(--gold);}
+.tile__nofoto-nota{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted-d);}
+
+.tile--skel{background:var(--ivory-2);position:relative;overflow:hidden;}
+.tile--skel::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(100deg,transparent 20%,rgba(255,255,255,.55) 50%,transparent 80%);
+  background-size:220% 100%;animation:shimmer 1.3s linear infinite;}
+
+.bento__mas{display:flex;justify-content:center;margin-top:clamp(1.25rem,2.5vw,2rem);}
+
+
+/* ==================== BUSCADOR Y FILTROS (port de ActionSearchBar) ====================
+   Del original se conserva la mecanica: input con debounce, icono que cambia
+   de lupa a flecha cuando hay texto, lista de sugerencias que entra con los
+   items escalonados, y pie con la ayuda de teclado.
+
+   Cambios: el original filtra sobre una lista fija en memoria; aca los datos
+   y las opciones de filtro salen de Supabase. Y el input lleva <label> visible,
+   no placeholder solo.
+   ==================================================================================== */
+.busc{display:grid;gap:1.25rem;margin-bottom:clamp(1.5rem,3vw,2.5rem);}
+
+.busc__campo{position:relative;max-width:560px;display:grid;gap:.35rem;}
+.busc__lbl{color:var(--muted-l);}
+.busc__input{position:relative;}
+.busc__input input{width:100%;height:48px;padding:0 5.5rem 0 1rem;
+  background:var(--ivory-2);border:1px solid var(--line-l);border-radius:999px;
+  font-size:1rem;color:var(--ink);
+  transition:border-color .25s var(--e-tw),box-shadow .25s var(--e-tw);}
+.busc__input input::placeholder{color:var(--muted-l);opacity:.85;}
+.busc__input input::-webkit-search-cancel-button{display:none;}
+.busc__input input:focus{outline:0;border-color:var(--ink);
+  box-shadow:0 0 0 3px rgba(43,58,66,.14);}
+
+.busc__ico{position:absolute;right:1rem;top:50%;transform:translateY(-50%);
+  width:20px;height:20px;pointer-events:none;color:var(--muted-l);}
+.busc__ico svg{position:absolute;inset:0;width:20px;height:20px;
+  fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  transition:opacity .2s var(--e-out),transform .2s var(--e-out);}
+.ico-flecha{opacity:0;transform:translateY(8px);}
+.busc.has-texto .ico-lupa{opacity:0;transform:translateY(-8px);}
+.busc.has-texto .ico-flecha{opacity:1;transform:none;color:var(--ink);}
+
+.busc__limpiar{min-width:44px;min-height:44px;
+  position:absolute;right:2.75rem;top:50%;transform:translateY(-50%);
+  width:32px;height:32px;display:grid;place-content:center;cursor:pointer;
+  border:0;background:none;border-radius:999px;color:var(--muted-l);
+  transition:background-color .2s var(--e-tw),color .2s var(--e-tw);}
+.busc__limpiar svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;}
+.busc__limpiar:hover{background:var(--ivory-3);color:var(--ink);}
+
+/* --- sugerencias --- */
+.busc__sug{position:absolute;left:0;right:0;top:calc(100% - 1.1rem);z-index:20;
+  margin-top:.5rem;padding:.35rem;list-style:none;
+  background:var(--ivory);border:1px solid var(--line-l);border-radius:14px;
+  box-shadow:0 22px 44px -26px rgba(43,58,66,.5);
+  max-height:min(58vh,420px);overflow-y:auto;overscroll-behavior:contain;}
+.busc__sug li{display:flex;align-items:center;gap:.7rem;
+  padding:.6rem .7rem;border-radius:10px;cursor:pointer;
+  opacity:0;transform:translateY(14px);
+  animation:sugEntra .34s var(--e-out) forwards;
+  animation-delay:calc(var(--i,0) * 45ms);}
+@keyframes sugEntra{to{opacity:1;transform:none;}}
+.busc__sug li:hover,.busc__sug li[aria-selected="true"]{background:var(--ivory-2);}
+.busc__sug .sug__ico{flex:none;width:34px;height:34px;border-radius:9px;
+  display:grid;place-content:center;background:var(--ink);color:var(--gold);}
+.busc__sug .sug__ico svg{width:17px;height:17px;fill:none;stroke:currentColor;
+  stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.sug__txt{min-width:0;flex:1;display:grid;gap:.1rem;}
+.sug__tit{font-size:.94rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sug__sub{font-size:.76rem;color:var(--muted-l);}
+.sug__precio{flex:none;font-size:.86rem;font-weight:600;font-variant-numeric:tabular-nums;}
+.busc__sug .sug__pie{display:flex;justify-content:space-between;gap:1rem;
+  padding:.6rem .7rem .3rem;margin-top:.25rem;border-top:1px solid var(--line-l);
+  font-size:.7rem;color:var(--muted-l);cursor:default;opacity:1;transform:none;animation:none;}
+.busc__sug .sug__pie:hover{background:none;}
+.sug__vacio{padding:1rem .7rem;color:var(--muted-l);font-size:.9rem;
+  opacity:1;transform:none;animation:none;cursor:default;}
+.sug__vacio:hover{background:none;}
+
+/* --- chips de filtro --- */
+.filtros{display:flex;flex-direction:column;gap:1rem;}
+@media (min-width:760px){
+  .filtros{flex-direction:row;flex-wrap:wrap;align-items:flex-start;gap:1.5rem 2rem;}
+  .filtros > .filtro{flex:1 1 260px;}
+  .filtros > .filtro--precio{flex:0 0 auto;}
+}
+.filtro{align-self:start;
+  border:0;padding:0;margin:0;min-width:0;display:grid;gap:.5rem;}
+.filtro legend{padding:0;color:var(--muted-l);}
+.chips{align-items:flex-start;
+  display:flex;flex-wrap:wrap;gap:.4rem;}
+.chip{display:inline-flex;align-items:center;gap:.4rem;cursor:pointer;
+  min-height:44px;padding:.4rem .95rem;border-radius:999px;
+  border:1px solid var(--line-l);background:none;color:var(--muted-l);
+  font-size:.82rem;font-weight:500;white-space:nowrap;
+  transition:background-color .22s var(--e-tw),color .22s var(--e-tw),border-color .22s var(--e-tw);}
+.chip:hover{border-color:var(--ink);color:var(--ink);}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--ivory);}
+.chip__n{font-size:.72rem;opacity:.7;font-variant-numeric:tabular-nums;}
+
+/* ---------- filtro de precio: dos montos escribibles ---------- */
+.rango{display:flex;align-items:flex-end;gap:.5rem;}
+.rango__campo{display:grid;gap:.3rem;min-width:0;}
+.rango__lbl{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted-l);}
+.rango__caja{--muted-l:#4A555A;
+  display:flex;align-items:center;gap:.4rem;
+  height:44px;padding:0 .8rem;border-radius:12px;
+  border:1px solid var(--line-l);background:var(--ivory-2);
+  transition:border-color .2s var(--e-tw),box-shadow .2s var(--e-tw);}
+.rango__caja:hover{border-color:var(--ink);}
+/* base: el anillo lo pinta el propio input, asi ningun navegador se queda
+   sin senal de foco */
+.rango__inp:focus-visible{outline:2px solid var(--ink);outline-offset:3px;
+  border-radius:4px;}
+/* donde haya :has(), el anillo pasa a la caja entera para que rodee tambien
+   al "USD" y el conjunto se lea como un solo control */
+@supports selector(:has(*)){
+  .rango__inp:focus-visible{outline:none;}
+  .rango__caja:has(.rango__inp:focus-visible){border-color:var(--ink);
+    box-shadow:0 0 0 3px rgba(122,94,64,.34);}
+}
+.rango__sig{font-size:.72rem;font-weight:600;letter-spacing:.04em;
+  color:var(--muted-l);flex:none;}
+.rango__inp{align-self:stretch;
+  width:8.5ch;min-width:0;border:0;background:none;padding:0;
+  font-family:var(--body);font-size:.95rem;font-weight:500;color:var(--ink);
+  font-variant-numeric:tabular-nums;}
+.rango__inp::placeholder{color:var(--muted-l);opacity:.62;font-weight:400;}
+.rango__inp::-webkit-search-cancel-button{display:none;}
+.rango__sep{align-self:center;margin-top:1.1rem;color:var(--muted-l);flex:none;}
+.rango__ayuda{margin-top:.45rem;}
+.rango__error{margin-top:.35rem;font-size:.78rem;font-weight:500;color:var(--alerta);}
+@supports selector(:has(*)){
+  .rango__caja:has(.rango__inp[aria-invalid="true"]){border-color:var(--alerta);}
+}
+@media (max-width:400px){
+  .rango{gap:.4rem;}
+  .rango__caja{padding:0 .6rem;}
+  .rango__inp{width:7ch;}
+}
+
+
+.busc__estado{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1rem;}
+.busc__cuenta{font-size:.9rem;color:var(--muted-l);}
+.busc__cuenta b{color:var(--ink);font-variant-numeric:tabular-nums;}
+.busc__reset{min-height:44px;
+  cursor:pointer;border:0;background:none;padding:.4rem 0;
+  font-size:.82rem;font-weight:500;color:var(--gold-l);
+  text-decoration:underline;text-underline-offset:3px;}
+.busc__reset:hover{color:var(--ink);}
+
+@media (prefers-reduced-motion:reduce){
+  .busc__sug li{opacity:1;transform:none;animation:none;}
+  .busc__ico svg{transition:none;}
+}
+
+/* ==================== VISTA DE PROPIEDAD (pagina completa) ====================
+   Antes era un modal centrado. Ahora ocupa toda la pantalla y se lee como
+   una pagina: barra fija arriba, imagen grande, y debajo dos columnas —
+   contenido a la izquierda, precio y contacto en una columna que acompaña
+   el scroll.
+   ============================================================================ */
+body.sin-scroll{overflow:hidden;}
+
+.pv{position:fixed;inset:0;z-index:1100;background:var(--ivory);
+  display:flex;flex-direction:column;
+  opacity:0;transition:opacity .22s var(--e-out);}
+.pv.is-open{opacity:1;}
+
+/* --- barra fija --- */
+.pv__bar{flex:none;display:flex;align-items:center;gap:1rem;
+  padding:.7rem var(--px);padding-top:calc(.7rem + env(safe-area-inset-top));
+  background:rgba(239,227,210,.9);backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid var(--line-l);}
+.pv__volver{display:inline-flex;align-items:center;gap:.5rem;cursor:pointer;
+  min-height:44px;
+  border:1px solid var(--line-l);background:none;border-radius:999px;
+  padding:.55rem 1rem;font-size:.875rem;font-weight:500;
+  transition:background-color .25s var(--e-tw),border-color .25s var(--e-tw);}
+.pv__volver svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round;}
+.pv__volver:hover{background:var(--ivory-2);border-color:var(--ink);}
+.pv__marca{margin-left:auto;font-family:var(--display);font-weight:600;
+  font-size:.95rem;letter-spacing:-.02em;}
+.pv__marca em{font-style:normal;color:var(--gold-l);}
+@media (max-width:640px){.pv__marca{display:none;}}
+
+/* --- zona que scrollea --- */
+.pv__scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;}
+
+.pv__hero{position:relative;width:100%;aspect-ratio:16/10;min-height:240px;
+  max-height:62dvh;background:var(--ink-3);overflow:hidden;
+  display:grid;place-items:center;}
+@media (max-width:640px){.pv__hero{aspect-ratio:4/3;}}
+
+/* La foto se ve ENTERA: object-fit contain, no cover. En una inmobiliaria
+   recortar la foto puede esconder justo lo que se esta vendiendo. Para que
+   no queden franjas negras a los costados, detras va la misma imagen
+   ampliada y desenfocada. */
+.pv__hero img{position:relative;z-index:1;
+  width:100%;height:100%;object-fit:contain;
+  opacity:0;transition:opacity .35s var(--e-out);}
+.pv__hero img.cargada,.pv__hero img[data-lista]{opacity:1;}
+.pv__hero::before{content:'';position:absolute;inset:0;z-index:0;
+  background-image:var(--foto);background-size:cover;background-position:center;
+  filter:blur(28px) saturate(.75) brightness(.55);transform:scale(1.15);}
+.pv__hero.sin-foto::before{display:none;}
+.pv__hero .tile__grad{display:none;}
+.pv__hero .tile__nofoto{position:absolute;inset:0;}
+
+.pv__wrap{width:100%;max-width:var(--maxw);margin-inline:auto;
+  padding:clamp(1.5rem,4vw,3rem) var(--px) clamp(3rem,7vw,5rem);
+  display:grid;gap:clamp(1.75rem,4vw,3.5rem);}
+@media (min-width:900px){
+  .pv__wrap{grid-template-columns:minmax(0,1.6fr) minmax(300px,.9fr);
+    gap:clamp(2.5rem,5vw,4.5rem);align-items:start;}
+}
+
+/* --- columna principal --- */
+.pv__main{display:grid;gap:.55rem;align-content:start;min-width:0;}
+.pv__kicker{color:var(--gold-l);text-transform:capitalize;}
+.pv__titulo{font-family:var(--display);font-weight:500;text-wrap:balance;
+  overflow-wrap:anywhere;
+  font-size:clamp(1.6rem,1.15rem + 2vw,2.6rem);line-height:1.08;letter-spacing:-.03em;}
+.pv__loc{color:var(--muted-l);font-size:1rem;}
+/* 60-75 caracteres por linea y interlineado 1.7: pautas de lectura */
+.pv__desc{margin-top:1rem;font-size:1.02rem;line-height:1.7;color:var(--muted-l);
+  max-width:68ch;white-space:pre-line;overflow-wrap:anywhere;}
+
+.pv__h{font-family:var(--display);font-weight:600;font-size:1.05rem;
+  letter-spacing:-.02em;margin-top:2rem;padding-bottom:.5rem;
+  border-bottom:1px solid var(--line-l);}
+.pv__datos{display:grid;grid-template-columns:1fr;margin-top:.25rem;}
+@media (min-width:560px){.pv__datos{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:2.5rem;}}
+.pv__datos>div{display:flex;justify-content:space-between;gap:1rem;
+  padding-block:.72rem;border-bottom:1px solid var(--line-l);align-items:baseline;}
+.pv__datos dt{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted-l);flex:none;}
+.pv__datos dd{font-weight:500;text-align:right;}
+
+/* --- columna de precio y contacto --- */
+.pv__side{display:grid;gap:.65rem;align-content:start;
+  /* el panel es mas oscuro que el fondo y ahi --muted-l cae a 4.3:1 */
+  --muted-l:#4E595E;
+  background:var(--ivory-2);border-radius:var(--r);
+  padding:clamp(1.25rem,2.5vw,1.75rem);}
+@media (min-width:900px){.pv__side{position:sticky;top:1.25rem;}}
+.pv__precio{font-family:var(--display);font-weight:600;
+  font-size:clamp(1.75rem,1.4rem + 1.4vw,2.4rem);line-height:1;letter-spacing:-.03em;}
+.pv__op{color:var(--muted-l);}
+.pv__side .btn{width:100%;margin-top:.35rem;}
+.pv__contacto{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--line-l);
+  display:grid;gap:.1rem;font-size:.9rem;color:var(--muted-l);}
+/* el telefono y el mail eran renglones de 23px de alto: en un celular es
+   casi imposible acertarles. Se les da el objetivo tactil de 44px sin
+   cambiar como se ven. */
+.pv__contacto a{display:inline-flex;align-items:center;min-height:44px;
+  color:var(--ink);text-decoration:none;width:fit-content;}
+.pv__contacto a:hover{color:var(--ink);text-decoration:underline;
+  text-underline-offset:3px;}
+.pv__contacto .label{color:var(--muted-l);margin-bottom:.15rem;}
+
+@media (prefers-reduced-motion:reduce){
+  .pv{transition:none;opacity:1;}
+}
+
+/* ============================ REVEALS ============================
+   Ocultos solo cuando el JS confirma que puede volver a mostrarlos. */
+.js .reveal{opacity:0;transform:translateY(26px);
+  transition:opacity .85s var(--e-out),transform .85s var(--e-out);
+  transition-delay:calc(var(--d,0) * 90ms);}
+.js .reveal.is-in{opacity:1;transform:none;}
+
+/* ============================ MOTION REDUCIDO ============================ */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;}
+  .js .reveal{opacity:1;transform:none;}
+  .words span{opacity:1;filter:none;}
+  .track--hero,.track--thesis,.track--serv,.track--reveal{height:auto;}
+  .pin{position:relative;height:auto;min-height:100dvh;}
+  /* el video queda abierto y quieto, sin secuencia de expansion */
+  .rv__media{clip-path:none!important;}
+  .rv__media video{transform:none!important;}
+  .rv__bg{opacity:0!important;}
+  .rv__head{position:absolute;}
+    .face{position:relative;inset:auto;opacity:1!important;transform:none!important;
+    padding-block:2rem;border-top:1px solid var(--line-d);}
+  .stage{height:auto;perspective:none;}
+  .track--serv .pin{display:block;padding-block:6rem 3rem;}
+  .serv__kicker{position:static;text-align:left;margin-bottom:2rem;}
+  .serv__rail{display:none;}
+  .js .slider{overflow-x:auto;}
+  .slider__track{animation:none!important;}
+  .slider--rev,.valle__foot{display:none;}
+  .tm__wave{transform:scaleY(1)!important;}
+  .tm__links{opacity:1!important;}
+}

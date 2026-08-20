@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es" style="color-scheme: light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Mirande Aybar · Inmobiliaria en Villa General Belgrano</title>
+<meta name="description" content="Casas, campos y terrenos en Villa General Belgrano y el Valle de Calamuchita. Más de 15 años y 200 operaciones en las sierras de Córdoba." />
+<meta name="theme-color" content="#2B3A42" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=20260819200808" />
+<link rel="icon" href="assets/logos/isotipo-crema.png" />
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+<a class="skip" href="#main">Ir al contenido</a>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav" id="nav">
+  <div class="nav__pill">
+    <a class="mark" href="#top" aria-label="Mirande Aybar, inicio">
+      <img src="assets/logos/isotipo-crema.png" alt="" class="mark__ico" width="2149" height="996" />
+      <span class="mark__txt">Mirande<em>Aybar</em></span>
+    </a>
+
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#propiedades">Propiedades</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#valle">El valle</a>
+      <a href="#equipo">Equipo</a>
+    </nav>
+
+    <a class="btn btn--pill" href="#contacto">Consultar</a>
+
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="drawer" aria-label="Abrir menú">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="drawer" id="drawer" hidden>
+  <a href="#propiedades">Propiedades</a>
+  <a href="#servicios">Servicios</a>
+  <a href="#valle">El valle</a>
+  <a href="#equipo">Equipo</a>
+  <a href="#contacto">Consultar</a>
+</div>
+
+<main id="main">
+
+<!-- ===================== 1. HERO — amanecer sobre el Champaquí ===================== -->
+<section class="track track--hero" id="top" data-track="hero">
+  <div class="pin">
+    <canvas id="gl" aria-hidden="true"></canvas>
+    <div class="pin__fallback" id="glFallback" hidden>
+      <img src="assets/fotos/champaqui.jpg" alt="Cerro Champaquí al amanecer" width="1080" height="765" />
+    </div>
+    <div class="pin__scrim" aria-hidden="true"></div>
+
+    <div class="hero__body" id="heroBody">
+      <p class="label hero__eyebrow">Villa General Belgrano &nbsp;·&nbsp; Valle de Calamuchita &nbsp;·&nbsp; Córdoba</p>
+      <h1 class="d1">Casas, campos<br />y terrenos.</h1>
+      <p class="hero__lede">
+        Conocemos cada camino del valle desde hace más de quince años.
+        Encontramos las pocas propiedades que importan.
+      </p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#propiedades">Ver propiedades</a>
+        <a class="btn btn--ghost" href="#contacto">Escribinos</a>
+      </div>
+    </div>
+
+    <div class="hero__foot">
+      <dl class="hero__stats">
+        <div><dt>Experiencia</dt><dd class="num" data-count="15" data-pre="+" data-post=" años">+15 años</dd></div>
+        <div><dt>Operaciones</dt><dd class="num" data-count="200" data-pre="+">+200</dd></div>
+        <div><dt>Localidades</dt><dd class="num">5 del valle</dd></div>
+        <div><dt>Atención</dt><dd class="num">Personalizada</dd></div>
+      </dl>
+      <div class="hero__sun">
+        <p class="label">Cerro Champaquí &nbsp;·&nbsp; 2.790 m</p>
+        <p class="hero__sunval num"><span id="sunRead">Amanecer 04°</span></p>
+      </div>
+      <div class="hero__prog" aria-hidden="true"><i id="heroBar"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 2. MANIFIESTO — revelado palabra por palabra ===================== -->
+<section class="track track--thesis" data-track="thesis">
+  <div class="pin pin--center pin--ivory">
+    <div class="thesis__frame" id="thesisFrame" aria-hidden="true"></div>
+    <div class="thesis__in">
+      <p class="label gold-l">Quiénes somos</p>
+      <blockquote class="d2 words" id="thesisWords">Una casa en las sierras no es solo una dirección. Es la luz de la mañana sobre el Champaquí, el silencio del valle, la certeza de una buena decisión.</blockquote>
+      <p class="thesis__by label">Sebastián Mirande &nbsp;·&nbsp; Mario Gonzalo Aybar</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 3. PROPIEDADES — bento ===================== -->
+<section class="band" id="propiedades">
+  <div class="wrap sec-head">
+    <p class="label gold-l reveal">El portafolio</p>
+    <h2 class="h2 reveal" data-d="1">Elegidas una por una.</h2>
+    <p class="note reveal" data-d="2">
+      Cada propiedad de esta lista la visitamos y la tasamos nosotros. Si no la
+      compraríamos, no la publicamos. <span class="num" id="propCount">—</span> publicadas hoy.
+    </p>
+  </div>
+
+
+  <div class="wrap busc">
+    <div class="busc__campo">
+      <label class="label busc__lbl" for="buscar">Buscar propiedad</label>
+      <div class="busc__input">
+        <input type="search" id="buscar" autocomplete="off" spellcheck="false"
+               placeholder="Casa en Los Reartes, lote, cabaña…"
+               role="combobox" aria-expanded="false" aria-controls="buscSug"
+               aria-describedby="buscAyuda" />
+        <span class="busc__ico" aria-hidden="true">
+          <svg class="ico-lupa" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <svg class="ico-flecha" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+        <button class="busc__limpiar" id="buscLimpiar" type="button" aria-label="Borrar búsqueda" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <p class="help" id="buscAyuda">Buscá por nombre, tipo o localidad.</p>
+      <ul class="busc__sug" id="buscSug" role="listbox" aria-label="Sugerencias" hidden></ul>
+    </div>
+
+    <div class="filtros">
+      <fieldset class="filtro">
+        <legend class="label">Operación</legend>
+        <div class="chips" id="fOperacion" role="group"></div>
+      </fieldset>
+      <fieldset class="filtro">
+        <legend class="label">Tipo</legend>
+        <div class="chips" id="fTipo" role="group"></div>
+      </fieldset>
+      <fieldset class="filtro filtro--precio">
+        <legend class="label">Precio</legend>
+        <div class="rango">
+          <div class="rango__campo">
+            <label class="rango__lbl" for="pMin">Desde</label>
+            <div class="rango__caja">
+              <span class="rango__sig" aria-hidden="true">USD</span>
+              <input class="rango__inp num" type="text" id="pMin" inputmode="numeric"
+                     autocomplete="off" maxlength="11" aria-describedby="pAyuda" />
+            </div>
+          </div>
+          <span class="rango__sep" aria-hidden="true">&ndash;</span>
+          <div class="rango__campo">
+            <label class="rango__lbl" for="pMax">Hasta</label>
+            <div class="rango__caja">
+              <span class="rango__sig" aria-hidden="true">USD</span>
+              <input class="rango__inp num" type="text" id="pMax" inputmode="numeric"
+                     autocomplete="off" maxlength="11" aria-describedby="pAyuda" />
+            </div>
+          </div>
+        </div>
+        <p class="help rango__ayuda" id="pAyuda"></p>
+        <p class="rango__error" id="pError" role="alert" hidden></p>
+      </fieldset>
+    </div>
+
+    <div class="busc__estado">
+      <p class="busc__cuenta" id="buscCuenta" aria-live="polite"></p>
+      <button class="busc__reset" id="buscReset" type="button" hidden>Limpiar filtros</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="bento">
+
+      <article class="tile tile--stat reveal" data-d="1">
+        <p class="label">Años en la región</p>
+        <p class="stat num" data-count="15" data-pre="+">+15</p>
+      </article>
+
+      <article class="tile tile--stat reveal" data-d="2">
+        <p class="label">Operaciones concretadas</p>
+        <p class="stat num" data-count="200" data-pre="+">+200</p>
+      </article>
+
+      <article class="tile tile--stat reveal" data-d="1">
+        <p class="label">Localidades del valle</p>
+        <p class="stat num" data-count="5">5</p>
+      </article>
+
+      <article class="tile tile--stat reveal" data-d="2">
+        <p class="label">Atención</p>
+        <p class="stat stat--word">Personalizada</p>
+      </article>
+
+      <article class="tile tile--2x2 tile--cta reveal" data-d="1">
+        <p class="label">¿No ves lo que buscás?</p>
+        <p class="cta__copy">Tenemos propiedades que no publicamos. Contanos qué necesitás.</p>
+        <a class="btn btn--ivory" href="#contacto">Pedir la lista completa</a>
+      </article>
+
+    </div>
+
+    <div class="bento__mas">
+      <button class="btn btn--ghost" id="verMas" type="button" hidden></button>
+      <noscript><p class="note">El listado necesita JavaScript. Escribinos por WhatsApp al
+        +54 9 3512 72-9721 y te pasamos las propiedades disponibles.</p></noscript>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 4. EL VALLE SE ABRE — media que se expande con el scroll ===================== -->
+<section class="track track--reveal" id="rincon" data-track="reveal">
+  <div class="pin pin--dark">
+
+    <!-- fondo, se desvanece a medida que el video se abre -->
+    <div class="rv__bg" id="rvBg" aria-hidden="true">
+      <img src="assets/fotos/champaqui.jpg" alt="" decoding="async" width="1080" height="765" />
+      <div class="rv__bgtint"></div>
+    </div>
+
+    <!-- media: ocupa el viewport y se revela por una ventana que crece -->
+    <div class="rv__media" id="rvMedia">
+      <video id="rvVideo" poster="assets/fotos/pueblo-aerea.jpg"
+             muted loop playsinline preload="metadata"
+             disablepictureinpicture aria-label="Vista aérea del valle serrano">
+        <source src="assets/video/valle-aereo.mp4" type="video/mp4" />
+      </video>
+      <div class="rv__tint" id="rvTint" aria-hidden="true"></div>
+    </div>
+
+    <!-- título: se parte en dos y sale de cuadro -->
+    <div class="rv__head" id="rvHead">
+      <h2 class="rv__title">
+        <span class="rv__t rv__t--a" id="rvT1">Conocemos</span>
+        <span class="rv__t rv__t--b" id="rvT2">cada rincón</span>
+      </h2>
+      <div class="rv__meta">
+        <p class="label" id="rvMetaA">Valle de Calamuchita</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="band band--tight" id="rincon-texto">
+  <div class="wrap rv__after">
+    <div>
+      <p class="label gold-l reveal">El terreno</p>
+      <h2 class="h2 reveal" data-d="1">Quince años recorriendo estos caminos.</h2>
+    </div>
+    <div class="rv__aftercopy">
+      <p class="note reveal" data-d="2">
+        Sabemos qué barrio se inunda, cuál tiene agua de red y cuál depende de
+        perforación. Dónde llega el gas natural y dónde hay que planificar
+        zeppelin. Qué loteo tiene escritura al día y cuál viene con boleto.
+      </p>
+      <p class="note reveal" data-d="3">
+        Esa diferencia no se ve en una foto, y es exactamente la que define si
+        una compra en las sierras sale bien o sale cara.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 5. SERVICIOS — giro 3D ===================== -->
+<section class="track track--serv" id="servicios" data-track="serv">
+  <div class="pin pin--dark pin--center">
+    <h2 class="label serv__kicker">Todo. Sin vueltas. De la primera visita a la escritura</h2>
+
+    <div class="stage" id="stage">
+      <article class="face">
+        <span class="face__n num">/ 01</span>
+        <h3 class="face__t">Comprá</h3>
+        <p class="face__p">Acceso a propiedades dentro y fuera del mercado, visitas acompañadas y negociación que cuida tu bolsillo.</p>
+      </article>
+      <article class="face">
+        <span class="face__n num">/ 02</span>
+        <h3 class="face__t">Vendé</h3>
+        <p class="face__p">Tasación real, difusión profesional y una red de compradores que se mueve antes que el mercado.</p>
+      </article>
+      <article class="face">
+        <span class="face__n num">/ 03</span>
+        <h3 class="face__t">Invertí</h3>
+        <p class="face__p">Terrenos, cabañas de renta y oportunidades en el valle con proyección turística todo el año.</p>
+      </article>
+      <article class="face">
+        <span class="face__n num">/ 04</span>
+        <h3 class="face__t">Alquiler temporario</h3>
+        <p class="face__p">Gestión completa de tu cabaña o casa de renta: huéspedes, mantenimiento y ocupación.</p>
+      </article>
+    </div>
+
+    <div class="serv__rail" aria-hidden="true">
+      <i data-step="0"></i><i data-step="1"></i><i data-step="2"></i><i data-step="3"></i>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 6. PROCESO ===================== -->
+<section class="band" id="proceso">
+  <div class="wrap sec-head">
+    <p class="label gold-l reveal">Cómo trabajamos</p>
+    <h2 class="h2 reveal" data-d="1">Cuatro pasos, en este orden.</h2>
+  </div>
+  <ol class="wrap steps">
+    <li class="step reveal">
+      <span class="step__n num">01</span>
+      <div><h3>Escuchamos</h3><p class="note">Una charla sin apuro sobre cómo querés vivir, no un formulario.</p></div>
+    </li>
+    <li class="step reveal" data-d="1">
+      <span class="step__n num">02</span>
+      <div><h3>Seleccionamos</h3><p class="note">Tres opciones justas, no treinta. Cada una ya visitada y tasada por nosotros.</p></div>
+    </li>
+    <li class="step reveal" data-d="2">
+      <span class="step__n num">03</span>
+      <div><h3>Negociamos</h3><p class="note">Cerramos la distancia entre lo que piden y lo que vale, siempre a tu favor.</p></div>
+    </li>
+    <li class="step reveal" data-d="3">
+      <span class="step__n num">04</span>
+      <div><h3>Entregamos</h3><p class="note">Llaves, escritura y servicios resueltos antes de que abras la puerta.</p></div>
+    </li>
+  </ol>
+</section>
+
+<!-- ===================== 7. EL VALLE — cinta infinita ===================== -->
+<section class="band band--dark valle" id="valle">
+  <div class="wrap sec-head">
+    <p class="label gold">Los alrededores</p>
+    <h2 class="h2 reveal" data-d="1">Un valle que se despliega.</h2>
+    <p class="note reveal" data-d="2">Sierras, ríos y bosques a minutos de cada propiedad.</p>
+  </div>
+
+  <div class="slider" data-speed="46" role="region" aria-label="Localidades del Valle de Calamuchita">
+    <div class="slider__track">
+      <ul class="slider__set">
+        <li class="place"><img src="assets/fotos/pueblo-aerea.jpg" alt="Vista aérea de Villa General Belgrano" loading="lazy" decoding="async" width="1200" height="1200" /><div class="place__cap"><h3>Villa General Belgrano</h3><p class="label">Centro del valle</p></div></li>
+        <li class="place"><img src="assets/fotos/champaqui.jpg" alt="Cerro Champaquí" loading="lazy" decoding="async" width="1080" height="765" /><div class="place__cap"><h3>Cerro Champaquí</h3><p class="label">2.790 m &nbsp;·&nbsp; el techo de Córdoba</p></div></li>
+        <li class="place"><img src="assets/fotos/los-reartes.jpg" alt="Río en Los Reartes" loading="lazy" decoding="async" width="1140" height="642" /><div class="place__cap"><h3>Los Reartes</h3><p class="label">Río y arboleda</p></div></li>
+        <li class="place"><img src="assets/fotos/cerro-virgen.jpg" alt="Cerro de la Virgen" loading="lazy" decoding="async" width="2048" height="1536" /><div class="place__cap"><h3>La Cumbrecita</h3><p class="label">Pueblo peatonal</p></div></li>
+        <li class="place"><img src="assets/fotos/lago-embalse.jpg" alt="Lago Embalse" loading="lazy" decoding="async" width="1200" height="900" /><div class="place__cap"><h3>Embalse</h3><p class="label">Lago y costanera</p></div></li>
+        <li class="place"><img src="assets/fotos/los-molinos.jpg" alt="Lago Los Molinos" loading="lazy" decoding="async" width="1200" height="1200" /><div class="place__cap"><h3>Los Molinos</h3><p class="label">Lago de montaña</p></div></li>
+        <li class="place"><img src="assets/fotos/rumipal.jpg" alt="Villa Rumipal" loading="lazy" decoding="async" width="1152" height="648" /><div class="place__cap"><h3>Villa Rumipal</h3><p class="label">Costa del Embalse</p></div></li>
+        <li class="place"><img src="assets/fotos/pozo-verde.jpg" alt="Pozo Verde" loading="lazy" decoding="async" width="1200" height="1200" /><div class="place__cap"><h3>Pozo Verde</h3><p class="label">Balneario natural</p></div></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="slider slider--rev" data-speed="38" aria-hidden="true">
+    <div class="slider__track"></div>
+  </div>
+
+  <div class="wrap valle__foot">
+    <button class="rbtn rbtn--wide" id="vallePausa" type="button" aria-pressed="false">
+      <svg class="ico-pausa" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5v14M17 5v14"/></svg>
+      <svg class="ico-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>
+      <span id="vallePausaTxt">Pausar</span>
+    </button>
+  </div>
+</section>
+
+<!-- ===================== 8. EQUIPO ===================== -->
+<section class="band team" id="equipo">
+  <div class="team__grid-bg" aria-hidden="true"></div>
+  <div class="wrap team__in">
+
+    <div class="team__head">
+      <div class="team__headline reveal">
+        <p class="team__our">N U E S T R O</p>
+        <h2 class="h2">Equipo</h2>
+        <p class="note">Dos personas firman cada mandato. No hay call center ni
+          derivaciones: el que te atiende es el que va a estar en la escritura.</p>
+      </div>
+      <div class="team__aside reveal" data-d="1">
+        <img class="team__logo" src="assets/logos/isologo-principal.png" alt="" width="2149" height="996" loading="lazy" decoding="async" />
+        <a class="btn btn--primary" href="#contacto">Hablar con nosotros</a>
+      </div>
+    </div>
+
+    <div class="team__social reveal" data-d="2">
+      <a href="https://www.instagram.com/mirandeaybar" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg></a>
+      <a href="https://www.tiktok.com/@mirandeaybar" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+      <a href="https://wa.me/5493512729721" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
+      <span class="team__site label">Paseo Los Troncos, Av. J. A. Roca 95</span>
+    </div>
+
+    <div class="team__members">
+      <article class="tm" style="--tint:rgba(166,131,100,.16);--d:0">
+        <span class="tm__wave" aria-hidden="true"></span>
+        <div class="tm__ph"><img src="assets/equipo/sebastian.jpeg" alt="Sebastián Mirande" width="460" height="910" loading="lazy" decoding="async" /></div>
+        <h3 class="tm__name">Sebastián Mirande</h3>
+        <p class="tm__role label">Socio fundador</p>
+        <p class="tm__bio">Nació y creció en el valle. Conoce cada camino, cada barrio y cada vecino, y por eso sabe qué vale una propiedad antes de tasarla.</p>
+        <div class="tm__links">
+          <a href="https://wa.me/5493512729721?text=Hola%21%20Queria%20hablar%20con%20Sebasti%C3%A1n." target="_blank" rel="noopener" aria-label="Escribir a Sebastián por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
+          <a href="mailto:mirandeaybar@gmail.com?subject=Consulta%20para%20Sebasti%C3%A1n" aria-label="Escribir a Sebastián por email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
+        </div>
+      </article>
+      <article class="tm" style="--tint:rgba(43,58,66,.09);--d:1">
+        <span class="tm__wave" aria-hidden="true"></span>
+        <div class="tm__ph"><img src="assets/equipo/mario.jpeg" alt="Mario Gonzalo Aybar" width="452" height="899" loading="lazy" decoding="async" /></div>
+        <h3 class="tm__name">Mario Gonzalo Aybar</h3>
+        <p class="tm__role label">Socio fundador</p>
+        <p class="tm__bio">Se ocupa de todo lo que pasa después del apretón de manos: tasación, papeles, escritura y servicios. Nada llega a la firma sin que él lo revise dos veces.</p>
+        <div class="tm__links">
+          <a href="https://wa.me/5493512729721?text=Hola%21%20Queria%20hablar%20con%20Mario." target="_blank" rel="noopener" aria-label="Escribir a Mario por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
+          <a href="mailto:mirandeaybar@gmail.com?subject=Consulta%20para%20Mario" aria-label="Escribir a Mario por email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== 9. OPINIONES ===================== -->
+<section class="band band--ivory2" id="opiniones">
+  <div class="wrap sec-head">
+    <p class="label gold-l reveal">Opiniones</p>
+    <h2 class="h2 reveal" data-d="1">Lo que dicen nuestros clientes.</h2>
+  </div>
+  <div class="stg" id="stg" role="group" aria-roledescription="carrusel"
+       aria-label="Opiniones de clientes">
+    <div class="stg__deck" id="stgDeck"></div>
+    <div class="stg__nav">
+      <button class="stg__btn" id="stgPrev" type="button" aria-label="Opinión anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <button class="stg__btn" id="stgNext" type="button" aria-label="Opinión siguiente">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
+    <p class="sr-only" id="stgLive" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- ===================== 10. CONTACTO ===================== -->
+<section class="band band--dark" id="contacto">
+  <div class="wrap enq">
+    <div class="enq__copy">
+      <p class="label gold reveal">Empecemos la charla</p>
+      <h2 class="h2 reveal" data-d="1">Toda gran dirección empieza con un hola.</h2>
+      <p class="note reveal" data-d="2">
+        Contanos qué buscás, o qué querés vender. Te respondemos personalmente
+        a la brevedad.
+      </p>
+      <ul class="enq__data reveal" data-d="3">
+        <li><span class="label">WhatsApp</span><a href="https://wa.me/5493512729721" target="_blank" rel="noopener">+54 9 3512 72-9721</a></li>
+        <li><span class="label">Email</span><a href="mailto:mirandeaybar@gmail.com">mirandeaybar@gmail.com</a></li>
+        <li><span class="label">Dirección</span><span>Paseo Los Troncos, Av. J. A. Roca 95<br />Villa General Belgrano, Córdoba</span></li>
+        <li><span class="label">Redes</span><a href="https://www.instagram.com/mirandeaybar" target="_blank" rel="noopener">@mirandeaybar</a></li>
+      </ul>
+    </div>
+
+    <form class="form reveal" id="form" data-d="1" novalidate>
+      <div class="field">
+        <label for="f-name"><span class="fnum num">01</span> Tu nombre <span class="req">*</span></label>
+        <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Nombre y apellido…" />
+        <p class="err" id="e-name" hidden></p>
+      </div>
+      <div class="field">
+        <label for="f-mail"><span class="fnum num">02</span> Tu email <span class="req">*</span></label>
+        <input id="f-mail" name="email" type="email" autocomplete="email" inputmode="email" spellcheck="false" placeholder="vos@correo.com" />
+        <p class="err" id="e-mail" hidden></p>
+      </div>
+      <div class="field">
+        <label for="f-tel"><span class="fnum num">03</span> Teléfono <span class="opt">(opcional)</span></label>
+        <input id="f-tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="+54 9 ..." />
+      </div>
+      <div class="field">
+        <label for="f-msg"><span class="fnum num">04</span> ¿Qué estás buscando? <span class="req">*</span></label>
+        <textarea id="f-msg" name="msg" rows="3" placeholder="Una casa de tres dormitorios en VGB, con parque y cerca del centro…"></textarea>
+        <p class="err" id="e-msg" hidden></p>
+      </div>
+
+      <div class="form__actions">
+        <button class="btn btn--primary btn--wide" type="submit" id="sendWa" data-via="wa">Enviar por WhatsApp</button>
+        <button class="btn btn--ghost btn--wide" type="button" id="sendMail" data-via="mail">Enviar por Email</button>
+      </div>
+      <p class="help">Se abrirá WhatsApp o tu correo con el mensaje ya escrito.</p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="sheet">
+  <div class="wrap">
+    <div class="sheet__top">
+      <div class="sheet__brand">
+        <img src="assets/logos/logotipo-crema.png" alt="Mirande Aybar" class="sheet__logo" width="2149" height="996" />
+        <p class="note">Inmobiliaria en Villa General Belgrano. Te ayudamos a encontrar o
+          vender tu propiedad en las Sierras de Calamuchita.</p>
+      </div>
+      <div class="sheet__cols">
+        <div><p class="label">Navegación</p><a href="#propiedades">Propiedades</a><a href="#servicios">Servicios</a><a href="#valle">Los alrededores</a><a href="#opiniones">Opiniones</a></div>
+        <div><p class="label">Inmobiliaria</p><a href="#rincon-texto">Nosotros</a><a href="#equipo">Equipo</a><a href="#proceso">Cómo trabajamos</a></div>
+        <div><p class="label">Contacto</p><a href="https://wa.me/5493512729721" target="_blank" rel="noopener">WhatsApp</a><a href="mailto:mirandeaybar@gmail.com">mirandeaybar@gmail.com</a><a href="https://www.instagram.com/mirandeaybar" target="_blank" rel="noopener">Instagram</a><a href="https://www.tiktok.com/@mirandeaybar" target="_blank" rel="noopener">TikTok</a></div>
+      </div>
+    </div>
+    <div class="sheet__foot">
+      <p class="label">© 2026 Mirande Aybar. Todos los derechos reservados.</p>
+      <p class="label">Paseo Los Troncos, Av. J. A. Roca 95 · VGB</p>
+    </div>
+  </div>
+</footer>
+
+<a class="wa" href="https://wa.me/5493512729721" target="_blank" rel="noopener" aria-label="Consultar por WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.8-2.8-1.5-3.9-3.4-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5s-.7-1.7-.9-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.8.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+</a>
+
+<script src="config.js?v=20260819200808"></script>
+<script src="main.js?v=20260819200808"></script>
+<script src="propiedades.js?v=20260819200808"></script>
+</body>
+</html>
