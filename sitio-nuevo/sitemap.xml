@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://mirande-aybar.vercel.app/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://mirande-aybar.vercel.app/#propiedades</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mirande-aybar.vercel.app/#servicios</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mirande-aybar.vercel.app/#valle</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mirande-aybar.vercel.app/#equipo</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mirande-aybar.vercel.app/#opiniones</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mirande-aybar.vercel.app/#contacto</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+</urlset>

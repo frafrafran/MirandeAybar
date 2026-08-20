@@ -134,7 +134,17 @@
     if (cont) cont.textContent = PROPS.length;
   }
 
+  /* Si no hay listado que filtrar, el buscador no tiene sentido. Sin esto
+     quedaba un bloque de 295px con un input habilitado que no busca nada,
+     un grupo de filtros vacio y el contador en blanco, justo encima del
+     mensaje de error. */
+  function buscadorVisible(v) {
+    var b = $('.busc');
+    if (b) b.hidden = !v;
+  }
+
   function estado(titulo, texto, cta) {
+    buscadorVisible(false);
     grid.innerHTML =
       '<article class="tile tile--2x2 tile--cta">' +
         '<p class="label">' + esc(titulo) + '</p>' +
@@ -674,6 +684,7 @@
         return;
       }
       PROPS = filas;
+      buscadorVisible(true);
       iniciarBuscador();
       aplicar();
       var m = /^#propiedad-(\d+)$/.exec(location.hash);

@@ -208,6 +208,22 @@
   var rvT1 = $('#rvT1'), rvT2 = $('#rvT2'), rvMeta = $('.rv__meta');
   var rvTint = $('#rvTint');
 
+  /* El video pesa 8,2 MB. Quien navega con "ahorro de datos" activado o con
+     una conexion lenta no deberia pagar eso sin haberlo pedido: en ese caso
+     queda el poster, que es una foto del mismo valle y pesa 230 KB. La
+     seccion se ve igual, solo que quieta.
+     rvVideo se anula a proposito: todos los usos posteriores lo consultan
+     con if (rvVideo), asi que la animacion simplemente no lo toca. */
+  var conex = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  var ahorrarDatos = !!(conex && (conex.saveData ||
+      /^(2g|3g|slow-2g)$/.test(conex.effectiveType || '')));
+  if (rvVideo && ahorrarDatos) {
+    rvVideo.preload = 'none';
+    var fuente = rvVideo.querySelector('source');
+    if (fuente) fuente.removeAttribute('src');
+    rvVideo = null;
+  }
+
   /* el video solo se descarga y reproduce cuando la seccion esta cerca */
   if (rvVideo) {
     new IntersectionObserver(function (es) {

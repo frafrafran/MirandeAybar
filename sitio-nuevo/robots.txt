@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mirande-aybar.vercel.app/sitemap.xml
