@@ -1,0 +1,52 @@
+name: Mantener la base despierta
+
+# Supabase pausa los proyectos del plan gratuito que reciben poca actividad
+# durante 7 dias. Si eso pasa, el listado de propiedades del sitio deja de
+# cargar y hay que entrar al panel a reactivarlo a mano.
+#
+# Esta tarea le hace una consulta minima a la base todos los dias, asi el
+# proyecto nunca queda inactivo. Es gratis: en repositorios publicos los
+# minutos de GitHub Actions no se cobran, y la consulta pide una sola fila.
+#
+# La clave que usa es la "anon", que ya es publica: va escrita en config.js y
+# cualquiera la ve con "Ver codigo fuente". No hay ningun secreto aca.
+#
+# OJO: GitHub desactiva las tareas programadas de un repositorio que pasa
+# 60 dias sin ningun commit. Si el sitio se queda quieto mucho tiempo, entra
+# a la pestana Actions y volve a habilitarla con "Enable workflow".
+
+on:
+  schedule:
+    # 11:00 UTC = 08:00 en Argentina, todos los dias
+    - cron: '0 11 * * *'
+  workflow_dispatch:        # tambien se puede correr a mano desde Actions
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Consultar una fila de propiedades
+        run: |
+          URL="https://emionflujpdzxpejlgye.supabase.co/rest/v1/propiedades?select=id&limit=1"
+          KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaW9uZmx1anBkenhwZWpsZ3llIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNzAxNjgsImV4cCI6MjA5OTY0NjE2OH0.ZnsyNAzXNItYcEBcn9B63KD4NXJAhE433EZpLnsoJEY"
+
+          CODIGO=$(curl -s -o /tmp/respuesta.json -w '%{http_code}' \
+            -H "apikey: $KEY" -H "Authorization: Bearer $KEY" "$URL")
+
+          echo "Respuesta HTTP: $CODIGO"
+          cat /tmp/respuesta.json
+
+          if [ "$CODIGO" != "200" ]; then
+            echo "::error::La base no respondio 200. Puede estar pausada: entra a https://supabase.com/dashboard y usa 'Resume project'."
+            exit 1
+          fi
+          echo "La base esta despierta."
+
+      - name: Comprobar que el sitio responde
+        run: |
+          CODIGO=$(curl -s -o /dev/null -w '%{http_code}' https://mirande-aybar.vercel.app/)
+          echo "Sitio: HTTP $CODIGO"
+          if [ "$CODIGO" != "200" ]; then
+            echo "::error::El sitio no respondio 200."
+            exit 1
+          fi
