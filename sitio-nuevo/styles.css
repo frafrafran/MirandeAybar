@@ -193,9 +193,34 @@ section[id],[id]{scroll-margin-top:96px;}
   background-size:220% 100%;animation:shimmer 1.05s linear infinite;}
 @keyframes shimmer{from{background-position:120% 0}to{background-position:-120% 0}}
 
-.burger{width:42px;height:42px;border:0;background:none;border-radius:999px;
+.burger{flex:none;width:44px;height:44px;border:0;background:none;border-radius:999px;
   display:grid;place-content:center;gap:5px;cursor:pointer;}
 .burger span{display:block;width:17px;height:1.5px;background:currentColor;transition:transform .35s var(--e-out);}
+
+
+/* ---------- objetivos tactiles en pantallas que se tocan ----------
+   Los minimos de 44px valen para el dedo, no para el mouse: con puntero
+   fino un enlace de 23px se acierta sin problema, y estirar el pie de
+   pagina en escritorio solo lo separaria de mas. Por eso va bajo
+   (pointer:coarse), que pregunta por el dispositivo y no por el ancho:
+   una tablet con mouse queda compacta y un celular apaisado, comodo.   */
+@media (pointer:coarse){
+  /* enlaces del pie: eran renglones de 23px */
+  .sheet__cols a,
+  .sheet__foot a{display:inline-flex;align-items:center;min-height:44px;
+    width:fit-content;}
+  .sheet__cols>div{gap:0;}
+
+  /* telefono y mail de la seccion de contacto: 27px */
+  #contacto a:not(.btn){display:inline-flex;align-items:center;min-height:44px;
+    width:fit-content;}
+
+  /* la marca del encabezado tambien es un enlace a la portada */
+  .mark{min-height:44px;}
+
+  .skip{min-height:44px;display:inline-flex;align-items:center;}
+  .btn--pill{min-height:44px;}
+}
 .burger[aria-expanded="true"] span:first-child{transform:translateY(3.25px) rotate(45deg);}
 .burger[aria-expanded="true"] span:last-child{transform:translateY(-3.25px) rotate(-45deg);}
 @media (min-width:900px){.burger{display:none;}}
@@ -462,7 +487,7 @@ section[id],[id]{scroll-margin-top:96px;}
 .team__social{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;
   padding-block:1.25rem;margin-bottom:clamp(2rem,4vw,3rem);
   border-top:1px solid var(--line-l);border-bottom:1px solid var(--line-l);}
-.team__social a{display:grid;place-content:center;width:44px;height:44px;
+.team__social a{flex:none;display:grid;place-content:center;width:44px;height:44px;
   color:var(--muted-l);border-radius:999px;
   transition:color .3s var(--e-tw),background-color .3s var(--e-tw);}
 .team__social a svg{width:22px;height:22px;}
