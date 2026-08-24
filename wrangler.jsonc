@@ -1,12 +1,24 @@
 {
-  // Le dice a Cloudflare Pages cual de las tres carpetas del repositorio
-  // publicar. Sin esto sirve la raiz, que no tiene index.html, y devuelve 404
-  // -- el mismo problema que hubo con Vercel al principio.
+  // Cloudflare importo este repositorio como un WORKER con assets estaticos,
+  // no como un proyecto de Pages. Son dos productos distintos con dos campos
+  // de configuracion distintos:
   //
-  // El sitio es HTML, CSS y JS planos: no hay build, no hay dependencias.
-  // Por eso el comando de compilacion queda vacio y esta carpeta se publica
-  // tal cual esta.
+  //   Pages   -> pages_build_output_dir
+  //   Workers -> assets.directory        <- este es el que corresponde
+  //
+  // Con el campo de Pages, Cloudflare ignoraba esta configuracion, autodetectaba
+  // el proyecto Vite de lithos-mapa/ y publicaba su index.html SIN compilar.
+  // Por eso la pagina salia en blanco: ese HTML solo tiene <div id="root"> y un
+  // <script src="/src/main.tsx"> que en produccion no existe.
+  //
+  // El sitio real es HTML, CSS y JS planos y vive en sitio-nuevo/. No hay build:
+  // la carpeta se publica tal cual.
   "name": "mirandeaybar",
-  "pages_build_output_dir": "./sitio-nuevo",
-  "compatibility_date": "2026-08-01"
+  "compatibility_date": "2026-08-01",
+  "assets": {
+    "directory": "./sitio-nuevo/",
+    // sirve nuestro 404.html propio en vez del error generico de Cloudflare
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  }
 }
