@@ -1,0 +1,12 @@
+{
+  // Le dice a Cloudflare Pages cual de las tres carpetas del repositorio
+  // publicar. Sin esto sirve la raiz, que no tiene index.html, y devuelve 404
+  // -- el mismo problema que hubo con Vercel al principio.
+  //
+  // El sitio es HTML, CSS y JS planos: no hay build, no hay dependencias.
+  // Por eso el comando de compilacion queda vacio y esta carpeta se publica
+  // tal cual esta.
+  "name": "mirandeaybar",
+  "pages_build_output_dir": "./sitio-nuevo",
+  "compatibility_date": "2026-08-01"
+}

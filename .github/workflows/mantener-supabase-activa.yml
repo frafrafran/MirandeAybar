@@ -43,10 +43,19 @@ jobs:
           echo "La base esta despierta."
 
       - name: Comprobar que el sitio responde
+        # Durante la mudanza a Cloudflare pueden convivir las dos direcciones.
+        # Alcanza con que UNA responda: si falla solo una, avisa pero no marca
+        # el trabajo como fallido, asi no llegan mails de error por algo que
+        # es esperable mientras se migra.
         run: |
-          CODIGO=$(curl -s -o /dev/null -w '%{http_code}' https://mirande-aybar.vercel.app/)
-          echo "Sitio: HTTP $CODIGO"
-          if [ "$CODIGO" != "200" ]; then
-            echo "::error::El sitio no respondio 200."
+          VIVO=0
+          for SITIO in https://mirandeaybar.pages.dev https://mirande-aybar.vercel.app; do
+            CODIGO=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$SITIO/" || echo 000)
+            echo "$SITIO -> HTTP $CODIGO"
+            [ "$CODIGO" = "200" ] && VIVO=1
+          done
+          if [ "$VIVO" != "1" ]; then
+            echo "::error::Ninguna de las dos direcciones respondio 200."
             exit 1
           fi
+          echo "El sitio esta en linea."
