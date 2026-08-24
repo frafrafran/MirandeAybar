@@ -49,7 +49,7 @@ jobs:
         # es esperable mientras se migra.
         run: |
           VIVO=0
-          for SITIO in https://mirandeaybar.pages.dev https://mirande-aybar.vercel.app; do
+          for SITIO in https://mirandeaybar.franciscoaybar2110.workers.dev https://mirande-aybar.vercel.app; do
             CODIGO=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$SITIO/" || echo 000)
             echo "$SITIO -> HTTP $CODIGO"
             [ "$CODIGO" = "200" ] && VIVO=1
