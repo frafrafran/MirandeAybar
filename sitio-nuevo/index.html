@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=20260820113015" />
+<link rel="stylesheet" href="styles.css?v=20260825180453" />
 <link rel="icon" href="assets/logos/isotipo-crema.png" />
 <link rel="apple-touch-icon" href="assets/logos/isotipo-azul.png" />
 
@@ -121,41 +121,55 @@
 
 <main id="main">
 
-<!-- ===================== 1. HERO — amanecer sobre el Champaquí ===================== -->
-<section class="track track--hero" id="top" data-track="hero">
-  <div class="pin">
-    <canvas id="gl" aria-hidden="true"></canvas>
-    <div class="pin__fallback" id="glFallback" hidden>
-      <img src="assets/fotos/champaqui.jpg" alt="Cerro Champaquí al amanecer" width="1080" height="765" />
-    </div>
-    <div class="pin__scrim" aria-hidden="true"></div>
+<!-- ===================== 1. PORTADA — el valle se abre =====================
+     La marca sobre el video del valle. El titulo se parte y sale de cuadro
+     mientras la ventana crece; al terminar de abrirse entran los botones y
+     los numeros, que antes vivian en el hero del amanecer.
+     ============================================================== -->
+<section class="track track--reveal" id="top" data-track="reveal">
+  <div class="pin pin--dark">
 
-    <div class="hero__body" id="heroBody">
-      <p class="label hero__eyebrow">Villa General Belgrano &nbsp;·&nbsp; Valle de Calamuchita &nbsp;·&nbsp; Córdoba</p>
-      <h1 class="d1">Casas, campos<br />y terrenos.</h1>
-      <p class="hero__lede">
-        Conocemos cada camino del valle desde hace más de quince años.
-        Encontramos las pocas propiedades que importan.
-      </p>
-      <div class="hero__cta">
-        <a class="btn btn--primary" href="#propiedades">Ver propiedades</a>
-        <a class="btn btn--ghost" href="#contacto">Escribinos</a>
+    <!-- fondo, se desvanece a medida que el video se abre -->
+    <div class="rv__bg" id="rvBg" aria-hidden="true">
+      <img src="assets/fotos/champaqui.jpg" alt="" decoding="async" width="1080" height="765" />
+      <div class="rv__bgtint"></div>
+    </div>
+
+    <!-- media: ocupa el viewport y se revela por una ventana que crece -->
+    <div class="rv__media" id="rvMedia">
+      <video id="rvVideo" poster="assets/fotos/pueblo-aerea.jpg"
+             muted loop playsinline preload="metadata"
+             disablepictureinpicture aria-label="Vista aérea del valle serrano">
+        <source src="assets/video/valle-aereo.mp4" type="video/mp4" />
+      </video>
+      <div class="rv__tint" id="rvTint" aria-hidden="true"></div>
+    </div>
+
+    <!-- título: se parte en dos y sale de cuadro -->
+    <div class="rv__head" id="rvHead">
+      <h1 class="rv__title">
+        <span class="rv__t rv__t--a" id="rvT1">Mirande</span>
+        <span class="rv__t rv__t--b" id="rvT2">Aybar</span>
+      </h1>
+      <div class="rv__meta">
+        <p class="label" id="rvMetaA">Villa General Belgrano &middot; Valle de Calamuchita</p>
       </div>
     </div>
 
-    <div class="hero__foot">
-      <dl class="hero__stats">
+    <!-- Entra cuando el video termina de abrirse, al reves que el titulo:
+         primero la marca, despues adonde ir y por que confiar. -->
+    <div class="rv__foot" id="rvFoot">
+      <div class="rv__cta">
+        <a class="btn btn--ivory" href="#propiedades">Ver propiedades</a>
+        <a class="btn btn--ghost" href="#contacto">Escribinos</a>
+      </div>
+      <dl class="rv__stats">
         <div><dt>Experiencia</dt><dd class="num" data-count="15" data-pre="+" data-post=" años">+15 años</dd></div>
         <div><dt>Operaciones</dt><dd class="num" data-count="200" data-pre="+">+200</dd></div>
         <div><dt>Localidades</dt><dd class="num">5 del valle</dd></div>
-        <div><dt>Atención</dt><dd class="num">Personalizada</dd></div>
       </dl>
-      <div class="hero__sun">
-        <p class="label">Cerro Champaquí &nbsp;·&nbsp; 2.790 m</p>
-        <p class="hero__sunval num"><span id="sunRead">Amanecer 04°</span></p>
-      </div>
-      <div class="hero__prog" aria-hidden="true"><i id="heroBar"></i></div>
     </div>
+
   </div>
 </section>
 
@@ -280,40 +294,6 @@
       <noscript><p class="note">El listado necesita JavaScript. Escribinos por WhatsApp al
         +54 9 3512 72-9721 y te pasamos las propiedades disponibles.</p></noscript>
     </div>
-  </div>
-</section>
-
-<!-- ===================== 4. EL VALLE SE ABRE — media que se expande con el scroll ===================== -->
-<section class="track track--reveal" id="rincon" data-track="reveal">
-  <div class="pin pin--dark">
-
-    <!-- fondo, se desvanece a medida que el video se abre -->
-    <div class="rv__bg" id="rvBg" aria-hidden="true">
-      <img src="assets/fotos/champaqui.jpg" alt="" decoding="async" width="1080" height="765" />
-      <div class="rv__bgtint"></div>
-    </div>
-
-    <!-- media: ocupa el viewport y se revela por una ventana que crece -->
-    <div class="rv__media" id="rvMedia">
-      <video id="rvVideo" poster="assets/fotos/pueblo-aerea.jpg"
-             muted loop playsinline preload="metadata"
-             disablepictureinpicture aria-label="Vista aérea del valle serrano">
-        <source src="assets/video/valle-aereo.mp4" type="video/mp4" />
-      </video>
-      <div class="rv__tint" id="rvTint" aria-hidden="true"></div>
-    </div>
-
-    <!-- título: se parte en dos y sale de cuadro -->
-    <div class="rv__head" id="rvHead">
-      <h2 class="rv__title">
-        <span class="rv__t rv__t--a" id="rvT1">Conocemos</span>
-        <span class="rv__t rv__t--b" id="rvT2">cada rincón</span>
-      </h2>
-      <div class="rv__meta">
-        <p class="label" id="rvMetaA">Valle de Calamuchita</p>
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -586,7 +566,7 @@
 </a>
 
 <script src="config.js?v=PRUEBAFALLO"></script>
-<script src="main.js?v=20260820113015"></script>
-<script src="propiedades.js?v=20260820113015"></script>
+<script src="main.js?v=20260825180453"></script>
+<script src="propiedades.js?v=20260825180453"></script>
 </body>
 </html>

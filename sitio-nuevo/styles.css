@@ -58,7 +58,7 @@
 
   --r:18px;
 
-  --t-hero:300vh; --t-thesis:200vh; --t-serv:400vh;
+  --t-thesis:200vh; --t-serv:400vh;
 }
 
 
@@ -240,7 +240,6 @@ section[id],[id]{scroll-margin-top:96px;}
 
 /* ============================ PINES ============================ */
 .track{position:relative;}
-.track--hero{height:var(--t-hero);}
 .track--thesis{height:var(--t-thesis);}
 .track--serv{height:var(--t-serv);}
 .pin{position:sticky;top:0;height:100dvh;overflow:hidden;display:flex;flex-direction:column;}
@@ -248,35 +247,6 @@ section[id],[id]{scroll-margin-top:96px;}
 .pin--dark{background:var(--ink);color:var(--ivory);}
 .pin--ivory{background:var(--ivory);}
 .pin--dark .note{color:var(--muted-d);}
-
-/* ============================ HERO ============================ */
-.track--hero .pin{background:linear-gradient(180deg,#101A22,#2A2A28 55%,#161E23);}
-#gl{position:absolute;inset:0;width:100%;height:100%;}
-.pin__fallback{position:absolute;inset:0;}
-.pin__fallback img{width:100%;height:100%;object-fit:cover;}
-.pin__scrim{position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(to top,rgba(43,58,66,.9),rgba(43,58,66,.1) 46%,rgba(43,58,66,.6));}
-
-.hero__body{position:relative;z-index:2;margin:auto 0 0;width:100%;max-width:var(--maxw);
-  margin-inline:auto;padding:0 var(--px) clamp(1.75rem,4vh,3rem);color:var(--ivory);
-  display:grid;gap:1.15rem;justify-items:start;will-change:transform,opacity;}
-.hero__eyebrow{color:var(--gold);}
-.hero__lede{font-size:1.0625rem;color:rgba(239,227,210,.88);max-width:44ch;}
-.hero__cta{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:.4rem;}
-
-.hero__foot{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin-inline:auto;
-  padding:1.1rem var(--px) clamp(1.25rem,3.5vh,2rem);color:var(--ivory);
-  border-top:1px solid var(--line-d);display:flex;flex-wrap:wrap;align-items:flex-end;gap:1rem 2rem;}
-.hero__stats{flex:1 1 22rem;display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem 1.5rem;}
-@media (min-width:760px){.hero__stats{grid-template-columns:repeat(4,1fr);}}
-.hero__stats dt{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--muted-d);margin-bottom:.25rem;}
-.hero__stats dd{font-family:var(--display);font-weight:600;font-size:1.12rem;letter-spacing:-.02em;}
-.hero__sun{text-align:right;}
-.hero__sun .label{color:var(--muted-d);margin-bottom:.2rem;}
-.hero__sunval{font-family:var(--display);font-weight:600;font-size:1.12rem;color:var(--gold);}
-.hero__prog{flex:1 1 100%;height:1px;background:var(--line-d);}
-.hero__prog i{display:block;height:100%;width:100%;background:var(--gold-graphic);transform:scaleX(0);transform-origin:left;}
 
 /* ============================ MANIFIESTO ============================ */
 .thesis__frame{position:absolute;width:min(64vw,660px);aspect-ratio:4/3;
@@ -354,6 +324,38 @@ section[id],[id]{scroll-margin-top:96px;}
   will-change:transform;}
 .rv__meta{display:grid;gap:.45rem;color:var(--ivory);will-change:opacity;}
 .rv__meta .label{color:rgba(239,227,210,.82);}
+
+/* Botones y numeros de la portada. Entran cuando el video termina de abrirse,
+   asi que arrancan invisibles: el JS los sube desde opacity 0. Sin este valor
+   inicial se verian de golpe en el primer cuadro, antes de que el bucle corra. */
+.rv__foot{color:var(--ivory);
+  position:absolute;left:0;right:0;bottom:clamp(1.75rem,5vh,3.25rem);
+  z-index:3;display:flex;flex-direction:column;align-items:center;
+  gap:clamp(1rem,2.5vh,1.6rem);padding-inline:clamp(1rem,5vw,2rem);
+  opacity:0;will-change:opacity,transform;pointer-events:none;}
+.rv__cta{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center;}
+.rv__stats{display:flex;flex-wrap:wrap;justify-content:center;
+  gap:.5rem clamp(1.25rem,4vw,2.75rem);margin:0;
+  padding-top:clamp(.75rem,2vh,1.1rem);border-top:1px solid rgba(239,227,210,.22);
+  width:min(100%,44rem);}
+.rv__stats > div{text-align:center;display:grid;gap:.1rem;}
+.rv__stats dt{font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(239,227,210,.66);}
+.rv__stats dd{margin:0;font-family:var(--display);font-weight:600;
+  font-size:1.05rem;letter-spacing:-.02em;color:var(--ivory);
+  font-variant-numeric:tabular-nums;}
+@media (max-width:520px){
+  .rv__cta{width:100%;flex-direction:column;}
+  .rv__cta .btn{width:100%;justify-content:center;}
+  /* en pantallas angostas tres columnas dejan los numeros ilegibles */
+  .rv__stats > div:last-child{display:none;}
+}
+/* sin animacion el titulo no sale de cuadro, asi que la portada se muestra
+   completa y quieta */
+@media (prefers-reduced-motion:reduce){
+  .rv__foot{opacity:1;transform:none;pointer-events:auto;position:static;
+    margin-top:auto;}
+}
 @keyframes cue{0%,100%{transform:scaleX(.25)}50%{transform:scaleX(1)}}
 
 .rv__after{display:grid;gap:clamp(1.5rem,4vw,3.5rem);}
@@ -971,7 +973,7 @@ body.sin-scroll{overflow:hidden;}
     transition-duration:.001ms!important;}
   .js .reveal{opacity:1;transform:none;}
   .words span{opacity:1;filter:none;}
-  .track--hero,.track--thesis,.track--serv,.track--reveal{height:auto;}
+  .track--thesis,.track--serv,.track--reveal{height:auto;}
   .pin{position:relative;height:auto;min-height:100dvh;}
   /* el video queda abierto y quieto, sin secuencia de expansion */
   .rv__media{clip-path:none!important;}

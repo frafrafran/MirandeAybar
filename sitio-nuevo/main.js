@@ -79,7 +79,7 @@
      2. Nav
      --------------------------------------------------------- */
   var nav = $('#nav'), burger = $('#burger'), drawer = $('#drawer');
-  var darkZones = $$('.track--hero .pin, .pin--dark, .band--dark, .sheet, .track--reveal .pin');
+  var darkZones = $$('.pin--dark, .band--dark, .sheet, .track--reveal .pin');
 
   burger.addEventListener('click', function () {
     var open = burger.getAttribute('aria-expanded') === 'true';
@@ -172,29 +172,6 @@
   }
 
   /* ---------------------------------------------------------
-     5. Hero
-     --------------------------------------------------------- */
-  var heroTrack = $('[data-track="hero"]'), heroBody = $('#heroBody');
-  var heroBar = $('#heroBar'), sunRead = $('#sunRead');
-  var heroScroll = 0, lastSun = '';
-
-  function updateHero() {
-    if (!heroTrack) return;
-    var p = REDUCE ? 0.35 : trackProgress(heroTrack);
-    heroScroll = p;
-    if (heroBody && !REDUCE) {
-      heroBody.style.transform = 'translate3d(0,' + (-p * 72).toFixed(1) + 'px,0)';
-      heroBody.style.opacity = clamp(1 - (p - 0.45) / 0.3, 0, 1).toFixed(3);
-    }
-    if (heroBar) heroBar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
-    if (sunRead) {
-      var deg = 2 + 14 * p;
-      var txt = (p < 0.45 ? 'Amanecer ' : 'Mañana ') + (deg < 10 ? '0' : '') + deg.toFixed(0) + '°';
-      if (txt !== lastSun) { sunRead.textContent = txt; lastSun = txt; }
-    }
-  }
-
-  /* ---------------------------------------------------------
      6. El valle se abre — port de ScrollExpandMedia
 
      El original engancha wheel/touch en window con preventDefault y
@@ -206,7 +183,7 @@
   var rvTrack = $('[data-track="reveal"]');
   var rvBg = $('#rvBg'), rvMedia = $('#rvMedia'), rvVideo = $('#rvVideo');
   var rvT1 = $('#rvT1'), rvT2 = $('#rvT2'), rvMeta = $('.rv__meta');
-  var rvTint = $('#rvTint');
+  var rvTint = $('#rvTint'), rvFoot = $('#rvFoot');
 
   /* El video pesa 8,2 MB. Quien navega con "ahorro de datos" activado o con
      una conexion lenta no deberia pagar eso sin haberlo pedido: en ese caso
@@ -265,6 +242,16 @@
     rvT1.style.transform = 'translate3d(-' + tx.toFixed(2) + 'vw,0,0)';
     rvT2.style.transform = 'translate3d(' + tx.toFixed(2) + 'vw,0,0)';
     if (rvMeta) rvMeta.style.opacity = clamp(1 - (p - 0.42) / 0.28, 0, 1).toFixed(3);
+
+    /* Al reves que el titulo: mientras la marca sale de cuadro, entran los
+       botones y los numeros. Empiezan a aparecer cuando el video ya se abrio
+       lo suficiente como para que se lean sobre el. */
+    if (rvFoot) {
+      var f = clamp((p - 0.5) / 0.26, 0, 1);
+      rvFoot.style.opacity = f.toFixed(3);
+      rvFoot.style.transform = 'translate3d(0,' + ((1 - f) * 26).toFixed(1) + 'px,0)';
+      rvFoot.style.pointerEvents = f > 0.55 ? 'auto' : 'none';
+    }
   }
 
   /* ---------------------------------------------------------
@@ -590,7 +577,6 @@
     }
     nav.classList.toggle('on-dark', onDark);
 
-    updateHero();
     updateThesis();
     updateReveal();
     updateServ();
@@ -598,228 +584,9 @@
     requestAnimationFrame(frame);
   }
 
-  /* ---------------------------------------------------------
-     10. Amanecer sobre las sierras — WebGL
-         Silueta de cordones en capas con fBm. Siete capas con
-         paralaje, luz de canto y niebla de valle: mucho más
-         barato que marchar un SDF y es el paisaje real.
-     --------------------------------------------------------- */
-  var VERT = [
-    'attribute vec2 aPos;',
-    'void main(){ gl_Position = vec4(aPos,0.0,1.0); }'
-  ].join('\n');
-
-  var FRAG = [
-    '#ifdef GL_FRAGMENT_PRECISION_HIGH',
-    'precision highp float;',
-    '#else',
-    'precision mediump float;',
-    '#endif',
-    'uniform vec2 uRes; uniform float uTime; uniform float uScroll; uniform vec2 uMouse;',
-
-    'float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453123); }',
-
-    'float noise(vec2 p){',
-    '  vec2 i = floor(p), f = fract(p);',
-    '  f = f*f*(3.0-2.0*f);',
-    '  return mix(mix(hash(i), hash(i+vec2(1.0,0.0)), f.x),',
-    '             mix(hash(i+vec2(0.0,1.0)), hash(i+vec2(1.0,1.0)), f.x), f.y);',
-    '}',
-
-    'float fbm(vec2 p){',
-    '  float a = 0.5, s = 0.0;',
-    '  for(int i=0;i<5;i++){ s += a*noise(p); p *= 2.03; a *= 0.5; }',
-    '  return s;',
-    '}',
-
-    /* perfil de un cordón: fBm afilado en crestas */
-    'float ridge(float x, float seed){',
-    '  float h = fbm(vec2(x + seed, seed*3.7));',
-    '  return h*h*(3.0-2.0*h);',
-    '}',
-
-    'vec3 aces(vec3 x){ return clamp((x*(2.51*x+0.03))/(x*(2.43*x+0.59)+0.14),0.0,1.0); }',
-
-    'void main(){',
-    '  vec2 uv = gl_FragCoord.xy/uRes;',
-    '  float aspect = uRes.x/uRes.y;',
-    '  vec2 p = vec2((uv.x-0.5)*aspect, uv.y-0.5);',
-    '  float px = 1.0/uRes.y;',
-    '  float s = uScroll;',
-
-    /* el sol sube con el scroll */
-    '  float sunY = mix(-0.10, 0.155, s);',
-    '  vec2 sunP = vec2(-0.20 + uMouse.x*0.03, sunY);',
-
-    /* cielo: previa del amanecer -> mañana */
-    '  vec3 zen = mix(vec3(0.055,0.075,0.125), vec3(0.155,0.265,0.395), s);',
-    '  vec3 hor = mix(vec3(0.62,0.31,0.15), vec3(0.99,0.80,0.55), s);',
-    '  float g = clamp(p.y+0.5, 0.0, 1.0);',
-    /* se guarda el cielo SIN resplandor: es la referencia de la que sale el
-       color de cada cordon, para que la silueta nunca supere a su fondo */
-    '  vec3 skyBase = mix(hor, zen, pow(g, 0.70));',
-    '  vec3 col = skyBase;',
-
-    /* resplandor y disco solar */
-    '  float d = length((p - sunP)*vec2(1.0,1.35));',
-    '  col += vec3(1.0,0.62,0.30) * exp(-d*4.6) * (0.50 + 0.45*s);',
-    '  col += vec3(1.0,0.86,0.62) * exp(-d*18.0) * 0.80;',
-    '  col += vec3(1.0,0.93,0.78) * smoothstep(0.036,0.028,d) * 1.45;',
-
-    /* siete cordones, del más lejano al más cercano */
-    '  for(int i=0;i<7;i++){',
-    '    float fi = float(i);',
-    '    float k = fi/6.0;',
-    '    float par = mix(0.010, 0.075, k);',
-    '    float x = (p.x + uMouse.x*par + s*par*0.55) * mix(2.2, 0.85, k);',
-    '    float amp = mix(0.040, 0.200, k);',
-    '    float base = mix(0.055, -0.340, k);',
-    '    float h = base + amp*(ridge(x, fi*11.3 + 3.1) - 0.45);',
-
-    '    float cov = smoothstep(-px, px, h - p.y);',
-    '    if(cov > 0.0){',
-    /* la bruma tiende al cielo de ESTE pixel pero siempre 28% por debajo:
-       asi la silueta se lee a cualquier altura del sol y a cualquier altura
-       de pantalla, sin depender de que coincidan dos mezclas distintas */
-    '      vec3 haze = skyBase * mix(0.72, 0.26, k);',
-    '      vec3 ink  = vec3(0.050,0.044,0.036);',
-    '      vec3 lc = mix(haze, ink, pow(k, 1.35));',
-
-    /* luz de canto en el filo, más fuerte del lado del sol */
-    '      float dz = max(h - p.y, 0.0);',
-    '      float rim = 1.0 - smoothstep(0.0, 0.013 + 0.021*k, dz);',
-    '      float sunSide = exp(-length((vec2(p.x,h) - sunP)*vec2(0.8,1.0))*2.2);',
-    '      lc += vec3(1.0,0.66,0.34) * rim * (0.26 + 1.25*sunSide) * (0.5 + 0.6*s);',
-
-    /* niebla de valle acumulada bajo cada filo */
-    '      float mist = exp(-dz*mix(30.0, 9.0, k));',
-    '      float drift = 0.5 + 0.5*sin(uTime*0.15 + fi*1.7);',
-    '      lc = mix(lc, mix(hor, vec3(0.86,0.81,0.75), 0.5), mist*mix(0.18,0.06,k)*(0.6+0.4*drift));',
-
-    '      col = mix(col, lc, cov);',
-    '    }',
-    '  }',
-
-    /* peso atmosférico en el borde inferior */
-    '  col = mix(col, mix(hor,zen,0.5)*0.26, smoothstep(0.02,-0.5,p.y)*0.22);',
-
-    '  col = aces(col*1.05);',
-    '  col = pow(col, vec3(0.4545));',
-    '  float vg = 1.0 - 0.38*dot(p*vec2(0.55,0.85), p*vec2(0.55,0.85));',
-    '  col *= clamp(vg, 0.0, 1.0);',
-    '  col += (hash(gl_FragCoord.xy + fract(uTime)) - 0.5)*0.018;',
-    '  gl_FragColor = vec4(col, 1.0);',
-    '}'
-  ].join('\n');
-
-  (function initGL() {
-    var canvas = $('#gl'), fallback = $('#glFallback');
-
-    function fail() {
-      if (canvas) canvas.style.display = 'none';
-      if (fallback) fallback.hidden = false;
-      requestAnimationFrame(frame);
-    }
-    if (!canvas) { requestAnimationFrame(frame); return; }
-
-    var gl = null;
-    var opts = { antialias: false, alpha: false, depth: false, stencil: false, powerPreference: 'high-performance' };
-    try {
-      gl = canvas.getContext('webgl2', opts) || canvas.getContext('webgl', opts) || canvas.getContext('experimental-webgl', opts);
-    } catch (e) { gl = null; }
-    if (!gl) { fail(); return; }
-
-    function compile(type, src) {
-      var sh = gl.createShader(type);
-      gl.shaderSource(sh, src); gl.compileShader(sh);
-      if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
-        console.error('Shader:', gl.getShaderInfoLog(sh));
-        gl.deleteShader(sh); return null;
-      }
-      return sh;
-    }
-    var vs = compile(gl.VERTEX_SHADER, VERT), fs = compile(gl.FRAGMENT_SHADER, FRAG);
-    if (!vs || !fs) { fail(); return; }
-
-    var prog = gl.createProgram();
-    gl.attachShader(prog, vs); gl.attachShader(prog, fs);
-    gl.bindAttribLocation(prog, 0, 'aPos');
-    gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
-      console.error('Link:', gl.getProgramInfoLog(prog)); fail(); return;
-    }
-    gl.useProgram(prog);
-
-    var buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-    gl.enableVertexAttribArray(0);
-    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
-
-    var uRes = gl.getUniformLocation(prog, 'uRes');
-    var uTime = gl.getUniformLocation(prog, 'uTime');
-    var uScroll = gl.getUniformLocation(prog, 'uScroll');
-    var uMouse = gl.getUniformLocation(prog, 'uMouse');
-
-    /* las siluetas quieren nitidez, y este shader es barato:
-       casi 1:1 en pantallas estándar */
-    var scale = Math.min(window.devicePixelRatio || 1, 1.6) * 0.9;
-    var cw = 0, ch = 0;
-
-    function resize() {
-      var w = Math.max(1, Math.round(canvas.clientWidth * scale));
-      var h = Math.max(1, Math.round(canvas.clientHeight * scale));
-      if (w === cw && h === ch) return;
-      cw = w; ch = h;
-      canvas.width = w; canvas.height = h;
-      gl.viewport(0, 0, w, h);
-      gl.uniform2f(uRes, w, h);
-    }
-    /* dimensiona desde la caja del elemento, no desde el bucle de dibujo,
-       para que siga bien aunque rAF esté throttleado */
-    if (window.ResizeObserver) new ResizeObserver(function () { resize(); }).observe(canvas);
-    /* respaldo por temporizador: los timers corren incluso cuando rAF y el
-       ResizeObserver están congelados (pestaña en segundo plano, primer
-       cuadro trabado, o layout que llega después de las fuentes) */
-    window.addEventListener('load', resize);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(resize);
-    [120, 600, 1800].forEach(function (ms) { window.setTimeout(resize, ms); });
-
-    var mx = 0, tmx = 0;
-    window.addEventListener('pointermove', function (e) {
-      if (e.pointerType === 'touch') return;
-      tmx = (e.clientX / vw - 0.5) * 2;
-    }, { passive: true });
-
-    var visible = true;
-    new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }, { threshold: 0 }).observe(canvas);
-    canvas.addEventListener('webglcontextlost', function (e) { e.preventDefault(); visible = false; fallback.hidden = false; });
-
-    var t0 = performance.now(), avg = 16, frames = 0, degraded = 0, prev = t0;
-
-    function loop(now) {
-      requestAnimationFrame(loop);
-      if (!visible) { prev = now; return; }
-      if (REDUCE && frames > 2) return;
-      var dt = now - prev; prev = now;
-      resize();
-      frames++;
-      avg = avg * 0.9 + Math.min(dt, 120) * 0.1;
-      if (frames > 70 && degraded < 2 && avg > 26) {
-        degraded++; scale = Math.max(0.5, scale * 0.72); cw = 0; frames = 0; avg = 16;
-      }
-      mx = lerp(mx, tmx, 0.06);
-      gl.uniform1f(uTime, (now - t0) / 1000);
-      gl.uniform1f(uScroll, heroScroll);
-      gl.uniform2f(uMouse, REDUCE ? 0 : mx, 0);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
-    }
-
-    resize();
-    requestAnimationFrame(loop);
-    requestAnimationFrame(frame);
-    window.addEventListener('resize', function () { cw = 0; frames = 0; resize(); });
-  })();
+  /* El amanecer WebGL se fue con el hero, y con el la funcion que
+     arrancaba este bucle. Ahora arranca aca. */
+  requestAnimationFrame(frame);
 
   /* expuesto para que propiedades.js registre las tarjetas creadas despues */
   window.MA = {
