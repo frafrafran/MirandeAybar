@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=20260825180453" />
+<link rel="stylesheet" href="styles.css?v=20260828000634" />
 <link rel="icon" href="assets/logos/isotipo-crema.png" />
 <link rel="apple-touch-icon" href="assets/logos/isotipo-azul.png" />
 
@@ -340,8 +340,8 @@
       </article>
       <article class="face">
         <span class="face__n num">/ 04</span>
-        <h3 class="face__t">Alquiler temporario</h3>
-        <p class="face__p">Gestión completa de tu cabaña o casa de renta: huéspedes, mantenimiento y ocupación.</p>
+        <h3 class="face__t">Alquiler permanente</h3>
+        <p class="face__p">Gestión completa de tu propiedad en alquiler: inquilinos, contratos, garantías y cobranza.</p>
       </article>
     </div>
 
@@ -554,6 +554,21 @@
         <div><p class="label">Contacto</p><a href="https://wa.me/5493512729721" target="_blank" rel="noopener">WhatsApp</a><a href="mailto:mirandeaybar@gmail.com">mirandeaybar@gmail.com</a><a href="https://www.instagram.com/mirandeaybar" target="_blank" rel="noopener">Instagram</a><a href="https://www.tiktok.com/@mirandeaybar" target="_blank" rel="noopener">TikTok</a></div>
       </div>
     </div>
+    <!-- Mapa de la oficina. El iframe lo arma main.js a partir de
+         CONFIG.oficina, para que las coordenadas vivan en un solo lugar.
+         Si el JS no corre, queda igual el enlace a Google Maps. -->
+    <div class="sheet__mapa">
+      <div class="sheet__mapacaja" id="mapaOficinaCaja"></div>
+      <div class="sheet__mapainfo">
+        <p class="label">Dónde estamos</p>
+        <p class="note">Paseo Los Troncos, Av. J. A. Roca 95<br />Villa General Belgrano, Córdoba</p>
+        <a class="btn btn--ghost" id="mapaOficinaIr" target="_blank" rel="noopener"
+           href="https://www.google.com/maps/search/?api=1&amp;query=Paseo+Los+Troncos%2C+Av.+J.+A.+Roca+95%2C+Villa+General+Belgrano%2C+C%C3%B3rdoba">
+          Cómo llegar
+        </a>
+      </div>
+    </div>
+
     <div class="sheet__foot">
       <p class="label">© 2026 Mirande Aybar. Todos los derechos reservados.</p>
       <p class="label">Paseo Los Troncos, Av. J. A. Roca 95 · VGB</p>
@@ -566,7 +581,7 @@
 </a>
 
 <script src="config.js?v=PRUEBAFALLO"></script>
-<script src="main.js?v=20260825180453"></script>
-<script src="propiedades.js?v=20260825180453"></script>
+<script src="main.js?v=20260828000634"></script>
+<script src="propiedades.js?v=20260828000634"></script>
 </body>
 </html>

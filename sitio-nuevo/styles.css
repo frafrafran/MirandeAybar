@@ -955,6 +955,32 @@ body.sin-scroll{overflow:hidden;}
   text-underline-offset:3px;}
 .pv__contacto .label{color:var(--muted-l);margin-bottom:.15rem;}
 
+/* ---------- mapas (OpenStreetMap incrustado) ---------- */
+.pv__mapa{margin-top:2rem;display:grid;gap:.9rem;justify-items:start;}
+.pv__mapacaja,.sheet__mapacaja{width:100%;border-radius:12px;overflow:hidden;
+  border:1px solid var(--line-l);background:var(--ivory-2);}
+.pv__mapacaja{aspect-ratio:16/9;min-height:240px;}
+.pv__mapacaja iframe,.sheet__mapacaja iframe{display:block;width:100%;height:100%;border:0;}
+@media (max-width:640px){.pv__mapacaja{aspect-ratio:4/3;}}
+
+/* pie de pagina */
+.sheet__mapa{display:grid;gap:1.25rem;align-items:center;
+  margin-top:clamp(2rem,5vw,3rem);padding-top:clamp(1.75rem,4vw,2.5rem);
+  border-top:1px solid var(--line-d);}
+@media (min-width:820px){
+  .sheet__mapa{grid-template-columns:minmax(0,1.7fr) minmax(15rem,1fr);gap:2rem;}
+}
+.sheet__mapacaja{aspect-ratio:21/9;min-height:200px;border-color:var(--line-d);
+  background:var(--ink-2);}
+@media (max-width:819px){.sheet__mapacaja{aspect-ratio:4/3;}}
+.sheet__mapainfo{display:grid;gap:.5rem;justify-items:start;}
+.sheet__mapainfo .label{color:var(--gold);}
+.sheet__mapainfo .btn{margin-top:.35rem;}
+
+/* Los mapas son de OpenStreetMap, que es claro. Sobre el pie oscuro un
+   marco blanco encandila, asi que se le baja un punto el brillo. */
+.sheet__mapacaja iframe{filter:brightness(.94) saturate(.92);}
+
 @media (prefers-reduced-motion:reduce){
   .pv{transition:none;opacity:1;}
 }

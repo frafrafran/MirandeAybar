@@ -588,8 +588,53 @@
      arrancaba este bucle. Ahora arranca aca. */
   requestAnimationFrame(frame);
 
+  /* ---------------------------------------------------------
+     Mapas — OpenStreetMap incrustado
+
+     Sin clave de API, sin librería y sin costo: es un iframe a un
+     servicio publico. Google Maps para incrustar exige una clave y
+     una cuenta con tarjeta, y aca la idea es que el sitio no genere
+     ninguna factura. El enlace "Como llegar" si va a Google Maps,
+     que es lo que la gente tiene instalado en el telefono.
+     --------------------------------------------------------- */
+  function urlMapa(lat, lng, radio) {
+    var d = radio || 0.006;
+    var bbox = [(lng - d).toFixed(6), (lat - d).toFixed(6),
+                (lng + d).toFixed(6), (lat + d).toFixed(6)].join(',');
+    return 'https://www.openstreetmap.org/export/embed.html?bbox=' + bbox +
+           '&layer=mapnik&marker=' + lat.toFixed(6) + ',' + lng.toFixed(6);
+  }
+
+  function comoLlegar(lat, lng) {
+    return 'https://www.google.com/maps/search/?api=1&query=' +
+           lat.toFixed(6) + ',' + lng.toFixed(6);
+  }
+
+  function marcoMapa(lat, lng, titulo, radio) {
+    var f = document.createElement('iframe');
+    f.src = urlMapa(lat, lng, radio);
+    f.title = titulo;
+    f.loading = 'lazy';                   /* no cuesta nada hasta que se ve */
+    f.referrerPolicy = 'no-referrer-when-downgrade';
+    f.setAttribute('frameborder', '0');
+    return f;
+  }
+
+  /* mapa de la oficina en el pie */
+  (function mapaOficina() {
+    var caja = $('#mapaOficinaCaja');
+    var o = (window.CONFIG || {}).oficina;
+    if (!caja || !o || typeof o.lat !== 'number') return;
+    caja.appendChild(marcoMapa(o.lat, o.lng, 'Mapa de la oficina de Mirande Aybar', 0.004));
+    var ir = $('#mapaOficinaIr');
+    if (ir) ir.href = comoLlegar(o.lat, o.lng);
+  })();
+
   /* expuesto para que propiedades.js registre las tarjetas creadas despues */
   window.MA = {
+    urlMapa: urlMapa,
+    comoLlegar: comoLlegar,
+    marcoMapa: marcoMapa,
     observarReveals: function () {
       $$('.reveal').forEach(function (el) {
         if (!el.classList.contains('is-in')) revealIO.observe(el);

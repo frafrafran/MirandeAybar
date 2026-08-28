@@ -519,6 +519,14 @@
             '<p class="pv__desc" id="pvDesc"></p>' +
             '<h2 class="pv__h">Ficha técnica</h2>' +
             '<dl class="pv__datos" id="pvDatos"></dl>' +
+            /* El mapa se arma recien al abrir una propiedad, y solo si tiene
+               coordenadas cargadas. Asi no se pide ningun mapa mientras el
+               visitante mira el listado. */
+            '<section class="pv__mapa" id="pvMapa" hidden>' +
+              '<h2 class="pv__h">Ubicación</h2>' +
+              '<div class="pv__mapacaja" id="pvMapaCaja"></div>' +
+              '<a class="btn btn--ghost pv__mapair" id="pvMapaIr" target="_blank" rel="noopener">Cómo llegar</a>' +
+            '</section>' +
           '</div>' +
           '<aside class="pv__side">' +
             '<p class="pv__precio num" id="pvPrecio"></p>' +
@@ -600,6 +608,16 @@
       fila('Cubiertos', areas(p).cubierto ? metros(areas(p).cubierto) : '') +
       fila('Terreno', areas(p).terreno ? metros(areas(p).terreno) : '') +
       fila('Referencia', 'MA-' + p.id);
+
+    var mapa = $('#pvMapa', vista), caja = $('#pvMapaCaja', vista);
+    var lat = Number(p.lat), lng = Number(p.lng);
+    var hayUbicacion = isFinite(lat) && isFinite(lng) && p.lat !== null && p.lng !== null;
+    caja.innerHTML = '';
+    mapa.hidden = !hayUbicacion;
+    if (hayUbicacion && window.MA && window.MA.marcoMapa) {
+      caja.appendChild(window.MA.marcoMapa(lat, lng, 'Mapa de ' + (p.titulo || 'la propiedad')));
+      $('#pvMapaIr', vista).href = window.MA.comoLlegar(lat, lng);
+    }
 
     $('#pvWa', vista).href = waLink(p);
     $('#pvMail', vista).href = 'mailto:' + (CFG.email || '') +
