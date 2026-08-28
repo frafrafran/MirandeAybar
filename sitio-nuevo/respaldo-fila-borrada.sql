@@ -1,0 +1,32 @@
+-- ============================================================
+--  Respaldo de la fila id=1, borrada el 28/08/2026
+--
+--  POR QUE SE BORRO: era la misma propiedad que la id=8 (Cabañas Maderhaus,
+--  Villa Yacanto), cargada dos veces con precios distintos: 90.000 en esta y
+--  80.000 en la otra. Francisco confirmo que el precio correcto es 80.000,
+--  asi que se conservo la id=8 y se elimino esta.
+--
+--  QUE SE RESCATO ANTES DE BORRAR: la foto. Estaba solo en esta fila; la
+--  id=8 tenia la imagen vacia. Se copio a la id=8 antes de eliminar, para no
+--  perder la unica foto real que tenia esa propiedad.
+--
+--  QUE NO SE COPIO, a proposito, porque la id=8 ya tenia sus propios valores:
+--    precio      90.000  ->  se conserva 80.000, que es el correcto
+--    superficie  500      ->  se conserva 40 (cubiertos) con lote 500, que es
+--                            mas preciso: esta fila arrastraba el error viejo
+--                            de poner la superficie del lote como cubierta
+--    tipo        'Cabaña\n' con salto de linea  ->  se conserva 'Cabaña'
+--    operacion   'Venta'  ->  se conserva 'venta'
+--    titulo_en   'Cavins MaderHaus Yacanto' (dice Cavins, no Cabins)
+--
+--  QUEDAN DOS DIFERENCIAS SIN RESOLVER, avisadas a Francisco:
+--    destacada   esta fila estaba en true y la id=8 esta en false
+--    banos       esta fila decia 1 y la id=8 dice 0, aunque su propia
+--                descripcion menciona "Baño"
+--
+--  PARA RESTAURARLA: ejecutar el insert de abajo en el SQL Editor de
+--  Supabase. Va a recibir un id nuevo, no el 1.
+-- ============================================================
+
+insert into public.propiedades (publicada,titulo,titulo_en,tipo,operacion,precio,moneda,localidad,dormitorios,banos,superficie,lote,descripcion,descripcion_en,destacada,nuevo,imagen,imagenes,lat,lng) values (true,'Cabañas MaderHaus Yacanto','Cavins MaderHaus Yacanto','Cabaña
+','Venta',90000,'USD','Villa Yacanto de Calamuchita',1,1,500,0,'Ideal para proyecto turístico. AGUA y LUZ de la Cooperativa Listas para escriturar 1 dormitorio, baño, living, comedor, cocina, galería No cuenta con gas natural. Con vista al Champa','Ideal for a tourism project. Water and electricity provided by the cooperative; ready for title transfer. Features 1 bedroom, bathroom, living room, dining room, kitchen, and veranda. No natural gas connection. View of Mount Champaquí.',true,true,'https://emionflujpdzxpejlgye.supabase.co/storage/v1/object/public/fotos/WhatsApp%20Image%202026-07-14%20at%2010.49.03%20PM.jpeg',null,-32.107889,-64.768472);
