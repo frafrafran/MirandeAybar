@@ -17,17 +17,22 @@ name: Mantener la base despierta
 
 on:
   schedule:
-    # 11:00 UTC = 08:00 en Argentina, todos los dias
-    - cron: '0 11 * * *'
+    # Cada 6 horas. Con una sola consulta por dia Supabase igual pauso el
+    # proyecto (10 de septiembre de 2026, tras 8 dias seguidos de tarea en
+    # verde): su documentacion pide "a few requests each day", y una no es
+    # "a few". Cuatro al dia si le alcanza.
+    - cron: '0 */6 * * *'
   workflow_dispatch:        # tambien se puede correr a mano desde Actions
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Consultar una fila de propiedades
+      - name: Consultar propiedades, como lo hace el sitio
         run: |
-          URL="https://emionflujpdzxpejlgye.supabase.co/rest/v1/propiedades?select=id&limit=1"
+          # Una consulta parecida a la que hace el sitio, no un ping minimo:
+          # cuenta mas como actividad real.
+          URL="https://emionflujpdzxpejlgye.supabase.co/rest/v1/propiedades?select=id,titulo,precio&publicada=eq.true&order=id.desc&limit=8"
           KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaW9uZmx1anBkenhwZWpsZ3llIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNzAxNjgsImV4cCI6MjA5OTY0NjE2OH0.ZnsyNAzXNItYcEBcn9B63KD4NXJAhE433EZpLnsoJEY"
 
           CODIGO=$(curl -s -o /tmp/respuesta.json -w '%{http_code}' \
