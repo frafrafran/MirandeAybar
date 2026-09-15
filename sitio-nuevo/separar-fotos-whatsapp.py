@@ -50,6 +50,10 @@ except ImportError:
     print('Falta Pillow. Instalala con:  pip install Pillow')
     raise SystemExit(1)
 
+# Los planos y panoramicas que manda el cliente pueden superar el limite
+# con el que Pillow se protege de archivos maliciosos. Son archivos propios.
+Image.MAX_IMAGE_PIXELS = None
+
 AQUI = os.path.dirname(os.path.abspath(__file__))
 IMG_EXT = ('.jpg', '.jpeg', '.png', '.webp', '.heic')
 
@@ -60,28 +64,40 @@ IMG_EXT = ('.jpg', '.jpeg', '.png', '.webp', '.heic')
 RE_ANDROID = re.compile(r'^(\d{1,2}/\d{1,2}/\d{2,4}),?\s+(\d{1,2}:\d{2}(?:\s?[ap]\.?\s?m\.?)?)\s+-\s+([^:]+?):\s(.*)$', re.I)
 RE_IPHONE = re.compile(r'^\[(\d{1,2}/\d{1,2}/\d{2,4}),?\s+(\d{1,2}:\d{2}(?::\d{2})?(?:\s?[ap]\.?\s?m\.?)?)\]\s+([^:]+?):\s(.*)$', re.I)
 
-# como nombra los adjuntos en cada idioma / plataforma
-RE_ADJUNTO = re.compile(
-    r'(?:\u200e)?(?:<adjunto:\s*|<attached:\s*|\u200e)?'
-    r'([A-Za-z0-9_\-. ]+?\.(?:jpe?g|png|webp|heic))'
-    r'(?:\s*\(archivo adjunto\)|\s*\(file attached\)|>)?',
-    re.I)
+# Como nombra los adjuntos cada plataforma. Van por separado porque en
+# iPhone, cuando la foto viaja como documento, el mensaje trae DOS nombres:
+#   IMG_20260812_143052.jpg <adjunto: 00000123-IMG_20260812_143052.jpg>
+# el visible y el del archivo real. Solo el segundo existe en el zip.
+RE_ADJ_IPHONE = re.compile(r'<(?:adjunto|attached):\s*([^>]+?\.(?:jpe?g|png|webp|heic))\s*>', re.I)
+RE_ADJ_ANDROID = re.compile(r'([A-Za-z0-9_\-. ]+?\.(?:jpe?g|png|webp|heic))\s*\((?:archivo adjunto|file attached)\)', re.I)
+RE_NOMBRE_SUELTO = re.compile(r'\b[A-Za-z0-9_\-]+\.(?:jpe?g|png|webp|heic)\b', re.I)
 
 # mensajes que no son nombre de propiedad ni foto: se ignoran
 RUIDO = re.compile(
     r'^(?:\u200e)?(?:'
-    r'<multimedia omitido>|<media omitted>|'
+    r'<?multimedia omitido>?|<?media omitted>?|<?documento omitido>?|<?document omitted>?|'
     r'los mensajes y las llamadas est[aá]n cifrados|messages and calls are end-to-end|'
     r'se elimin[oó] este mensaje|this message was deleted|'
     r'eliminaste este mensaje|you deleted this message|'
-    r'.*\.(?:mp4|opus|pdf|vcf|docx?)\b.*'
+    r'llamada(?:\s+perdida)?\.|videollamada|missed (?:voice|video) call|'
+    r'.*<(?:adjunto|attached):[^>]*\.(?!jpe?g|png|webp|heic)[a-z0-9]+\s*>.*|'
+    r'.*\.(?:mp4|opus|pdf|vcf|docx?|xlsx?|pptx?|zip)\b.*'
     r')', re.I)
+
+
+RE_CODIGO = re.compile(r'\b(MA\s?\d{1,3})\b', re.I)
+
+
+def codigo_de(texto):
+    """'MA4 CABAÑAS MADERHAUS' -> 'MA4'. None si no trae codigo."""
+    m = RE_CODIGO.search(texto)
+    return m.group(1).upper().replace(' ', '') if m else None
 
 
 def slug(t):
     t = unicodedata.normalize('NFKD', t).encode('ascii', 'ignore').decode('ascii').lower()
     t = re.sub(r'[^a-z0-9]+', '-', t)
-    return re.sub(r'-+', '-', t).strip('-') or 'propiedad'
+    return (re.sub(r'-+', '-', t).strip('-') or 'propiedad')[:60].strip('-')
 
 
 def norm(t):
@@ -95,7 +111,10 @@ def leer_mensajes(txt):
     mensajes = []
     actual = None
     for linea in txt.splitlines():
-        linea = linea.replace('\u202f', ' ').replace('\u00a0', ' ').rstrip('\n')
+        # iPhone antepone una marca de direccion invisible (U+200E) a muchas
+        # lineas y usa espacios angostos en la hora. Se limpian antes de
+        # comparar, o el regex no reconoce el mensaje.
+        linea = linea.replace('\u202f', ' ').replace('\u00a0', ' ').rstrip('\n').lstrip('‎')
         m = RE_ANDROID.match(linea) or RE_IPHONE.match(linea)
         if m:
             if actual:
@@ -109,12 +128,16 @@ def leer_mensajes(txt):
         mensajes.append(actual)
 
     for msg in mensajes:
-        adj = RE_ADJUNTO.findall(msg['texto'])
-        msg['adjuntos'] = [a.strip() for a in adj if a.lower().endswith(IMG_EXT)]
-        limpio = RE_ADJUNTO.sub('', msg['texto'])
-        limpio = re.sub(r'\(archivo adjunto\)|\(file attached\)', '', limpio, flags=re.I)
+        adj = RE_ADJ_IPHONE.findall(msg['texto']) or RE_ADJ_ANDROID.findall(msg['texto'])
+        # los stickers tambien son .webp, pero no son fotos de nada
+        msg['adjuntos'] = [x.strip() for x in adj
+                           if x.lower().endswith(IMG_EXT) and 'STICKER' not in x.upper()]
+        limpio = RE_ADJ_IPHONE.sub('', msg['texto'])
+        limpio = RE_ADJ_ANDROID.sub('', limpio)
+        # el nombre visible del documento tampoco es texto del cliente
+        limpio = RE_NOMBRE_SUELTO.sub('', limpio)
         msg['limpio'] = limpio.replace('\u200e', '').strip()
-        msg['es_ruido'] = bool(RUIDO.match(msg['texto'].strip()))
+        msg['es_ruido'] = bool(RUIDO.match(msg['texto'].strip())) or 'STICKER' in msg['texto'].upper()
     return mensajes
 
 
@@ -141,7 +164,10 @@ def agrupar(mensajes):
         if not pendientes or msg['autor'] != autor_pendiente:
             continue
         nombre = msg['limpio'].splitlines()[0].strip()
-        grupos.setdefault(nombre, []).extend(pendientes)
+        # dos tandas con el mismo codigo son la misma propiedad, aunque el
+        # texto que las acompaña cambie ('MA5 LOTE...' y 'MA5 MAPA LOTEO...')
+        clave = codigo_de(nombre) or nombre
+        grupos.setdefault(clave, {'nombre': nombre, 'fotos': []})['fotos'].extend(pendientes)
         pendientes = []
         autor_pendiente = None
     if pendientes:
@@ -174,23 +200,122 @@ def cargar_titulos(ruta):
         return []
 
 
+def cargar_codigos(ruta):
+    """JSON {"MA1": {"id": 5, "titulo": "..."}, ...}: la llave exacta."""
+    if ruta and os.path.exists(ruta):
+        return json.load(open(ruta, encoding='utf-8'))
+    return {}
+
+
+TIPOS = [
+    ('complejo', r'complejo|cabanas|cabañas|lofts|aldea'),
+    ('casa',     r'\bcasa\b|dormitorio|housing'),
+    ('chacra',   r'chacra'),
+    ('campo',    r'\bcampo\b|hectarea|\bha\b'),
+    ('lote',     r'lote|macrolote|terreno|loteo'),
+    ('local',    r'local|deposito|salon|fiestas'),
+]
+
+
+def tipo_de(texto):
+    t = ' '.join(norm(texto))
+    for nombre, patron in TIPOS:
+        if re.search(patron, t):
+            return nombre
+    return None
+
+
 def parecido(nombre, prop):
-    """0..1. Mezcla de similitud de texto y palabras en comun; las
-       palabras del cliente que aparecen en el titulo pesan mucho."""
+    """0..1. Similitud de texto + palabras en comun + acuerdo en el TIPO.
+       Sin el tipo, "casa en Tierras del Sauce" y "lotes en Tierras del Sauce"
+       empatan por el nombre del barrio y caen en la misma propiedad."""
     a = ' '.join(norm(nombre))
     b = ' '.join(norm(prop['titulo'] + ' ' + (prop.get('localidad') or '')))
     seq = difflib.SequenceMatcher(None, a, b).ratio()
-    pa, pb = set(norm(nombre)), set(norm(prop['titulo'] + ' ' + (prop.get('localidad') or '')))
-    pa = {w for w in pa if len(w) > 2}
+    pa = {w for w in norm(nombre) if len(w) > 2}
+    pb = set(norm(prop['titulo'] + ' ' + (prop.get('localidad') or '')))
     cobertura = len(pa & pb) / len(pa) if pa else 0
-    return round(0.4 * seq + 0.6 * cobertura, 3)
+    base = 0.4 * seq + 0.6 * cobertura
+    ta, tb = tipo_de(nombre), tipo_de(prop['titulo'])
+    if ta and tb:
+        base += 0.15 if ta == tb else -0.20
+    return round(max(0.0, min(1.0, base)), 3)
 
 
-def emparejar(nombre, titulos):
-    if not titulos:
-        return None, 0
-    mejor = max(titulos, key=lambda p: parecido(nombre, p))
-    return mejor, parecido(nombre, mejor)
+def ranking(nombre, titulos):
+    return sorted(((p, parecido(nombre, p)) for p in titulos), key=lambda x: -x[1])
+
+
+def alinear_por_orden(grupos, titulos, codigos):
+    """El cliente recorre el Excel de arriba abajo y va mandando tandas, pero a
+       veces saltea una fila y sigue numerando de corrido: su MA9 puede ser el
+       MA10 del Excel. El numero no sirve, pero el ORDEN si. Se alinean las dos
+       secuencias como hace un diff: cada tanda con a lo sumo una fila, sin
+       cruzarse, maximizando el parecido de texto."""
+    por_id = {p['id']: p for p in titulos}
+    A = [(k, g) for k, g in grupos.items() if codigo_de(g['nombre'])]
+    B = sorted(codigos.items(), key=lambda kv: int(re.sub(r'\D', '', kv[0]) or 0))
+    B = [(k, v) for k, v in B if v['id'] in por_id]
+    if not A or not B:
+        return {}
+
+    def sc(g, fila):
+        return parecido(RE_CODIGO.sub('', g['nombre']).strip() or g['nombre'], por_id[fila['id']])
+
+    UMBRAL = 0.45
+    n, k = len(A), len(B)
+    best = [[0.0] * (k + 1) for _ in range(n + 1)]
+    back = [[None] * (k + 1) for _ in range(n + 1)]
+    for i in range(1, n + 1):
+        for j in range(1, k + 1):
+            op = [(best[i - 1][j], 'tanda'), (best[i][j - 1], 'fila')]
+            v = sc(A[i - 1][1], B[j - 1][1])
+            if v >= UMBRAL:
+                op.append((best[i - 1][j - 1] + v, 'par'))
+            best[i][j], back[i][j] = max(op)
+    i, j, out = n, k, {}
+    while i > 0 and j > 0:
+        if back[i][j] == 'par':
+            kA, g = A[i - 1]
+            kB, fila = B[j - 1]
+            out[kA] = (por_id[fila['id']], sc(g, fila), 'orden del Excel (%s -> %s)' % (kA, kB))
+            i -= 1; j -= 1
+        elif back[i][j] == 'tanda':
+            i -= 1
+        else:
+            j -= 1
+    return out
+
+
+def asignar(grupos, titulos, codigos, forzadas=None):
+    """Tandas con codigo: alineacion por orden contra el Excel.
+       Tandas sin codigo: parecido de texto, uno a uno, sobre lo que quede.
+       forzadas: {'MA19': 25} para los casos que se resuelven a mano."""
+    forzadas = forzadas or {}
+    por_id = {p['id']: p for p in titulos}
+    salida = alinear_por_orden(grupos, titulos, codigos) if codigos else {}
+
+    for clave, idp in forzadas.items():
+        if clave in grupos and idp in por_id:
+            salida[clave] = (por_id[idp], 1.0, 'forzada a mano: %s -> id %d' % (clave, idp))
+
+    tomadas = {v[0]['id'] for v in salida.values() if v[0]}
+    libres = [p for p in titulos if p['id'] not in tomadas]
+    cand = []
+    for clave, g in grupos.items():
+        if clave in salida:
+            continue
+        for prop, score in ranking(g['nombre'], libres)[:5]:
+            cand.append((score, clave, prop))
+    cand.sort(key=lambda x: -x[0])
+    for score, clave, prop in cand:
+        if clave in salida or prop['id'] in tomadas or score < 0.6:
+            continue
+        salida[clave] = (prop, score, 'texto')
+        tomadas.add(prop['id'])
+    for clave in grupos:
+        salida.setdefault(clave, (None, 0.0, 'sin pareja'))
+    return salida
 
 
 # --- 4. optimizar y guardar --------------------------------------------
@@ -213,6 +338,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('zip', help='el .zip que exporta WhatsApp')
     ap.add_argument('--titulos', help='JSON con los titulos de la base (si no, los baja)')
+    ap.add_argument('--codigos', help='JSON codigo->propiedad (MA1, MA2...) en el orden del Excel')
+    ap.add_argument('--forzar', action='append', default=[],
+                    help='resolver a mano una tanda: --forzar MA19=25 (codigo del chat = id en la base)')
     ap.add_argument('--salida', default=None, help='carpeta de salida (por defecto, al lado del zip)')
     ap.add_argument('--r2', default='https://pub-XXXX.r2.dev', help='direccion publica del bucket, para el SQL')
     a = ap.parse_args()
@@ -238,19 +366,56 @@ def main():
     fotos_en_zip = {os.path.basename(n): n for n in nombres if n.lower().endswith(IMG_EXT)}
     grupos, sin_nombre = agrupar(mensajes)
     titulos = cargar_titulos(a.titulos)
+    codigos = cargar_codigos(a.codigos)
 
     print('Chat     : %s' % txts[0])
     print('Mensajes : %d   fotos en el zip: %d   grupos: %d' % (len(mensajes), len(fotos_en_zip), len(grupos)))
-    print('Titulos de la base: %d' % len(titulos))
+    print('Titulos de la base: %d   codigos conocidos: %d' % (len(titulos), len(codigos)))
     print('-' * 78)
 
     filas = []
     sql = []
     total_ok = total_falta = 0
-    for nombre, fotos in grupos.items():
-        prop, score = emparejar(nombre, titulos)
-        carpeta_slug = slug(prop['titulo']) if prop and score >= 0.6 else slug(nombre)
-        carpeta = os.path.join(base, carpeta_slug)
+    forzadas = {}
+    for f in a.forzar:
+        k, v = f.split('=', 1)
+        forzadas[k.strip().upper()] = int(v)
+    asignacion = asignar(grupos, titulos, codigos, forzadas)
+
+    # Las tandas sin codigo se nombran por donde cayeron entre las que si lo
+    # tienen: "entre-MA17-y-MA19" dice mucho mas que el texto que las siguio,
+    # que suele ser charla. Y no expone mensajes personales en nombres de carpeta.
+    claves = list(grupos.keys())
+    posicion = {}
+    contador = 0
+    for i, k in enumerate(claves):
+        if codigo_de(grupos[k]['nombre']):
+            continue
+        contador += 1
+        ant = next((c for c in reversed(claves[:i]) if codigo_de(grupos[c]['nombre'])), None)
+        sig = next((c for c in claves[i + 1:] if codigo_de(grupos[c]['nombre'])), None)
+        if ant and sig:
+            posicion[k] = '%02d-entre-%s-y-%s' % (contador, ant, sig)
+        elif sig:
+            posicion[k] = '%02d-antes-de-%s' % (contador, sig)
+        elif ant:
+            posicion[k] = '%02d-despues-de-%s' % (contador, ant)
+        else:
+            posicion[k] = '%02d' % contador
+    for clave, g in grupos.items():
+        nombre, fotos = g['nombre'], g['fotos']
+        cod = codigo_de(nombre)
+        prop, score, via = asignacion[clave]
+        if prop and score >= 0.6:
+            carpeta_slug = slug(prop['titulo'])
+            carpeta = os.path.join(base, carpeta_slug)
+        elif cod:
+            carpeta_slug = slug(nombre)
+            carpeta = os.path.join(base, carpeta_slug)
+        else:
+            # sin codigo: aparte, nombradas por posicion, para revisar a mano
+            carpeta_slug = posicion[clave]
+            carpeta = os.path.join(base, '_sin-codigo', carpeta_slug)
         os.makedirs(carpeta, exist_ok=True)
 
         hechas = []
@@ -268,9 +433,12 @@ def main():
             except Exception as e:
                 print('   ! %s: %s' % (f, e))
             finally:
-                os.remove(destino + '.tmp')
+                if os.path.exists(destino + '.tmp'):
+                    os.remove(destino + '.tmp')
 
-        seguridad = 'alta' if score >= 0.8 else ('media' if score >= 0.6 else 'REVISAR')
+        seguridad = ('forzada' if via.startswith('forzada') else
+                     'REVISAR' if not prop or score < 0.6 else
+                     'alta' if score >= 0.8 else 'media')
         filas.append({
             'nombre_en_el_chat': nombre,
             'fotos': len(hechas),
@@ -278,10 +446,12 @@ def main():
             'propiedad_en_la_base': prop['titulo'] if prop else '',
             'id': prop['id'] if prop else '',
             'seguridad': seguridad,
+            'via': via,
             'puntaje': score,
         })
-        print('  %-38s %2d fotos  ->  %-34s [%s %.2f]'
-              % (nombre[:38], len(hechas), (prop['titulo'][:34] if prop else '(sin pareja)'), seguridad, score))
+        visible = nombre if cod else '(texto sin codigo, ver revision.csv)'
+        print('  %-38s %2d fotos  ->  %-34s [%s]'
+              % (visible[:38], len(hechas), (prop['titulo'][:34] if prop else '(sin pareja)'), seguridad))
 
         if prop and score >= 0.6 and hechas:
             urls = ['%s/%s/%s' % (a.r2.rstrip('/'), carpeta_slug, h) for h in hechas]
