@@ -297,7 +297,8 @@ def asignar(grupos, titulos, codigos, forzadas=None):
 
     for clave, idp in forzadas.items():
         if clave in grupos and idp in por_id:
-            salida[clave] = (por_id[idp], 1.0, 'forzada a mano: %s -> id %d' % (clave, idp))
+            etiqueta = codigo_de(grupos[clave]['nombre']) or 'tanda sin codigo'
+            salida[clave] = (por_id[idp], 1.0, 'forzada a mano: %s -> id %d' % (etiqueta, idp))
 
     tomadas = {v[0]['id'] for v in salida.values() if v[0]}
     libres = [p for p in titulos if p['id'] not in tomadas]
@@ -380,8 +381,6 @@ def main():
     for f in a.forzar:
         k, v = f.split('=', 1)
         forzadas[k.strip().upper()] = int(v)
-    asignacion = asignar(grupos, titulos, codigos, forzadas)
-
     # Las tandas sin codigo se nombran por donde cayeron entre las que si lo
     # tienen: "entre-MA17-y-MA19" dice mucho mas que el texto que las siguio,
     # que suele ser charla. Y no expone mensajes personales en nombres de carpeta.
@@ -402,6 +401,15 @@ def main():
             posicion[k] = '%02d-despues-de-%s' % (contador, ant)
         else:
             posicion[k] = '%02d' % contador
+
+    # --forzar entre-MA17-y-MA19=24  ->  una tanda sin codigo, por su posicion
+    por_id = {p['id']: p for p in titulos}
+    for k, nombre_pos in posicion.items():
+        for f_k, f_id in list(forzadas.items()):
+            if f_k.lower() in nombre_pos.lower() and f_id in por_id:
+                forzadas[k] = f_id
+    asignacion = asignar(grupos, titulos, codigos, forzadas)
+
     for clave, g in grupos.items():
         nombre, fotos = g['nombre'], g['fotos']
         cod = codigo_de(nombre)
