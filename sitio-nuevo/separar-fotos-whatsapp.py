@@ -16,7 +16,11 @@ COMO AGRUPA
   aparece en dos tandas distintas, las junta.
 
 COMO SE USA
-  python separar-fotos-whatsapp.py "C:\\ruta\\Chat de WhatsApp con Cliente.zip"
+  python separar-fotos-whatsapp.py "C:\\ruta\\Chat de WhatsApp con Cliente.zip" --r2 https://pub-XXXX.r2.dev
+
+  Baja solo los titulos y los codigos (MA1, MA2...) de Supabase con la clave
+  publica de config.js. Si una tanda queda mal emparejada, se resuelve a mano:
+    --forzar MA19=25        (codigo que escribio el cliente = id en la base)
 
 QUE DEJA
   listo-para-r2/
@@ -239,7 +243,7 @@ def cargar_titulos(ruta):
     try:
         import urllib.request
         req = urllib.request.Request(
-            url.group(1) + '/rest/v1/propiedades?select=id,titulo,localidad,tipo&order=id.asc',
+            url.group(1) + '/rest/v1/propiedades?select=id,titulo,localidad,tipo,codigo&order=id.asc',
             headers={'apikey': key.group(1), 'Authorization': 'Bearer ' + key.group(1)})
         with urllib.request.urlopen(req, timeout=30) as r:
             return json.loads(r.read().decode('utf-8'))
@@ -248,11 +252,17 @@ def cargar_titulos(ruta):
         return []
 
 
-def cargar_codigos(ruta):
-    """JSON {"MA1": {"id": 5, "titulo": "..."}, ...}: la llave exacta."""
+def cargar_codigos(ruta, titulos):
+    """Codigo -> propiedad. Sale de la columna `codigo` de la base (MA1, MA2...);
+       o de un JSON {"MA1": {"id": 5}, ...} si se pasa --codigos."""
     if ruta and os.path.exists(ruta):
         return json.load(open(ruta, encoding='utf-8'))
-    return {}
+    out = {}
+    for p in titulos:
+        c = (p.get('codigo') or '').strip().upper().replace(' ', '')
+        if c:
+            out[c] = {'id': p['id'], 'titulo': p['titulo']}
+    return out
 
 
 TIPOS = [
@@ -387,7 +397,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('zip', help='el .zip que exporta WhatsApp')
     ap.add_argument('--titulos', help='JSON con los titulos de la base (si no, los baja)')
-    ap.add_argument('--codigos', help='JSON codigo->propiedad (MA1, MA2...) en el orden del Excel')
+    ap.add_argument('--codigos', help='JSON codigo->propiedad; si no se pasa, usa la columna codigo de la base')
     ap.add_argument('--forzar', action='append', default=[],
                     help='resolver a mano una tanda: --forzar MA19=25 (codigo del chat = id en la base)')
     ap.add_argument('--salida', default=None, help='carpeta de salida (por defecto, al lado del zip)')
@@ -399,6 +409,11 @@ def main():
         raise SystemExit(1)
 
     base = a.salida or os.path.join(os.path.dirname(os.path.abspath(a.zip)), 'listo-para-r2')
+    base = os.path.abspath(base)
+    if os.name == 'nt' and not base.startswith('\\\\?\\'):
+        # Windows corta las rutas en 260 caracteres; carpeta larga + nombre
+        # largo de foto se pasan. Con este prefijo no hay limite.
+        base = '\\\\?\\' + base
     os.makedirs(base, exist_ok=True)
 
     z = zipfile.ZipFile(a.zip)
@@ -415,7 +430,7 @@ def main():
     fotos_en_zip = {os.path.basename(n): n for n in nombres if n.lower().endswith(IMG_EXT)}
     grupos, sin_nombre = agrupar(mensajes)
     titulos = cargar_titulos(a.titulos)
-    codigos = cargar_codigos(a.codigos)
+    codigos = cargar_codigos(a.codigos, titulos)
 
     print('Chat     : %s' % txts[0])
     print('Mensajes : %d   fotos en el zip: %d   grupos: %d' % (len(mensajes), len(fotos_en_zip), len(grupos)))
@@ -537,12 +552,31 @@ def main():
     if total_falta:
         print('Fotos citadas en el chat pero ausentes del zip: %d  (exporta con "Incluir archivos")' % total_falta)
     if sin_nombre:
-        print('Fotos al final sin nombre despues: %d  (quedaron fuera; el cliente no escribio la propiedad)' % len(sin_nombre))
+        # se guardan aparte, achicadas, para mirarlas: no van a R2 (subir-a-r2
+        # saltea las carpetas que empiezan con "_")
+        carpeta = os.path.join(base, '_sin-codigo')
+        os.makedirs(carpeta, exist_ok=True)
+        guardadas = 0
+        for i, f in enumerate(sin_nombre, 1):
+            if f not in fotos_en_zip:
+                continue
+            destino = os.path.join(carpeta, 'sin-codigo-%02d.webp' % i)
+            with z.open(fotos_en_zip[f]) as src, open(destino + '.tmp', 'wb') as tmp:
+                tmp.write(src.read())
+            try:
+                optimizar(destino + '.tmp', destino)
+                guardadas += 1
+            except Exception as e:
+                print('   ! %s: %s' % (f, e))
+            finally:
+                if os.path.exists(destino + '.tmp'):
+                    os.remove(destino + '.tmp')
+        print('Fotos sin codigo al lado: %d  -> _sin-codigo\\  (no se suben; si son de una propiedad, pedir que las manden con el codigo)' % guardadas)
     revisar = [f for f in filas if f['seguridad'] == 'REVISAR']
     if revisar:
         print('Grupos que no pude emparejar con seguridad: %d  -> mira revision.csv' % len(revisar))
     print()
-    print('Salida: %s' % base)
+    print('Salida: %s' % base.replace('\\\\?\\', ''))
     print('  revision.csv          <- revisar primero')
     print('  actualizar-fotos.sql  <- correr despues de subir a R2')
 

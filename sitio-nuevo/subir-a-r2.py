@@ -50,6 +50,10 @@ def main():
                 partes = clave.split('/')
                 if partes[0].startswith('tanda-'):
                     clave = '/'.join(partes[1:])
+                    partes = partes[1:]
+                # _sin-codigo y similares: fotos sin propiedad, no van a R2
+                if partes[0].startswith('_'):
+                    continue
                 archivos.append((ruta, clave))
     archivos.sort(key=lambda x: x[1])
 
