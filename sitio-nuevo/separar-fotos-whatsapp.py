@@ -9,11 +9,11 @@ COMO EXPORTAR EL CHAT (lo hace Francisco, yo no toco WhatsApp)
   Queda un .zip. Guardalo y pasale la ruta a esta herramienta.
 
 COMO AGRUPA
-  En el chat, el cliente manda una tanda de fotos y al final escribe el nombre
-  de la propiedad. La herramienta lee el texto exportado en orden: cada vez
-  que encuentra un mensaje de texto, se lo asigna a todas las fotos que
-  vinieron antes desde el texto anterior. Si el mismo nombre aparece en dos
-  tandas distintas, las junta.
+  En el chat, el cliente manda una tanda de fotos y escribe el nombre de la
+  propiedad al lado: antes o despues de las fotos, las dos formas valen (y
+  puede cambiar de una a otra en el mismo chat). Cada nombre se queda con la
+  tanda pegada a el, y una tanda va a un solo nombre. Si el mismo codigo
+  aparece en dos tandas distintas, las junta.
 
 COMO SE USA
   python separar-fotos-whatsapp.py "C:\\ruta\\Chat de WhatsApp con Cliente.zip"
@@ -141,37 +141,85 @@ def leer_mensajes(txt):
     return mensajes
 
 
-# --- 2. agrupar: las fotos toman el nombre del texto que las sigue ------
+# --- 2. agrupar: cada nombre toma la tanda de al lado ---------------------
+def _minutos(msg):
+    """fecha+hora del mensaje en minutos, para medir distancias."""
+    d = re.findall(r'\d+', msg['fecha'])
+    h = re.findall(r'\d+', msg['hora'])
+    if len(d) < 3 or len(h) < 2:
+        return 0
+    dia, mes, anio = int(d[0]), int(d[1]), int(d[2])
+    hh, mm = int(h[0]), int(h[1])
+    t = msg['hora'].lower().replace('.', '').replace(' ', '')
+    if 'pm' in t and hh < 12:
+        hh += 12
+    if 'am' in t and hh == 12:
+        hh = 0
+    return ((anio * 12 + mes) * 31 + dia) * 1440 + hh * 60 + mm
+
+
+VENTANA = 30   # minutos: mas lejos que esto, la tanda no es de ese nombre
+
+
 def agrupar(mensajes):
-    """El nombre de la propiedad solo vale si lo escribe la misma persona que
-       mando las fotos. Si Francisco contesta "dale" en el medio, ese mensaje
-       no se roba la tanda: las fotos siguen esperando el nombre del cliente."""
-    grupos = OrderedDict()
-    pendientes = []
-    autor_pendiente = None
-    sin_nombre = []
+    """El cliente manda las fotos en tandas y escribe el nombre de la propiedad
+       al lado: a veces DESPUES de las fotos, a veces ANTES (en el chat de Papa
+       cambio de una a la otra a mitad de camino). Regla:
+         - una tanda son fotos seguidas del mismo autor, sin mas de VENTANA
+           minutos entre una y otra;
+         - un nombre es un texto con codigo (MA4...) o, si el chat no usa
+           codigos, cualquier texto que no sea ruido;
+         - cada nombre toma la tanda inmediatamente ANTERIOR si esta libre y
+           cerca; si no, la inmediatamente SIGUIENTE si esta cerca y es del
+           mismo autor. Una tanda va a un solo nombre.
+       Lo que queda sin nombre se devuelve aparte."""
+    usa_codigos = any(codigo_de(m['limpio']) for m in mensajes if m['limpio'] and not m['adjuntos'])
+
+    # 1) fichas: ('T', tanda) y ('N', nombre) en orden
+    fichas = []
     for msg in mensajes:
         if msg['adjuntos']:
-            if autor_pendiente and msg['autor'] != autor_pendiente and pendientes:
-                # otra persona empieza a mandar fotos: lo anterior queda sin nombre
-                sin_nombre.extend(pendientes)
-                pendientes = []
-            pendientes.extend(msg['adjuntos'])
-            autor_pendiente = msg['autor']
+            ult = fichas[-1] if fichas else None
+            if (ult and ult[0] == 'T' and ult[1]['autor'] == msg['autor']
+                    and _minutos(msg) - ult[1]['fin'] <= VENTANA):
+                ult[1]['fotos'].extend(msg['adjuntos'])
+                ult[1]['fin'] = _minutos(msg)
+            else:
+                fichas.append(('T', {'autor': msg['autor'], 'fotos': list(msg['adjuntos']),
+                                     'ini': _minutos(msg), 'fin': _minutos(msg), 'dueno': None}))
             continue
         if msg['es_ruido'] or not msg['limpio']:
             continue
-        if not pendientes or msg['autor'] != autor_pendiente:
+        if usa_codigos and not codigo_de(msg['limpio']):
             continue
-        nombre = msg['limpio'].splitlines()[0].strip()
-        # dos tandas con el mismo codigo son la misma propiedad, aunque el
-        # texto que las acompaña cambie ('MA5 LOTE...' y 'MA5 MAPA LOTEO...')
-        clave = codigo_de(nombre) or nombre
-        grupos.setdefault(clave, {'nombre': nombre, 'fotos': []})['fotos'].extend(pendientes)
-        pendientes = []
-        autor_pendiente = None
-    if pendientes:
-        sin_nombre.extend(pendientes)
+        fichas.append(('N', {'autor': msg['autor'], 'texto': msg['limpio'].splitlines()[0].strip(),
+                             'min': _minutos(msg)}))
+
+    # 2) cada nombre elige su tanda
+    grupos = OrderedDict()
+    notas = []
+    for i, (tipo, f) in enumerate(fichas):
+        if tipo != 'N':
+            continue
+        elegida = None
+        ant = fichas[i - 1] if i > 0 else None
+        if (ant and ant[0] == 'T' and ant[1]['dueno'] is None and ant[1]['autor'] == f['autor']
+                and f['min'] - ant[1]['fin'] <= VENTANA):
+            elegida = ant[1]
+        else:
+            sig = fichas[i + 1] if i + 1 < len(fichas) else None
+            if (sig and sig[0] == 'T' and sig[1]['dueno'] is None and sig[1]['autor'] == f['autor']
+                    and sig[1]['ini'] - f['min'] <= VENTANA):
+                elegida = sig[1]
+        if elegida is None:
+            notas.append(f['texto'])       # un texto con codigo pero sin fotos al lado
+            continue
+        elegida['dueno'] = f['texto']
+        clave = codigo_de(f['texto']) or f['texto']
+        grupos.setdefault(clave, {'nombre': f['texto'], 'fotos': []})['fotos'].extend(elegida['fotos'])
+
+    sin_nombre = [x for t, f in fichas if t == 'T' and f['dueno'] is None for x in f['fotos']]
+    agrupar.notas = notas
     return grupos, sin_nombre
 
 
@@ -415,7 +463,9 @@ def main():
         cod = codigo_de(nombre)
         prop, score, via = asignacion[clave]
         if prop and score >= 0.6:
-            carpeta_slug = slug(prop['titulo'])
+            # el codigo del Excel adelante, para encontrarla en R2 de un vistazo
+            cod_excel = next((k for k, v in codigos.items() if v.get('id') == prop['id']), None)
+            carpeta_slug = ((cod_excel + '-') if cod_excel else '') + slug(prop['titulo'])
             carpeta = os.path.join(base, carpeta_slug)
         elif cod:
             carpeta_slug = slug(nombre)
@@ -465,6 +515,9 @@ def main():
             urls = ['%s/%s/%s' % (a.r2.rstrip('/'), carpeta_slug, h) for h in hechas]
             sql.append("-- %s  (%s)\nupdate public.propiedades set imagen = '%s', imagenes = '%s' where id = %d;"
                        % (nombre, seguridad, urls[0], json.dumps(urls, ensure_ascii=False).replace("'", "''"), prop['id']))
+
+    for n in getattr(agrupar, 'notas', []):
+        print('  NOTA sin fotos al lado (revisar a mano): %s' % n)
 
     with open(os.path.join(base, 'revision.csv'), 'w', newline='', encoding='utf-8-sig') as f:
         w = csv.DictWriter(f, fieldnames=list(filas[0].keys()) if filas else ['nombre_en_el_chat'])
