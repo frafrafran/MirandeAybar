@@ -891,8 +891,13 @@ body.sin-scroll{overflow:hidden;}
 /* La foto se ve ENTERA: object-fit contain, no cover. En una inmobiliaria
    recortar la foto puede esconder justo lo que se esta vendiendo. Para que
    no queden franjas negras a los costados, detras va la misma imagen
-   ampliada y desenfocada. */
-.pv__hero img{position:relative;z-index:1;
+   ampliada y desenfocada.
+   Va absoluta a proposito: como hijo normal de la grilla, `height:100%`
+   no tiene contra que resolverse, la imagen toma su alto natural (mas que
+   el hero, que esta topeado a 62dvh), `contain` nunca actua y el
+   overflow:hidden la recorta. Anclada a los cuatro bordes, el alto es el
+   del hero y la foto entra completa. */
+.pv__hero img{position:absolute;inset:0;z-index:1;
   width:100%;height:100%;object-fit:contain;
   opacity:0;transition:opacity .35s var(--e-out);}
 .pv__hero img.cargada,.pv__hero img[data-lista]{opacity:1;}

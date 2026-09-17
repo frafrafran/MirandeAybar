@@ -87,7 +87,10 @@ def main():
         cmd = ['npx', '--yes', 'wrangler', 'r2', 'object', 'put',
                '%s/%s' % (a.bucket, clave), '--file', ruta,
                '--content-type', a.tipo, '--remote']
-        r = subprocess.run(cmd, capture_output=True, text=True, shell=(os.name == 'nt'))
+        # utf-8 explicito: wrangler imprime simbolos que la consola de Windows
+        # (cp1252) no sabe decodificar y el hilo que lee la salida se caia
+        r = subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8',
+                           errors='replace', shell=(os.name == 'nt'))
         with lock:
             cuenta['hechos'] += 1
             if r.returncode == 0:
