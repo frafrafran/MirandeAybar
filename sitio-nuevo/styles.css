@@ -900,6 +900,45 @@ body.sin-scroll{overflow:hidden;}
   background-image:var(--foto);background-size:cover;background-position:center;
   filter:blur(28px) saturate(.75) brightness(.55);transform:scale(1.15);}
 .pv__hero.sin-foto::before{display:none;}
+
+/* ---------- galeria de la ficha ---------- */
+.pv__galeria{position:relative;}
+.pv__flecha{position:absolute;top:50%;transform:translateY(-50%);z-index:2;
+  width:48px;height:48px;border-radius:50%;border:1px solid rgba(239,227,210,.28);
+  background:rgba(22,30,35,.62);color:var(--ivory);cursor:pointer;
+  display:grid;place-items:center;backdrop-filter:blur(8px);
+  transition:background-color .2s var(--e-tw),border-color .2s var(--e-tw);}
+.pv__flecha svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round;}
+.pv__flecha:hover{background:rgba(22,30,35,.86);border-color:var(--ivory);}
+.pv__flecha:focus-visible{outline:2px solid var(--ivory);outline-offset:3px;}
+.pv__flecha--ant{left:clamp(.6rem,2vw,1.25rem);}
+.pv__flecha--sig{right:clamp(.6rem,2vw,1.25rem);}
+.pv__contador{position:absolute;right:clamp(.6rem,2vw,1.25rem);bottom:.75rem;z-index:2;
+  margin:0;padding:.25rem .65rem;border-radius:999px;font-size:.78rem;font-weight:600;
+  letter-spacing:.04em;color:var(--ivory);background:rgba(22,30,35,.62);
+  backdrop-filter:blur(8px);}
+
+/* Miniaturas en una sola fila que se desplaza a lo ancho. Cargan perezosas:
+   con 29 fotos, solo bajan las que entran en pantalla. */
+.pv__miniaturas{display:flex;gap:.5rem;padding:.75rem var(--px,1rem);
+  overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;
+  scrollbar-width:thin;background:var(--ivory-2);border-bottom:1px solid var(--line-l);}
+.pv__mini{flex:none;width:84px;height:64px;padding:0;border:2px solid transparent;
+  border-radius:8px;overflow:hidden;background:var(--ivory-3);cursor:pointer;
+  scroll-snap-align:center;opacity:.62;
+  transition:opacity .2s var(--e-tw),border-color .2s var(--e-tw),transform .2s var(--e-tw);}
+.pv__mini img{width:100%;height:100%;object-fit:cover;display:block;}
+.pv__mini:hover{opacity:.9;}
+.pv__mini.is-activa{opacity:1;border-color:var(--ink);}
+.pv__mini:focus-visible{outline:2px solid var(--ink);outline-offset:2px;opacity:1;}
+@media (max-width:640px){
+  .pv__flecha{width:44px;height:44px;}
+  .pv__mini{width:72px;height:54px;}
+}
+@media (prefers-reduced-motion:reduce){
+  .pv__mini,.pv__flecha{transition:none;}
+}
 .pv__hero .tile__grad{display:none;}
 .pv__hero .tile__nofoto{position:absolute;inset:0;}
 

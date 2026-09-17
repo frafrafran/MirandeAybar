@@ -72,6 +72,21 @@
   /* Sin foto cargada no se pone una imagen genérica del valle: daría a
      entender que es la foto de ESA propiedad. Va un panel tipográfico
      que se lee claramente como pendiente. */
+  /* Todas las fotos de una propiedad, en orden. `imagenes` es un JSON con las
+     direcciones; si no esta o viene roto, queda `imagen` sola. La primera de
+     la lista es siempre la que ve la grilla. */
+  function fotos(p) {
+    var lista = [];
+    if (p.imagenes) {
+      try {
+        var arr = typeof p.imagenes === 'string' ? JSON.parse(p.imagenes) : p.imagenes;
+        if (Array.isArray(arr)) lista = arr.filter(function (u) { return typeof u === 'string' && u; });
+      } catch (e) { /* JSON invalido: se ignora y queda la foto principal */ }
+    }
+    if (!lista.length && p.imagen) lista = [p.imagen];
+    return lista;
+  }
+
   function medio(p, grande) {
     if (p.imagen) {
       return '<img src="' + esc(p.imagen) + '" alt="' + esc(p.titulo) + '"' +
@@ -510,7 +525,15 @@
         '<span class="pv__marca" aria-hidden="true">Mirande<em>Aybar</em></span>' +
       '</header>' +
       '<div class="pv__scroll" id="pvScroll">' +
-        '<div class="pv__hero" id="pvHero"></div>' +
+        '<div class="pv__galeria" id="pvGaleria">' +
+          '<div class="pv__hero" id="pvHero"></div>' +
+          '<button class="pv__flecha pv__flecha--ant" id="pvAnt" type="button" aria-label="Foto anterior" hidden>' +
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>' +
+          '<button class="pv__flecha pv__flecha--sig" id="pvSig" type="button" aria-label="Foto siguiente" hidden>' +
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>' +
+          '<p class="pv__contador num" id="pvContador" aria-live="polite" hidden></p>' +
+        '</div>' +
+        '<div class="pv__miniaturas" id="pvMinis" role="group" aria-label="Fotos de la propiedad" hidden></div>' +
         '<div class="pv__wrap">' +
           '<div class="pv__main">' +
             '<p class="label pv__kicker" id="pvKicker"></p>' +
@@ -562,6 +585,12 @@
 
   function onKey(e) {
     if (e.key === 'Escape') { e.preventDefault(); cerrar(); return; }
+    /* flechas: solo si el foco no esta en un campo de texto */
+    var enCampo = /^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement || {}).tagName || '');
+    if (!enCampo && galFotos.length > 1) {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); mostrarFoto(galIdx - 1); return; }
+      if (e.key === 'ArrowRight') { e.preventDefault(); mostrarFoto(galIdx + 1); return; }
+    }
     if (e.key !== 'Tab') return;
     var f = $$(FOCALIZABLES, vista).filter(function (el) { return el.offsetParent !== null; });
     if (!f.length) return;
@@ -573,7 +602,7 @@
   function abrir(id, empujarHistorial) {
     var p = PROPS.filter(function (x) { return String(x.id) === String(id); })[0];
     if (!p) return;
-    if (!vista) vista = crearVista();
+    if (!vista) { vista = crearVista(); engancharGaleria(); }
     ultimoFoco = document.activeElement;
 
     var hero = $('#pvHero', vista);
@@ -592,6 +621,7 @@
       hero.classList.add('sin-foto');
       hero.style.removeProperty('--foto');
     }
+    armarGaleria(p);
     $('#pvKicker', vista).textContent = (p.tipo || '') + ' · ' + (p.operacion || '');
     $('#pvTitulo', vista).textContent = p.titulo || '';
     $('#pvLoc', vista).textContent = p.localidad || '';
@@ -642,6 +672,73 @@
     if (empujarHistorial !== false) {
       history.pushState({ ficha: p.id }, '', '#propiedad-' + p.id);
     }
+  }
+
+  /* ---------- galeria ----------
+     Miniaturas debajo de la foto grande, flechas, contador, teclado y
+     deslizar. Solo cambia el src de la foto grande: no se crean elementos
+     por foto mas que las miniaturas, que cargan perezosas y solo las que
+     entran en pantalla. */
+  var galFotos = [], galIdx = 0, galTitulo = '';
+
+  function armarGaleria(p) {
+    galFotos = fotos(p);
+    galIdx = 0;
+    galTitulo = p.titulo || 'la propiedad';
+    var minis = $('#pvMinis', vista), ant = $('#pvAnt', vista), sig = $('#pvSig', vista), cont = $('#pvContador', vista);
+    var varias = galFotos.length > 1;
+    minis.hidden = ant.hidden = sig.hidden = cont.hidden = !varias;
+    minis.innerHTML = '';
+    if (!varias) return;
+    minis.innerHTML = galFotos.map(function (u, i) {
+      return '<button class="pv__mini' + (i === 0 ? ' is-activa' : '') + '" type="button"' +
+             ' data-i="' + i + '" aria-label="Foto ' + (i + 1) + ' de ' + galFotos.length + '"' +
+             (i === 0 ? ' aria-current="true"' : '') + '>' +
+             '<img src="' + esc(u) + '" alt="" loading="lazy" decoding="async" /></button>';
+    }).join('');
+    minis.scrollLeft = 0;
+    mostrarFoto(0);
+  }
+
+  function mostrarFoto(i) {
+    if (!galFotos.length) return;
+    galIdx = (i + galFotos.length) % galFotos.length;
+    var u = galFotos[galIdx];
+    var hero = $('#pvHero', vista), img = hero.querySelector('img');
+    if (img) {
+      img.classList.remove('cargada');
+      img.src = u;
+      img.alt = galTitulo + ' — foto ' + (galIdx + 1) + ' de ' + galFotos.length;
+      if (img.complete) img.classList.add('cargada');
+      else img.addEventListener('load', function () { img.classList.add('cargada'); }, { once: true });
+    }
+    hero.style.setProperty('--foto', 'url("' + String(u).replace(/"/g, '%22') + '")');
+    $('#pvContador', vista).textContent = (galIdx + 1) + ' / ' + galFotos.length;
+    $$('.pv__mini', vista).forEach(function (b, k) {
+      var activa = k === galIdx;
+      b.classList.toggle('is-activa', activa);
+      if (activa) { b.setAttribute('aria-current', 'true'); b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }); }
+      else b.removeAttribute('aria-current');
+    });
+  }
+
+  function engancharGaleria() {
+    $('#pvAnt', vista).addEventListener('click', function () { mostrarFoto(galIdx - 1); });
+    $('#pvSig', vista).addEventListener('click', function () { mostrarFoto(galIdx + 1); });
+    $('#pvMinis', vista).addEventListener('click', function (e) {
+      var b = e.target.closest('.pv__mini');
+      if (b) mostrarFoto(parseInt(b.getAttribute('data-i'), 10));
+    });
+    /* deslizar con el dedo sobre la foto grande */
+    var x0 = null;
+    var gal = $('#pvGaleria', vista);
+    gal.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    gal.addEventListener('touchend', function (e) {
+      if (x0 === null || galFotos.length < 2) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      x0 = null;
+      if (Math.abs(dx) > 40) mostrarFoto(galIdx + (dx < 0 ? 1 : -1));
+    }, { passive: true });
   }
 
   function cerrar(desdeHistorial) {
