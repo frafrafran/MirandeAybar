@@ -10,7 +10,7 @@ Las tres piezas, para ubicarse:
 |---|---|---|
 | **Supabase** | La ficha de cada propiedad y los *links* a sus fotos | supabase.com → proyecto `mirandeaybar` → **Table Editor** → `propiedades` |
 | **Cloudflare R2** | Los archivos de las fotos, en una carpeta por propiedad | dash.cloudflare.com → **R2** → `mirandeaybar-fotos` |
-| **La web** | Muestra lo que hay en Supabase | https://mirandeaybar.franciscoaybar2110.workers.dev |
+| **La web** | Muestra lo que hay en Supabase | https://mirandeaybar.com |
 
 Las herramientas (`separar-fotos-whatsapp.py`, `subir-a-r2.py`,
 `borrar-de-r2.py`) están en la carpeta del sitio, junto a este archivo.
@@ -36,7 +36,7 @@ Table Editor → tabla `propiedades` → **Insert row**. Campos:
 |---|---|---|
 | `codigo` | El código del Excel, **único**. El siguiente libre (hoy, `MA29`). Es la *Referencia* que ve el cliente en la ficha. | `MA29` |
 | `titulo` | Cómo se ve en la web. Poner la localidad al final ayuda a las fotos. | `Casa 3 Dormitorios en Los Reartes` |
-| `tipo` | Uno de los que ya existen, para que el filtro funcione: `Casa`, `Lote`, `Cabaña`, `Complejo de cabañas`, `Macrolote`, `Chacra`, `Campo`, `Local comercial`, `Salón de fiestas`, `Housing` | `Casa` |
+| `tipo` | Uno de los que ya existen, escrito igual, para que el filtro no los duplique: `Casa`, `Lote`, `Cabaña`, `Dúplex`, `Campo`, `Local comercial`, `Salón de fiestas` | `Casa` |
 | `operacion` | `venta` o `alquiler` (minúsculas) | `venta` |
 | `precio` | Solo el número, sin puntos ni símbolo. Si es un rango, el **mínimo**. | `85000` |
 | `precio_hasta` | Solo si es un rango ("18.000 a 39.000"): el máximo. Si no, vacío. | `39000` |
@@ -44,8 +44,12 @@ Table Editor → tabla `propiedades` → **Insert row**. Campos:
 | `moneda` | `USD` o `ARS` | `USD` |
 | `localidad` | Igual que las demás: `Villa General Belgrano`, `Los Reartes`, `La Cumbrecita`, `Villa Yacanto`, `Villa Ciudad Parque`, `El Durazno`, `Villa Los Aromos`, `Villa Berna` | `Los Reartes` |
 | `dormitorios`, `banos` | Números. Para lotes, `0`. | `3`, `2` |
-| `superficie` | m² cubiertos | `120` |
-| `lote` | m² del terreno | `800` |
+| `superficie` | m² cubiertos. Si es un rango, el mínimo. | `120` |
+| `superficie_hasta` | Solo si los m² cubiertos son un rango ("65/85"): el máximo. | `85` |
+| `superficie_por_unidad` | `true` si los m² cubiertos son por unidad ("40 c/u"). | `false` |
+| `lote` | m² del terreno. 1 hectárea = `10000`. Si es un rango, el mínimo. | `800` |
+| `lote_hasta` | Solo si el terreno es un rango ("3000 a 6000"): el máximo. | `6000` |
+| `lote_por_unidad` | `true` si el terreno es por unidad ("560 c/u"). | `false` |
 | `descripcion` | El texto largo de la ficha. Sin datos del dueño. | |
 | `publicada` | `true` para que se vea. `false` la esconde sin borrarla. | `true` |
 | `vendido` | `true` la marca como **Vendida** (queda al final, en gris). | `false` |

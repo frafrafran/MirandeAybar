@@ -1,8 +1,11 @@
 # Publicar la web
 
-La web **ya está publicada** en:
+La web **está publicada** en:
 
-**https://mirandeaybar.franciscoaybar2110.workers.dev**
+**https://mirandeaybar.com**
+
+(La dirección técnica `mirandeaybar.franciscoaybar2110.workers.dev` sigue
+andando, pero la que se comparte y la que ve Google es `mirandeaybar.com`.)
 
 Cómo está armado, en una línea: el código vive en GitHub
 (`github.com/frafrafran/MirandeAybar`), y Cloudflare publica solo, en uno o dos
@@ -75,45 +78,37 @@ versión anterior. Tocá el despliegue, copiá el error y pasámelo.
 
 ---
 
-## 3. Dominio propio (`mirandeaybar.com.ar` o `.com`)
+## 3. El dominio: `mirandeaybar.com`
 
-Es lo único que cuesta plata. Todo lo demás es gratis.
+Ya está comprado, en Cloudflare, y conectado al Worker `mirandeaybar`. Todas
+las direcciones del código (vista previa de WhatsApp, `robots.txt`,
+`sitemap.xml`, datos para Google) apuntan a `https://mirandeaybar.com`.
 
-### Opción A — `.com` comprado en Cloudflare (la más simple)
+Hay dos ajustes que solo se pueden hacer desde el panel de Cloudflare. Van una
+sola vez:
 
-1. https://dash.cloudflare.com → **Domain Registration → Register Domains**.
-2. Buscá `mirandeaybar.com` → comprálo (precio de costo, unos USD 10 por año).
-   Queda conectado a Cloudflare automáticamente.
-3. Seguí en **Conectar el dominio a la web**.
+### a) Que `http://` pase siempre a `https://`
 
-### Opción B — `.com.ar` comprado en NIC Argentina
+1. https://dash.cloudflare.com → dominio **mirandeaybar.com**.
+2. **SSL/TLS** → **Edge Certificates**.
+3. Activá **Always Use HTTPS**.
 
-1. https://nic.ar → ingresá con tu **CUIT y Clave Fiscal** → registrá
-   `mirandeaybar.com.ar`.
-2. En Cloudflare: **Add a domain** (o *Add a site*) → escribí
-   `mirandeaybar.com.ar` → elegí el plan **Free** → *Continue*.
-3. Cloudflare te muestra **dos nameservers** (algo como
-   `ana.ns.cloudflare.com` y `bob.ns.cloudflare.com`). Copialos.
-4. En nic.ar → **Mis dominios** → `mirandeaybar.com.ar` → **Delegaciones** →
-   borrá las que haya y cargá los dos de Cloudflare → guardar.
-5. Esperá el mail de Cloudflare avisando que el dominio está activo
-   (de minutos a 24 h).
-6. Seguí en **Conectar el dominio a la web**.
-
-### Conectar el dominio a la web
+### b) Que `www.mirandeaybar.com` lleve a `mirandeaybar.com`
 
 1. **Workers & Pages** → `mirandeaybar` → **Settings** → **Domains & Routes**
-   → **+ Add** → **Custom domain**.
-2. Escribí `mirandeaybar.com.ar` (o `.com`) → **Add domain**.
-3. Repetí con `www.mirandeaybar.com.ar`.
-4. Cloudflare crea el DNS y el certificado HTTPS solo. En unos minutos la
-   web abre en el dominio nuevo, con candado.
+   → **+ Add** → **Custom domain** → `www.mirandeaybar.com` → **Add domain**.
+   (Crea la dirección `www` y su certificado.)
+2. Volvé al dominio **mirandeaybar.com** → **Rules** → **Overview** →
+   **Create rule** → **Redirect Rule** → elegí la plantilla
+   **Redirect from WWW to Root** → **Deploy**.
 
-### Después: avisame para cambiar las direcciones del código
+Para comprobar: abrí `http://www.mirandeaybar.com` y tiene que terminar en
+`https://mirandeaybar.com`.
 
-Varios archivos (la vista previa de WhatsApp en `index.html`, `robots.txt`,
-`sitemap.xml`, los datos para Google) todavía dicen `workers.dev`. Se cambian
-todos juntos en un solo commit. La dirección `workers.dev` sigue andando igual.
+### Si algún día cambia el dominio
+
+Reemplazar `mirandeaybar.com` en `index.html` (7 lugares), `robots.txt` y
+`sitemap.xml`, y en `.github/workflows/mantener-supabase-activa.yml`.
 
 ---
 

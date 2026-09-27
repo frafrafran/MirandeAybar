@@ -1,0 +1,16 @@
+# Archivos de la carpeta que NO se publican en la web.
+# Cloudflare sirve sitio-nuevo/ entera; sin esta lista, cualquiera podia abrir
+# mirandeaybar.com/README.md, los scripts de Python o los SQL de respaldo.
+# Se sigue publicando: index.html, 404.html, los .css y .js, assets/,
+# favicon.ico, robots.txt y sitemap.xml.
+*.md
+*.py
+*.sql
+*.csv
+*.bat
+*.xlsx
+*.xls
+.gitignore
+.assetsignore
+.wrangler
+__pycache__

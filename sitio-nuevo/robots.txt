@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mirandeaybar.franciscoaybar2110.workers.dev/sitemap.xml
+Sitemap: https://mirandeaybar.com/sitemap.xml

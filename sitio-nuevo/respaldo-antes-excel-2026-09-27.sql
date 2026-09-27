@@ -31,3 +31,36 @@ update public.propiedades set titulo = 'Complejo 5 Cabañas en Villa General Bel
 update public.propiedades set titulo = '1 Lote 2900m2 Barrio Loma del Tigre en Villa Berna', precio = 30000, precio_hasta = null, precio_por_unidad = false, descripcion = '1 lote 2900M2 en barrio Loma del Tigre / Agua y luz en puerta / Expensas $35.000 Servicios: Agua y luz en puerta / Expensas $35.000. Documentación: Escritura.' where id = 32;
 update public.propiedades set titulo = '1 Lote 2700mz Barrio El Sereno en Villa Yacanto', precio = 35000, precio_hasta = null, precio_por_unidad = false, descripcion = '1 lote 2700M2 en barrio El Sereno / Agua en puerta / Luz Coop Yacanto / Sin expensas Servicios: Agua en puerta / Luz Coop Yacanto / Sin expensas. Documentación: Escritura.' where id = 33;
 update public.propiedades set titulo = '2 Lotes Esquina en Villa Ciudad Parque', precio = 13500, precio_hasta = null, precio_por_unidad = false, descripcion = '2 lotes esquina 560M2 con luz y agua en puerta / Buena ubicacion / Apto vivienda o local comercial / Calle Dorrego entre san pedro y san lorenzo Servicios: Luz y agua en puerta / Gas envasado / Apto vivienda / Local comercial. Documentación: Escritura. Precio por unidad.' where id = 34;
+
+-- Segunda parte: tipo, dormitorios, banos y m2 antes de pasar los del Excel.
+update public.propiedades set tipo = 'Lote', dormitorios = 0, banos = 0, superficie = 1200, lote = 0 where id = 2;
+update public.propiedades set tipo = 'Lote', dormitorios = 0, banos = 0, superficie = 0, lote = 500 where id = 5;
+update public.propiedades set tipo = 'Lote', dormitorios = 0, banos = 0, superficie = 0, lote = 1200 where id = 6;
+update public.propiedades set tipo = 'Lote', dormitorios = 0, banos = 0, superficie = 0, lote = 900 where id = 7;
+update public.propiedades set tipo = 'Cabaña', dormitorios = 1, banos = 0, superficie = 40, lote = 500 where id = 8;
+update public.propiedades set tipo = 'Lote', dormitorios = 0, banos = 0, superficie = 0, lote = 3000 where id = 9;
+update public.propiedades set tipo = 'Casa', dormitorios = 2, banos = 0, superficie = 100, lote = 400 where id = 10;
+update public.propiedades set tipo = 'Cabaña', dormitorios = 0, banos = 0, superficie = 33, lote = 1600 where id = 11;
+update public.propiedades set tipo = 'Cabaña', dormitorios = 1, banos = 0, superficie = 32, lote = 390 where id = 12;
+update public.propiedades set tipo = 'Casa', dormitorios = 3, banos = 2, superficie = 250, lote = 1020 where id = 13;
+update public.propiedades set tipo = 'Lote', dormitorios = 0, banos = 0, superficie = 0, lote = 1000 where id = 14;
+update public.propiedades set tipo = 'Salón de fiestas', dormitorios = 0, banos = 3, superficie = 600, lote = 25000 where id = 15;
+update public.propiedades set tipo = 'Lote', dormitorios = 0, banos = 0, superficie = 0, lote = 2000 where id = 16;
+update public.propiedades set tipo = 'Casa', dormitorios = 2, banos = 0, superficie = 90, lote = 1500 where id = 17;
+update public.propiedades set tipo = 'Casa', dormitorios = 1, banos = 0, superficie = 80, lote = 5000 where id = 18;
+update public.propiedades set tipo = 'Lote', dormitorios = 0, banos = 0, superficie = 0, lote = 3200 where id = 19;
+update public.propiedades set tipo = 'Lote', dormitorios = 0, banos = 0, superficie = 0, lote = 700 where id = 20;
+update public.propiedades set tipo = 'Local comercial', dormitorios = 0, banos = 0, superficie = 200, lote = 10000 where id = 21;
+update public.propiedades set tipo = 'Campo', dormitorios = 0, banos = 0, superficie = 0, lote = 3500000 where id = 22;
+update public.propiedades set tipo = 'Lote', dormitorios = 0, banos = 0, superficie = 0, lote = 1000 where id = 23;
+update public.propiedades set tipo = 'Lote', dormitorios = 0, banos = 0, superficie = 0, lote = 1000 where id = 24;
+update public.propiedades set tipo = 'Casa', dormitorios = 2, banos = 0, superficie = 140, lote = 2000 where id = 25;
+update public.propiedades set tipo = 'Chacra', dormitorios = 0, banos = 0, superficie = 0, lote = 10000 where id = 26;
+update public.propiedades set tipo = 'Housing', dormitorios = 2, banos = 0, superficie = 0, lote = 110 where id = 27;
+update public.propiedades set tipo = 'Lote', dormitorios = 0, banos = 0, superficie = 0, lote = 525 where id = 28;
+update public.propiedades set tipo = 'Macrolote', dormitorios = 0, banos = 0, superficie = 0, lote = 10000 where id = 29;
+update public.propiedades set tipo = 'Casa', dormitorios = 0, banos = 3, superficie = 250, lote = 25000 where id = 30;
+update public.propiedades set tipo = 'Cabaña', dormitorios = 0, banos = 0, superficie = 65, lote = 10000 where id = 31;
+update public.propiedades set tipo = 'Lote', dormitorios = 0, banos = 0, superficie = 0, lote = 2900 where id = 32;
+update public.propiedades set tipo = 'Lote', dormitorios = 0, banos = 0, superficie = 0, lote = 2700 where id = 33;
+update public.propiedades set tipo = 'Lote', dormitorios = 0, banos = 0, superficie = 0, lote = 1120 where id = 34;

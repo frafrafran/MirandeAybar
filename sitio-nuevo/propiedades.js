@@ -68,9 +68,31 @@
     var tipo = String(p.tipo || '').toLowerCase();
     var tierra = SIN_CUBIERTO.indexOf(tipo) !== -1;
     var cub = p.superficie || 0, terreno = p.lote || 0;
-    if (tierra && cub && !terreno) { terreno = cub; cub = 0; }
-    if (tierra) cub = 0;
-    return { cubierto: cub, terreno: terreno };
+    var a = {
+      cubierto: cub, cubiertoHasta: p.superficie_hasta || 0, cubiertoCu: !!p.superficie_por_unidad,
+      terreno: terreno, terrenoHasta: p.lote_hasta || 0, terrenoCu: !!p.lote_por_unidad
+    };
+    if (tierra && cub && !terreno) {
+      a.terreno = cub; a.terrenoHasta = a.cubiertoHasta; a.terrenoCu = a.cubiertoCu;
+    }
+    if (tierra) { a.cubierto = 0; a.cubiertoHasta = 0; a.cubiertoCu = false; }
+    return a;
+  }
+
+  /* "3.000 – 6.000 m²", "1.000 m² – 1 ha", "40 m² c/u": como lo publica el Excel */
+  function metrosRango(min, max, cu) {
+    if (!min) return null;
+    var t;
+    if (max && max > min) {
+      t = (min < 10000 && max < 10000)
+        ? Number(min).toLocaleString('es-AR') + ' – ' + metros(max)
+        : (min >= 10000 && max >= 10000)
+          ? (min / 10000).toLocaleString('es-AR', { maximumFractionDigits: 1 }) + ' – ' + metros(max)
+          : metros(min) + ' – ' + metros(max);
+    } else {
+      t = metros(min);
+    }
+    return cu ? t + ' c/u' : t;
   }
 
   function specs(p) {
@@ -78,8 +100,8 @@
     if (p.dormitorios) s.push(p.dormitorios + (p.dormitorios === 1 ? ' dorm.' : ' dorm.'));
     if (p.banos) s.push(p.banos + (p.banos === 1 ? ' baño' : ' baños'));
     var a = areas(p);
-    if (a.cubierto) s.push(metros(a.cubierto) + ' cub.');
-    if (a.terreno) s.push('lote ' + metros(a.terreno));
+    if (a.cubierto) s.push(metrosRango(a.cubierto, a.cubiertoHasta, false) + ' cub.' + (a.cubiertoCu ? ' c/u' : ''));
+    if (a.terreno) s.push('lote ' + metrosRango(a.terreno, a.terrenoHasta, a.terrenoCu));
     return s;
   }
 
@@ -685,8 +707,8 @@
       fila('Localidad', p.localidad) +
       fila('Dormitorios', p.dormitorios) +
       fila('Baños', p.banos) +
-      fila('Cubiertos', areas(p).cubierto ? metros(areas(p).cubierto) : '') +
-      fila('Terreno', areas(p).terreno ? metros(areas(p).terreno) : '') +
+      fila('Cubiertos', metrosRango(areas(p).cubierto, areas(p).cubiertoHasta, areas(p).cubiertoCu) || '') +
+      fila('Terreno', metrosRango(areas(p).terreno, areas(p).terrenoHasta, areas(p).terrenoCu) || '') +
       /* el codigo del Excel (MA1, MA2...), el mismo que usa el chat con el
          cliente. Antes era 'MA-' + id de la base, que no coincide con el
          Excel. Sin codigo cargado, la fila no aparece. */

@@ -1,0 +1,11 @@
+# Encabezados que Cloudflare agrega a cada respuesta de la web.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Strict-Transport-Security: max-age=31536000
+
+# fotos, logos y video: se guardan un dia en el navegador del visitante
+/assets/*
+  Cache-Control: public, max-age=86400

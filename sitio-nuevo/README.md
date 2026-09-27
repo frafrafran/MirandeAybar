@@ -160,6 +160,12 @@ Costo medido en gráficos integrados Intel Iris Xe, a 1138×648:
   `precio_hasta` lo muestra como rango ("USD 18.000 – 39.000") y
   `precio_por_unidad` agrega "c/u". El filtro por precio incluye una
   publicación si su rango se cruza con lo pedido.
+- **Metros** — igual que el precio: `superficie` / `lote` son el mínimo,
+  `superficie_hasta` / `lote_hasta` el tope de un rango y
+  `superficie_por_unidad` / `lote_por_unidad` agregan "c/u".
+- **Qué se publica** — Cloudflare sirve `sitio-nuevo/` entera, menos lo que
+  lista `.assetsignore` (guías, scripts, SQL, CSV). `_headers` agrega los
+  encabezados de seguridad y el cache de `assets/`.
 - **Equipo** — port a vanilla de `TeamSection`. (La sección de opiniones se
   sacó el 27/9/2026: las reseñas eran de muestra.)
 - **Riel del valle** — 8 localidades con arrastre, snap y botones.
