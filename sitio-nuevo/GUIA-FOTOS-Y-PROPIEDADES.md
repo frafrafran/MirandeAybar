@@ -38,7 +38,9 @@ Table Editor → tabla `propiedades` → **Insert row**. Campos:
 | `titulo` | Cómo se ve en la web. Poner la localidad al final ayuda a las fotos. | `Casa 3 Dormitorios en Los Reartes` |
 | `tipo` | Uno de los que ya existen, para que el filtro funcione: `Casa`, `Lote`, `Cabaña`, `Complejo de cabañas`, `Macrolote`, `Chacra`, `Campo`, `Local comercial`, `Salón de fiestas`, `Housing` | `Casa` |
 | `operacion` | `venta` o `alquiler` (minúsculas) | `venta` |
-| `precio` | Solo el número, sin puntos ni símbolo | `85000` |
+| `precio` | Solo el número, sin puntos ni símbolo. Si es un rango, el **mínimo**. | `85000` |
+| `precio_hasta` | Solo si es un rango ("18.000 a 39.000"): el máximo. Si no, vacío. | `39000` |
+| `precio_por_unidad` | `true` si el precio es por unidad (el Excel dice "c/u"). En la web sale "c/u". | `false` |
 | `moneda` | `USD` o `ARS` | `USD` |
 | `localidad` | Igual que las demás: `Villa General Belgrano`, `Los Reartes`, `La Cumbrecita`, `Villa Yacanto`, `Villa Ciudad Parque`, `El Durazno`, `Villa Los Aromos`, `Villa Berna` | `Los Reartes` |
 | `dormitorios`, `banos` | Números. Para lotes, `0`. | `3`, `2` |

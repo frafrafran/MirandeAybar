@@ -33,6 +33,25 @@
     return (m || 'USD') + ' ' + Number(p).toLocaleString('es-AR');
   }
 
+  /* El precio tal como lo publica la inmobiliaria: un valor, un rango
+     ("USD 18.000 – 39.000") y/o "c/u" cuando es por unidad. `precio` es
+     siempre el minimo: con eso ordena y filtra el resto del codigo. */
+  function precioTexto(p) {
+    if (p.precio == null || p.precio === '') return 'Consultar';
+    var t = plata(p.precio, p.moneda);
+    if (p.precio_hasta != null && Number(p.precio_hasta) > Number(p.precio)) {
+      t += ' – ' + Number(p.precio_hasta).toLocaleString('es-AR');
+    }
+    if (p.precio_por_unidad) t += ' c/u';
+    return t;
+  }
+
+  /* el valor mas alto de la publicacion (el tope del rango, o el precio) */
+  function precioTope(p) {
+    var h = Number(p.precio_hasta);
+    return (p.precio_hasta != null && isFinite(h) && h > Number(p.precio)) ? h : Number(p.precio);
+  }
+
   function metros(n) {
     if (!n) return null;
     if (n >= 10000) return (n / 10000).toLocaleString('es-AR', { maximumFractionDigits: 1 }) + ' ha';
@@ -67,7 +86,7 @@
   function waLink(p) {
     var txt = p.vendido
       ? 'Hola! Vi que se vendió: ' + p.titulo + '. ¿Tienen algo parecido?'
-      : 'Hola! Me interesa: ' + p.titulo + ' (' + plata(p.precio, p.moneda) + ').';
+      : 'Hola! Me interesa: ' + p.titulo + ' (' + precioTexto(p) + ').';
     return 'https://wa.me/' + (CFG.whatsapp || '') + '?text=' + encodeURIComponent(txt);
   }
 
@@ -119,7 +138,7 @@
         (sp.length ? '<ul class="tile__specs">' +
           sp.map(function (x) { return '<li class="num">' + esc(x) + '</li>'; }).join('') +
         '</ul>' : '') +
-        '<p class="tile__price num">' + (p.vendido ? 'Vendida' : esc(plata(p.precio, p.moneda))) + '</p>' +
+        '<p class="tile__price num">' + (p.vendido ? 'Vendida' : esc(precioTexto(p))) + '</p>' +
       '</div>' +
       (p.vendido ? '<span class="tile__flag tile__flag--vendida label">Vendida</span>'
        : p.destacada ? '<span class="tile__flag label">Destacada</span>'
@@ -308,7 +327,8 @@
     if (!precios.length) { var f = iMin.closest('.filtro'); if (f) f.hidden = true; return; }
 
     LIMITES.min = Math.min.apply(null, precios);
-    LIMITES.max = Math.max.apply(null, precios);
+    LIMITES.max = Math.max.apply(null, PROPS.filter(function (p) { return typeof p.precio === 'number'; })
+      .map(precioTope));
     var mon = (PROPS[0] && PROPS[0].moneda) || 'USD';
 
     /* el placeholder y la ayuda salen de los datos, no escritos a mano:
@@ -385,9 +405,11 @@
       if (filtro.tipo && norm(p.tipo) !== filtro.tipo) return false;
       /* los dos extremos son inclusive: quien escribe "hasta 100.000"
          espera ver la de 100.000 */
+      /* con rango (8 lotes de 18.000 a 39.000), entra si alguna unidad cae
+         dentro de lo pedido: el rango se cruza con el filtro */
       if (filtro.min != null || filtro.max != null) {
         if (p.precio == null) return false;
-        if (filtro.min != null && p.precio < filtro.min) return false;
+        if (filtro.min != null && precioTope(p) < filtro.min) return false;
         if (filtro.max != null && p.precio > filtro.max) return false;
       }
       if (q) {
@@ -444,7 +466,7 @@
           '<span class="sug__tit">' + esc(p.titulo) + '</span>' +
           '<span class="sug__sub">' + esc(bonito(p.tipo)) + ' &middot; ' + esc(p.localidad) + '</span>' +
         '</span>' +
-        '<span class="sug__precio num">' + esc(plata(p.precio, p.moneda)) + '</span>' +
+        '<span class="sug__precio num">' + esc(p.vendido ? 'Vendida' : precioTexto(p)) + '</span>' +
       '</li>';
     }).join('') +
     '<li class="sug__pie" aria-hidden="true"><span>Enter abre la primera</span><span>Esc cierra</span></li>';
@@ -650,7 +672,7 @@
     $('#pvTitulo', vista).textContent = p.titulo || '';
     $('#pvLoc', vista).textContent = p.localidad || '';
     $('#pvDesc', vista).textContent = p.descripcion || '';
-    $('#pvPrecio', vista).textContent = p.vendido ? 'Vendida' : plata(p.precio, p.moneda);
+    $('#pvPrecio', vista).textContent = p.vendido ? 'Vendida' : precioTexto(p);
     $('#pvOp', vista).textContent = p.vendido
       ? 'Esta propiedad ya se vendió'
       : (p.operacion || '') + (p.moneda ? ' · ' + p.moneda : '');

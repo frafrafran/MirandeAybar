@@ -156,6 +156,10 @@ Costo medido en gráficos integrados Intel Iris Xe, a 1138×648:
   el precio por "Vendida" y el WhatsApp pregunta por algo parecido.
 - **Referencia** — la ficha muestra la columna `codigo` (MA1, MA2…), la misma
   del Excel y del chat.
+- **Precio** — `precio` es el mínimo (con eso se ordena y filtra);
+  `precio_hasta` lo muestra como rango ("USD 18.000 – 39.000") y
+  `precio_por_unidad` agrega "c/u". El filtro por precio incluye una
+  publicación si su rango se cruza con lo pedido.
 - **Equipo** — port a vanilla de `TeamSection`. (La sección de opiniones se
   sacó el 27/9/2026: las reseñas eran de muestra.)
 - **Riel del valle** — 8 localidades con arrastre, snap y botones.
