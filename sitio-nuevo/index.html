@@ -4,13 +4,13 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Mirande Aybar · Inmobiliaria en Villa General Belgrano</title>
-<meta name="description" content="Casas, campos y terrenos en Villa General Belgrano y el Valle de Calamuchita. Más de 15 años y 200 operaciones en las sierras de Córdoba." />
+<meta name="description" content="Casas, lotes, cabañas y campos en venta en Villa General Belgrano y el Valle de Calamuchita, sierras de Córdoba." />
 <meta name="theme-color" content="#2B3A42" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=20260917084318" />
+<link rel="stylesheet" href="styles.css?v=20260927164156" />
 <link rel="icon" href="assets/logos/isotipo-crema.png" />
 <link rel="apple-touch-icon" href="assets/logos/isotipo-azul.png" />
 
@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Mirande Aybar" />
 <meta property="og:locale" content="es_AR" />
 <meta property="og:title" content="Mirande Aybar &middot; Inmobiliaria en Villa General Belgrano" />
-<meta property="og:description" content="Casas, campos y terrenos en Villa General Belgrano y el Valle de Calamuchita. Mas de 15 anos en las sierras de Cordoba." />
+<meta property="og:description" content="Casas, lotes, cabañas y campos en venta en Villa General Belgrano y el Valle de Calamuchita, sierras de Córdoba." />
 <meta property="og:url" content="https://mirandeaybar.franciscoaybar2110.workers.dev/" />
 <meta property="og:image" content="https://mirandeaybar.franciscoaybar2110.workers.dev/assets/og.jpg" />
 <meta property="og:image:width" content="1200" />
@@ -131,7 +131,7 @@
 
     <!-- fondo, se desvanece a medida que el video se abre -->
     <div class="rv__bg" id="rvBg" aria-hidden="true">
-      <img src="assets/fotos/champaqui.jpg" alt="" decoding="async" width="1080" height="765" />
+      <img src="assets/fotos/villa-general-belgrano.jpg" alt="" decoding="async" fetchpriority="high" width="1920" height="822" />
       <div class="rv__bgtint"></div>
     </div>
 
@@ -147,9 +147,14 @@
 
     <!-- título: se parte en dos y sale de cuadro -->
     <div class="rv__head" id="rvHead">
-      <h1 class="rv__title">
-        <span class="rv__t rv__t--a" id="rvT1">Mirande</span>
-        <span class="rv__t rv__t--b" id="rvT2">Aybar</span>
+      <!-- el logo real, partido en sus dos renglones: cada uno sale de
+           cuadro hacia un lado con el scroll -->
+      <h1 class="rv__title rv__title--logo">
+        <span class="sr-only">Mirande Aybar</span>
+        <img class="rv__t rv__t--a" id="rvT1" src="assets/logos/portada-mirande.png" alt=""
+             width="1661" height="223" decoding="async" fetchpriority="high" />
+        <img class="rv__t rv__t--b" id="rvT2" src="assets/logos/portada-aybar.png" alt=""
+             width="1661" height="224" decoding="async" fetchpriority="high" />
       </h1>
       <div class="rv__meta">
         <p class="label" id="rvMetaA">Villa General Belgrano &middot; Valle de Calamuchita</p>
@@ -157,17 +162,12 @@
     </div>
 
     <!-- Entra cuando el video termina de abrirse, al reves que el titulo:
-         primero la marca, despues adonde ir y por que confiar. -->
+         primero la marca, despues adonde ir. -->
     <div class="rv__foot" id="rvFoot">
       <div class="rv__cta">
         <a class="btn btn--ivory" href="#propiedades">Ver propiedades</a>
         <a class="btn btn--ghost" href="#contacto">Escribinos</a>
       </div>
-      <dl class="rv__stats">
-        <div><dt>Experiencia</dt><dd class="num" data-count="15" data-pre="+" data-post=" años">+15 años</dd></div>
-        <div><dt>Operaciones</dt><dd class="num" data-count="200" data-pre="+">+200</dd></div>
-        <div><dt>Localidades</dt><dd class="num">5 del valle</dd></div>
-      </dl>
     </div>
 
   </div>
@@ -261,24 +261,26 @@
   <div class="wrap">
     <div class="bento">
 
-      <article class="tile tile--stat reveal" data-d="1">
-        <p class="label">Años en la región</p>
-        <p class="stat num" data-count="15" data-pre="+">+15</p>
+      <!-- Los dos primeros numeros salen del listado de Supabase al cargar
+           (propiedades.js): son siempre los reales. Sin listado no se muestran. -->
+      <article class="tile tile--stat tile--dato reveal" data-d="1" data-dato="propiedades" hidden>
+        <p class="label">Propiedades en venta</p>
+        <p class="stat num"></p>
       </article>
 
-      <article class="tile tile--stat reveal" data-d="2">
-        <p class="label">Operaciones concretadas</p>
-        <p class="stat num" data-count="200" data-pre="+">+200</p>
-      </article>
-
-      <article class="tile tile--stat reveal" data-d="1">
+      <article class="tile tile--stat tile--dato reveal" data-d="2" data-dato="localidades" hidden>
         <p class="label">Localidades del valle</p>
-        <p class="stat num" data-count="5">5</p>
+        <p class="stat num"></p>
       </article>
 
-      <article class="tile tile--stat reveal" data-d="2">
+      <article class="tile tile--stat reveal" data-d="1">
         <p class="label">Atención</p>
         <p class="stat stat--word">Personalizada</p>
+      </article>
+
+      <article class="tile tile--stat reveal" data-d="2">
+        <p class="label">Zona</p>
+        <p class="stat stat--word">Calamuchita</p>
       </article>
 
       <article class="tile tile--2x2 tile--cta reveal" data-d="1">
@@ -301,7 +303,7 @@
   <div class="wrap rv__after">
     <div>
       <p class="label gold-l reveal">El terreno</p>
-      <h2 class="h2 reveal" data-d="1">Quince años recorriendo estos caminos.</h2>
+      <h2 class="h2 reveal" data-d="1">Recorremos estos caminos todos los días.</h2>
     </div>
     <div class="rv__aftercopy">
       <p class="note reveal" data-d="2">
@@ -444,9 +446,9 @@
         <div class="tm__ph"><img src="assets/equipo/sebastian.jpeg" alt="Sebastián Mirande" width="460" height="910" loading="lazy" decoding="async" /></div>
         <h3 class="tm__name">Sebastián Mirande</h3>
         <p class="tm__role label">Socio fundador</p>
-        <p class="tm__bio">Nació y creció en el valle. Conoce cada camino, cada barrio y cada vecino, y por eso sabe qué vale una propiedad antes de tasarla.</p>
+        <p class="tm__bio">Se ocupa de todo lo que pasa después del apretón de manos: tasación, papeles, escritura y servicios. Nada llega a la firma sin que él lo revise dos veces.</p>
         <div class="tm__links">
-          <a href="https://wa.me/5493512729721?text=Hola%21%20Queria%20hablar%20con%20Sebasti%C3%A1n." target="_blank" rel="noopener" aria-label="Escribir a Sebastián por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
+          <a href="https://wa.me/5493546436653?text=Hola%21%20Queria%20hablar%20con%20Sebasti%C3%A1n." target="_blank" rel="noopener" aria-label="Escribir a Sebastián por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
           <a href="mailto:mirandeaybar@gmail.com?subject=Consulta%20para%20Sebasti%C3%A1n" aria-label="Escribir a Sebastián por email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
         </div>
       </article>
@@ -455,7 +457,7 @@
         <div class="tm__ph"><img src="assets/equipo/mario.jpeg" alt="Mario Gonzalo Aybar" width="452" height="899" loading="lazy" decoding="async" /></div>
         <h3 class="tm__name">Mario Gonzalo Aybar</h3>
         <p class="tm__role label">Socio fundador</p>
-        <p class="tm__bio">Se ocupa de todo lo que pasa después del apretón de manos: tasación, papeles, escritura y servicios. Nada llega a la firma sin que él lo revise dos veces.</p>
+        <p class="tm__bio">Nació y creció en el valle. Conoce cada camino, cada barrio y cada vecino, y por eso sabe qué vale una propiedad antes de tasarla.</p>
         <div class="tm__links">
           <a href="https://wa.me/5493512729721?text=Hola%21%20Queria%20hablar%20con%20Mario." target="_blank" rel="noopener" aria-label="Escribir a Mario por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
           <a href="mailto:mirandeaybar@gmail.com?subject=Consulta%20para%20Mario" aria-label="Escribir a Mario por email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
@@ -463,29 +465,6 @@
       </article>
     </div>
 
-  </div>
-</section>
-
-<!-- ===================== 9. OPINIONES ===================== -->
-<section class="band band--ivory2" id="opiniones">
-  <div class="wrap sec-head">
-    <p class="label gold-l reveal">Opiniones</p>
-    <h2 class="h2 reveal" data-d="1">Lo que dicen nuestros clientes.</h2>
-  </div>
-  <div class="stg" id="stg" role="group" aria-roledescription="carrusel"
-       aria-label="Opiniones de clientes">
-    <div class="stg__deck" id="stgDeck"></div>
-    <div class="stg__nav">
-      <button class="stg__btn" id="stgPrev" type="button" aria-label="Opinión anterior">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-      </button>
-      <button class="stg__btn" id="stgNext" type="button" aria-label="Opinión siguiente">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-      </button>
-    </div>
-    <p class="sr-only" id="stgLive" aria-live="polite"></p>
   </div>
 </section>
 
@@ -549,7 +528,7 @@
           vender tu propiedad en las Sierras de Calamuchita.</p>
       </div>
       <div class="sheet__cols">
-        <div><p class="label">Navegación</p><a href="#propiedades">Propiedades</a><a href="#servicios">Servicios</a><a href="#valle">Los alrededores</a><a href="#opiniones">Opiniones</a></div>
+        <div><p class="label">Navegación</p><a href="#propiedades">Propiedades</a><a href="#servicios">Servicios</a><a href="#valle">Los alrededores</a></div>
         <div><p class="label">Inmobiliaria</p><a href="#rincon-texto">Nosotros</a><a href="#equipo">Equipo</a><a href="#proceso">Cómo trabajamos</a></div>
         <div><p class="label">Contacto</p><a href="https://wa.me/5493512729721" target="_blank" rel="noopener">WhatsApp</a><a href="mailto:mirandeaybar@gmail.com">mirandeaybar@gmail.com</a><a href="https://www.instagram.com/mirandeaybar" target="_blank" rel="noopener">Instagram</a><a href="https://www.tiktok.com/@mirandeaybar" target="_blank" rel="noopener">TikTok</a></div>
       </div>
@@ -580,8 +559,8 @@
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.8-2.8-1.5-3.9-3.4-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5s-.7-1.7-.9-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.8.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
 </a>
 
-<script src="config.js?v=20260917084318"></script>
-<script src="main.js?v=20260917084318"></script>
-<script src="propiedades.js?v=20260917084318"></script>
+<script src="config.js?v=20260927164156"></script>
+<script src="main.js?v=20260927164156"></script>
+<script src="propiedades.js?v=20260927164156"></script>
 </body>
 </html>

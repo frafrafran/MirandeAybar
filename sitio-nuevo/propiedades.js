@@ -65,7 +65,9 @@
   }
 
   function waLink(p) {
-    var txt = 'Hola! Me interesa: ' + p.titulo + ' (' + plata(p.precio, p.moneda) + ').';
+    var txt = p.vendido
+      ? 'Hola! Vi que se vendió: ' + p.titulo + '. ¿Tienen algo parecido?'
+      : 'Hola! Me interesa: ' + p.titulo + ' (' + plata(p.precio, p.moneda) + ').';
     return 'https://wa.me/' + (CFG.whatsapp || '') + '?text=' + encodeURIComponent(txt);
   }
 
@@ -105,7 +107,8 @@
     var grande = (i % 4 === 0);
     var sp = specs(p);
     return '' +
-    '<article class="tile ' + (grande ? 'tile--2x2' : 'tile--2x1') + ' tile--photo tile--prop reveal"' +
+    '<article class="tile ' + (grande ? 'tile--2x2' : 'tile--2x1') + ' tile--photo tile--prop' +
+            (p.vendido ? ' tile--vendida' : '') + ' reveal"' +
             ' data-id="' + p.id + '" tabindex="0" role="button"' +
             ' aria-label="Ver ficha de ' + esc(p.titulo) + '">' +
       medio(p, grande) +
@@ -116,9 +119,10 @@
         (sp.length ? '<ul class="tile__specs">' +
           sp.map(function (x) { return '<li class="num">' + esc(x) + '</li>'; }).join('') +
         '</ul>' : '') +
-        '<p class="tile__price num">' + esc(plata(p.precio, p.moneda)) + '</p>' +
+        '<p class="tile__price num">' + (p.vendido ? 'Vendida' : esc(plata(p.precio, p.moneda))) + '</p>' +
       '</div>' +
-      (p.destacada ? '<span class="tile__flag label">Destacada</span>'
+      (p.vendido ? '<span class="tile__flag tile__flag--vendida label">Vendida</span>'
+       : p.destacada ? '<span class="tile__flag label">Destacada</span>'
        : p.nuevo ? '<span class="tile__flag tile__flag--new label">Nuevo</span>' : '') +
     '</article>';
   }
@@ -134,9 +138,29 @@
 
   var TILES_FIJOS = grid.innerHTML;   // las de estadísticas y el CTA, que no salen de la base
 
+  /* "Propiedades en venta" y "Localidades del valle" se cuentan del listado
+     real, sin las vendidas. En el HTML vienen ocultas: si el listado no
+     carga, no se muestra un numero inventado. */
+  function tilesFijos() {
+    if (!PROPS.length) return TILES_FIJOS;
+    var enVenta = PROPS.filter(function (p) { return !p.vendido; });
+    var locs = {};
+    enVenta.forEach(function (p) { if (p.localidad) locs[norm(p.localidad)] = 1; });
+    var datos = { propiedades: enVenta.length, localidades: Object.keys(locs).length };
+    var t = document.createElement('div');
+    t.innerHTML = TILES_FIJOS;
+    $$('[data-dato]', t).forEach(function (el) {
+      var n = datos[el.getAttribute('data-dato')];
+      if (!n) return;
+      el.querySelector('.stat').textContent = n;
+      el.hidden = false;
+    });
+    return t.innerHTML;
+  }
+
   function pintar() {
     var tanda = VISTA.slice(0, mostradas);
-    var html = tanda.map(tarjeta).join('') + TILES_FIJOS;
+    var html = tanda.map(tarjeta).join('') + tilesFijos();
     grid.innerHTML = html;
     if (window.MA && window.MA.observarReveals) window.MA.observarReveals();
     var btn = $('#verMas');
@@ -626,8 +650,12 @@
     $('#pvTitulo', vista).textContent = p.titulo || '';
     $('#pvLoc', vista).textContent = p.localidad || '';
     $('#pvDesc', vista).textContent = p.descripcion || '';
-    $('#pvPrecio', vista).textContent = plata(p.precio, p.moneda);
-    $('#pvOp', vista).textContent = (p.operacion || '') + (p.moneda ? ' · ' + p.moneda : '');
+    $('#pvPrecio', vista).textContent = p.vendido ? 'Vendida' : plata(p.precio, p.moneda);
+    $('#pvOp', vista).textContent = p.vendido
+      ? 'Esta propiedad ya se vendió'
+      : (p.operacion || '') + (p.moneda ? ' · ' + p.moneda : '');
+    vista.classList.toggle('pv--vendida', !!p.vendido);
+    $('#pvWa', vista).textContent = p.vendido ? 'Consultar por algo similar' : 'Consultar por WhatsApp';
 
     $('#pvDatos', vista).innerHTML =
       fila('Tipo', p.tipo) +
@@ -637,7 +665,10 @@
       fila('Baños', p.banos) +
       fila('Cubiertos', areas(p).cubierto ? metros(areas(p).cubierto) : '') +
       fila('Terreno', areas(p).terreno ? metros(areas(p).terreno) : '') +
-      fila('Referencia', 'MA-' + p.id);
+      /* el codigo del Excel (MA1, MA2...), el mismo que usa el chat con el
+         cliente. Antes era 'MA-' + id de la base, que no coincide con el
+         Excel. Sin codigo cargado, la fila no aparece. */
+      fila('Referencia', p.codigo || '');
 
     var mapa = $('#pvMapa', vista), caja = $('#pvMapaCaja', vista);
     var lat = Number(p.lat), lng = Number(p.lng);
@@ -652,7 +683,9 @@
     $('#pvWa', vista).href = waLink(p);
     $('#pvMail', vista).href = 'mailto:' + (CFG.email || '') +
       '?subject=' + encodeURIComponent('Consulta: ' + p.titulo) +
-      '&body=' + encodeURIComponent('Hola! Me interesa ' + p.titulo + '.');
+      '&body=' + encodeURIComponent(p.vendido
+        ? 'Hola! Vi que se vendió ' + p.titulo + '. ¿Tienen algo parecido?'
+        : 'Hola! Me interesa ' + p.titulo + '.');
 
     vista.hidden = false;
     document.body.classList.add('sin-scroll');
@@ -779,7 +812,7 @@
   }
 
   var url = CFG.supabaseUrl.replace(/\/$/, '') +
-    '/rest/v1/propiedades?select=*&publicada=eq.true&order=destacada.desc,id.desc';
+    '/rest/v1/propiedades?select=*&publicada=eq.true&order=vendido.asc,destacada.desc,id.desc';
 
   var listo = false;
   var corte = window.setTimeout(function () {

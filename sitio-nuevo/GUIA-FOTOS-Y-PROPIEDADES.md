@@ -34,7 +34,7 @@ Table Editor → tabla `propiedades` → **Insert row**. Campos:
 
 | Campo | Qué poner | Ejemplo |
 |---|---|---|
-| `codigo` | El código del Excel, **único**. El siguiente libre. | `MA31` |
+| `codigo` | El código del Excel, **único**. El siguiente libre (hoy, `MA29`). Es la *Referencia* que ve el cliente en la ficha. | `MA29` |
 | `titulo` | Cómo se ve en la web. Poner la localidad al final ayuda a las fotos. | `Casa 3 Dormitorios en Los Reartes` |
 | `tipo` | Uno de los que ya existen, para que el filtro funcione: `Casa`, `Lote`, `Cabaña`, `Complejo de cabañas`, `Macrolote`, `Chacra`, `Campo`, `Local comercial`, `Salón de fiestas`, `Housing` | `Casa` |
 | `operacion` | `venta` o `alquiler` (minúsculas) | `venta` |
@@ -46,6 +46,7 @@ Table Editor → tabla `propiedades` → **Insert row**. Campos:
 | `lote` | m² del terreno | `800` |
 | `descripcion` | El texto largo de la ficha. Sin datos del dueño. | |
 | `publicada` | `true` para que se vea. `false` la esconde sin borrarla. | `true` |
+| `vendido` | `true` la marca como **Vendida** (queda al final, en gris). | `false` |
 | `destacada` | `true` la muestra arriba de todo | `false` |
 | `nuevo` | `true` le pone la etiqueta "Nuevo" | `true` |
 | `lat`, `lng` | Coordenadas para el mapa. Google Maps → clic derecho en el lugar → copiar el primer renglón. | `-31.9182`, `-64.5789` |
@@ -55,12 +56,13 @@ Guardar. La propiedad ya aparece en la web con "Foto en preparación".
 
 ### 2. Cargar las fotos
 
-Seguir la parte B. La herramienta reconoce `MA31` y arma todo.
+Seguir la parte B. La herramienta reconoce `MA29` y arma todo.
 
 ### Para cambiar algo de una propiedad existente
 
 Table Editor → doble clic en la celda → editar → Enter. Listo. Para sacar una
-de la web sin borrarla, `publicada` = `false`. Para venderla, lo mismo.
+de la web sin borrarla, `publicada` = `false`. Cuando se vende, `vendido` = `true`:
+sigue visible con la marca "Vendida" (si preferís que desaparezca, `publicada` = `false`).
 
 ---
 
@@ -70,7 +72,7 @@ de la web sin borrarla, `publicada` = `false`. Para venderla, lo mismo.
 
 Por el chat, así:
 
-1. Escribe el código y una descripción corta: **`MA31 CASA 3 DORMITORIOS LOS REARTES`**
+1. Escribe el código y una descripción corta: **`MA29 CASA 3 DORMITORIOS LOS REARTES`**
 2. Manda las fotos de esa propiedad, todas seguidas.
 3. Siguiente propiedad: otra vez el código y las fotos.
 
@@ -100,9 +102,9 @@ carpeta **`listo-para-r2\`**:
 
 ```
 listo-para-r2\
-  MA31-casa-3-dormitorios-en-los-reartes\
-    MA31-casa-3-dormitorios-en-los-reartes-01.webp
-    MA31-casa-3-dormitorios-en-los-reartes-02.webp
+  MA29-casa-3-dormitorios-en-los-reartes\
+    MA29-casa-3-dormitorios-en-los-reartes-01.webp
+    MA29-casa-3-dormitorios-en-los-reartes-02.webp
   _sin-codigo\            <- fotos que no tenían código al lado
   revision.csv            <- qué tanda fue a qué propiedad y con qué seguridad
   actualizar-fotos.sql    <- el comando para la base
@@ -114,9 +116,9 @@ listo-para-r2\
 - `REVISAR`: no encontró con seguridad la propiedad. Se resuelve a mano
   diciéndole el `id` de la fila en Supabase:
   ```powershell
-  python separar-fotos-whatsapp.py "...zip" --r2 https://pub-80c8232a5cae49bdb5c7fa00acf6dfb6.r2.dev --forzar MA31=35
+  python separar-fotos-whatsapp.py "...zip" --r2 https://pub-80c8232a5cae49bdb5c7fa00acf6dfb6.r2.dev --forzar MA29=35
   ```
-  (`MA31` = lo que escribió Papá, `35` = el `id` de la fila).
+  (`MA29` = lo que escribió Papá, `35` = el `id` de la fila).
 - `NOTA sin fotos al lado`: escribió un código pero no hay fotos pegadas.
   Avisarle.
 

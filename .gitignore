@@ -30,3 +30,7 @@ __pycache__/
 
 # Config local de herramientas (lleva rutas absolutas de cada maquina)
 .claude/
+
+# Cache de wrangler (lleva el ID de la cuenta de Cloudflare). Nunca se sube:
+# dentro de sitio-nuevo/ se serviria como archivo publico.
+.wrangler/

@@ -119,8 +119,11 @@ Costo medido en gráficos integrados Intel Iris Xe, a 1138×648:
   La ventana crece con `clip-path: inset(… round …)` en lugar de animar
   `width`/`height`: no toca el layout, lo compone la GPU, y el video queda
   quieto mientras se abre el encuadre en vez de reencuadrarse a cada cuadro.
-  El título se parte en dos con `mix-blend-mode: difference`, así se lee tanto
-  sobre cielo claro como sobre sierra oscura.
+  El título es el logotipo oficial partido en sus dos renglones
+  (`assets/logos/portada-mirande.png` y `portada-aybar.png`, recortados de
+  `logotipo-crema.png`): cada uno sale de cuadro hacia su lado, con un
+  recorrido medido sobre el ancho real del logo para que no queden restos.
+  De fondo, antes de que se abra el video, `assets/fotos/villa-general-belgrano.jpg`.
 
   El video (`assets/video/valle-aereo.mp4`) sale de
   [Pexels](https://www.pexels.com/video/aerial-view-of-a-village-surrounded-by-green-mountains-15543358/),
@@ -144,9 +147,17 @@ Costo medido en gráficos integrados Intel Iris Xe, a 1138×648:
   para que no queden franjas vacías. El fondo queda `inert` mientras está
   abierta, y la ficha vive en la URL (`#propiedad-12`), así se puede compartir y
   el botón *atrás* la cierra.
-- **Bento de propiedades** — tiles de propiedad mezcladas con métricas.
-- **Equipo** y **Opiniones** — ports a vanilla de `TeamSection` y
-  `StaggerTestimonials`, verificados contra la geometría del original.
+- **Bento de propiedades** — tiles de propiedad mezcladas con métricas. Las
+  dos métricas numéricas (propiedades en venta, localidades) se cuentan del
+  listado real al cargar; si el listado no carga, no se muestran. No hay
+  cifras escritas a mano.
+- **Vendidas** — con `vendido = true` en Supabase, la propiedad sigue en la
+  web, al final del listado, en gris y con la marca "Vendida"; la ficha cambia
+  el precio por "Vendida" y el WhatsApp pregunta por algo parecido.
+- **Referencia** — la ficha muestra la columna `codigo` (MA1, MA2…), la misma
+  del Excel y del chat.
+- **Equipo** — port a vanilla de `TeamSection`. (La sección de opiniones se
+  sacó el 27/9/2026: las reseñas eran de muestra.)
 - **Riel del valle** — 8 localidades con arrastre, snap y botones.
 - **Giro 3D de servicios** — las cuatro caras centradas en `p = i/(n-1)`, para
   que la primera esté de frente cuando el pin engancha y la última cuando se

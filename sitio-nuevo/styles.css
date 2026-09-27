@@ -287,6 +287,10 @@ section[id],[id]{scroll-margin-top:96px;}
 .tile__flag{position:absolute;top:.9rem;left:.9rem;z-index:3;padding:.28rem .6rem;border-radius:99px;
   background:var(--gold);color:var(--ink);font-size:.62rem;}
 .tile__flag--new{background:var(--ivory);}
+/* vendida: sigue a la vista (muestra trayectoria) pero se lee cerrada */
+.tile__flag--vendida{background:var(--ink);color:var(--ivory);}
+.tile--vendida img{filter:grayscale(.85) brightness(.9);}
+.tile--vendida .tile__price{color:var(--ivory);letter-spacing:.06em;text-transform:uppercase;font-size:.95rem;}
 .tile--stat{justify-content:space-between;background:var(--ink-2);color:var(--ivory);}
 .tile--stat .label{color:var(--muted-d);}
 .tile--stat .stat{color:var(--gold);}
@@ -304,7 +308,9 @@ section[id],[id]{scroll-margin-top:96px;}
 .track--reveal .pin{background:var(--ink);}
 
 .rv__bg{position:absolute;inset:0;z-index:0;will-change:opacity;}
-.rv__bg img{width:100%;height:100%;object-fit:cover;}
+.rv__bg img{width:100%;height:100%;object-fit:cover;
+  /* foto panoramica: en pantallas angostas se centra en la torre del reloj */
+  object-position:30% 50%;}
 .rv__bgtint{position:absolute;inset:0;background:rgba(43,58,66,.42);}
 
 .rv__media{position:absolute;inset:0;z-index:1;
@@ -322,10 +328,18 @@ section[id],[id]{scroll-margin-top:96px;}
 .rv__t{display:block;font-family:var(--display);font-weight:600;color:var(--ivory);
   font-size:clamp(2.4rem,1.1rem + 6vw,6rem);line-height:.98;letter-spacing:-.045em;
   will-change:transform;}
+/* Version logo: los dos renglones del logotipo oficial, con la misma
+   proporcion y separacion que el archivo original (90 px de aire sobre
+   1661 px de ancho). Sin mix-blend: invertido, el marfil se volvia azul
+   sobre el cielo. Lo sostiene una sombra suave. */
+.rv__title--logo{mix-blend-mode:normal;gap:calc(var(--logo-w) * .0542);
+  --logo-w:min(84vw,46rem);}
+.rv__title--logo .rv__t{width:var(--logo-w);height:auto;max-width:none;
+  filter:drop-shadow(0 2px 22px rgba(20,28,33,.5));}
 .rv__meta{display:grid;gap:.45rem;color:var(--ivory);will-change:opacity;}
 .rv__meta .label{color:rgba(239,227,210,.82);}
 
-/* Botones y numeros de la portada. Entran cuando el video termina de abrirse,
+/* Botones de la portada. Entran cuando el video termina de abrirse,
    asi que arrancan invisibles: el JS los sube desde opacity 0. Sin este valor
    inicial se verian de golpe en el primer cuadro, antes de que el bucle corra. */
 .rv__foot{color:var(--ivory);
@@ -334,21 +348,9 @@ section[id],[id]{scroll-margin-top:96px;}
   gap:clamp(1rem,2.5vh,1.6rem);padding-inline:clamp(1rem,5vw,2rem);
   opacity:0;will-change:opacity,transform;pointer-events:none;}
 .rv__cta{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center;}
-.rv__stats{display:flex;flex-wrap:wrap;justify-content:center;
-  gap:.5rem clamp(1.25rem,4vw,2.75rem);margin:0;
-  padding-top:clamp(.75rem,2vh,1.1rem);border-top:1px solid rgba(239,227,210,.22);
-  width:min(100%,44rem);}
-.rv__stats > div{text-align:center;display:grid;gap:.1rem;}
-.rv__stats dt{font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;
-  color:rgba(239,227,210,.66);}
-.rv__stats dd{margin:0;font-family:var(--display);font-weight:600;
-  font-size:1.05rem;letter-spacing:-.02em;color:var(--ivory);
-  font-variant-numeric:tabular-nums;}
 @media (max-width:520px){
   .rv__cta{width:100%;flex-direction:column;}
   .rv__cta .btn{width:100%;justify-content:center;}
-  /* en pantallas angostas tres columnas dejan los numeros ilegibles */
-  .rv__stats > div:last-child{display:none;}
 }
 /* sin animacion el titulo no sale de cuadro, asi que la portada se muestra
    completa y quieta */
@@ -548,73 +550,9 @@ section[id],[id]{scroll-margin-top:96px;}
   .tm:hover .tm__links,.tm:focus-within .tm__links{opacity:1;}
 }
 
-/* ============================ OPINIONES (stagger) ============================
-   Port del StaggerTestimonials. Geometria identica al original:
-   tarjeta 365px (290 en movil), desplazamiento cardSize/1.5 por posicion,
-   chaflan de 50px arriba a la derecha y sombra dura de 8px.
-   Los tokens shadcn se mapean a la marca:
-     --primary -> gold   --card -> ivory   --border -> ink
-     --muted -> ivory-2  --background -> ivory
-   ============================================================================ */
+/* texto solo para lectores de pantalla */
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
   clip:rect(0 0 0 0);white-space:nowrap;border:0;}
-
-.stg{position:relative;width:100%;height:600px;overflow:hidden;
-  background:rgba(228,215,196,.34);}
-.stg__deck{position:absolute;inset:0;}
-
-.stg__card{
-  position:absolute;left:50%;top:50%;
-  cursor:pointer;border:2px solid var(--ink);padding:2rem;
-  background:var(--ivory);color:var(--ink);
-  transition:transform .5s ease-in-out,background-color .5s ease-in-out,
-              color .5s ease-in-out,border-color .5s ease-in-out,box-shadow .5s ease-in-out;
-  /* solo se corta la esquina superior derecha: los puntos de abajo del
-     poligono original son colineales y no recortan nada */
-  clip-path:polygon(50px 0%, calc(100% - 50px) 0%, 100% 50px, 100% 100%,
-                    calc(100% - 50px) 100%, 50px 100%, 0 100%, 0 0);
-  will-change:transform;
-}
-.stg__card:hover{border-color:var(--gold-deep);}
-.stg__card.is-center{
-  z-index:10;background:var(--gold);color:var(--ink);border-color:var(--gold);
-  box-shadow:0 8px 0 4px var(--ink);
-}
-.stg__card.is-center:hover{border-color:var(--gold);}
-.stg__card:focus-visible{outline:2px solid var(--ink);outline-offset:4px;}
-
-/* el borde del chaflan, que el clip-path elimina */
-.stg__edge{position:absolute;display:block;right:-2px;top:48px;
-  width:70.7107px;height:2px;background:var(--ink);
-  transform-origin:top right;transform:rotate(45deg);}
-.stg__card.is-center .stg__edge{background:var(--ink);}
-
-/* mismo hueco 48x56 y misma sombra dura que el <img> original.
-   Va con iniciales de marca y no con fotos de personas reales de un
-   servicio de avatares: son clientes inventados, no caras ajenas. */
-.stg__ph{width:48px;height:56px;margin-bottom:1rem;flex:none;
-  display:grid;place-content:center;
-  background:var(--ink);color:var(--gold);
-  font-family:var(--display);font-weight:600;font-size:1rem;letter-spacing:.02em;
-  /* como el original: la sombra es del color del fondo de pagina, asi que
-     desaparece en las tarjetas claras y solo se ve sobre la del centro */
-  box-shadow:3px 3px 0 var(--ivory);}
-
-.stg__quote{font-family:var(--display);font-weight:500;
-  font-size:1rem;line-height:1.3;letter-spacing:-.02em;}
-@media (min-width:640px){.stg__quote{font-size:1.25rem;}}
-.stg__by{position:absolute;bottom:2rem;left:2rem;right:2rem;margin-top:.5rem;
-  font-size:.875rem;font-style:italic;color:var(--muted-l);}
-.stg__card.is-center .stg__by{color:var(--ink);}
-
-.stg__nav{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);
-  display:flex;gap:.5rem;z-index:20;}
-.stg__btn{width:56px;height:56px;display:grid;place-content:center;cursor:pointer;
-  background:var(--ivory);border:2px solid var(--ink);color:var(--ink);
-  transition:background .2s var(--e-tw),color .2s var(--e-tw);}
-.stg__btn svg{width:26px;height:26px;}
-.stg__btn:hover{background:var(--gold);color:var(--ink);}
-.stg__btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
 
 /* ============================ CONTACTO ============================ */
 .enq{display:grid;gap:clamp(2.5rem,5vw,4.5rem);}
@@ -987,6 +925,7 @@ body.sin-scroll{overflow:hidden;}
 .pv__precio{font-family:var(--display);font-weight:600;
   font-size:clamp(1.75rem,1.4rem + 1.4vw,2.4rem);line-height:1;letter-spacing:-.03em;}
 .pv__op{color:var(--muted-l);}
+.pv--vendida .pv__precio{text-transform:uppercase;letter-spacing:.04em;}
 .pv__side .btn{width:100%;margin-top:.35rem;}
 .pv__contacto{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--line-l);
   display:grid;gap:.1rem;font-size:.9rem;color:var(--muted-l);}

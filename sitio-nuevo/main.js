@@ -237,10 +237,13 @@
     if (rvBg) rvBg.style.opacity = (1 - e * 0.92).toFixed(3);
     if (rvTint) rvTint.style.opacity = (0.45 - e * 0.28).toFixed(3);
 
-    /* el titulo se parte y sale de cuadro */
-    var tx = e * (mob ? 72 : 58);
-    rvT1.style.transform = 'translate3d(-' + tx.toFixed(2) + 'vw,0,0)';
-    rvT2.style.transform = 'translate3d(' + tx.toFixed(2) + 'vw,0,0)';
+    /* el logo se parte y cada renglon sale de cuadro hacia su lado. El
+       recorrido se mide con el ancho real del logo: al final del track
+       tiene que quedar entero afuera, sin restos sobre el video. */
+    var ancho = rvT1.offsetWidth || w * 0.6;
+    var tx = e * ((w + ancho) / 2 + 24);
+    rvT1.style.transform = 'translate3d(-' + tx.toFixed(1) + 'px,0,0)';
+    rvT2.style.transform = 'translate3d(' + tx.toFixed(1) + 'px,0,0)';
     if (rvMeta) rvMeta.style.opacity = clamp(1 - (p - 0.42) / 0.28, 0, 1).toFixed(3);
 
     /* Al reves que el titulo: mientras la marca sale de cuadro, entran los
@@ -329,164 +332,6 @@
         });
       }, { rootMargin: '150px 0px' }).observe(valle);
     }
-  })();
-
-  /* ---------------------------------------------------------
-     7b. Opiniones escalonadas — port de StaggerTestimonials
-
-     El original le pone un tempId nuevo a la tarjeta que da la vuelta,
-     asi que React la desmonta y la vuelve a montar: por eso esa salta
-     sin animar mientras el resto se desliza. Aca se replica creando un
-     nodo nuevo para esa tarjeta y reusando los demas.
-     --------------------------------------------------------- */
-  var RESENAS = [
-    { ini: 'LR', nombre: 'Laura Rivarola', que: 'Compró una casa en Villa General Belgrano',
-      texto: 'Nos acompañaron en todo el proceso con mucha paciencia. Encontramos la casa ideal para la familia.' },
-    { ini: 'MG', nombre: 'Martín Gauna', que: 'Invirtió en un terreno en Los Reartes',
-      texto: 'Muy profesionales y transparentes. Conocen la zona como nadie y me asesoraron muy bien para invertir.' },
-    { ini: 'CP', nombre: 'Carolina Peralta', que: 'Vendió su casa en VGB',
-      texto: 'Vendí mi propiedad en tiempo récord y al valor que esperaba. Siempre disponibles para responder mis dudas.' },
-    { ini: 'DB', nombre: 'Diego Bustos', que: 'Compró un lote en Los Reartes',
-      texto: 'Me avisaron que el lote que quería no tenía agua de red antes de que hiciera la oferta. Esa honestidad me ahorró un problema enorme.' },
-    { ini: 'SB', nombre: 'Silvana Bertello', que: 'Alquiler temporario en VGB',
-      texto: 'Administran mi cabaña hace dos temporadas. Ocupación llena en enero y yo sin mover un dedo.' },
-    { ini: 'HQ', nombre: 'Hernán Quiroga', que: 'Vendió un campo en Santa Rosa',
-      texto: 'Tasaron el campo con criterio, sin inflar el número para engancharme. Se vendió en cuatro meses.' },
-    { ini: 'MO', nombre: 'Mariela Ocampo', que: 'Compró en La Cumbrecita',
-      texto: 'Nos mostraron tres cabañas, no treinta. Las tres servían. Compramos la segunda.' },
-    { ini: 'FL', nombre: 'Fabián Ludueña', que: 'Inversión en Villa Berna',
-      texto: 'Llevo dos operaciones con ellos. La segunda ni la dudé.' },
-    { ini: 'AS', nombre: 'Andrea Suárez', que: 'Compró casa en VGB',
-      texto: 'Sebastián nos hizo recorrer el barrio un sábado a la mañana para que viéramos el movimiento real. Nadie hace eso.' },
-    { ini: 'RM', nombre: 'Ricardo Maldonado', que: 'Vendió un departamento en VGB',
-      texto: 'Mario se ocupó de toda la escritura. Yo firmé y listo, sin una sola vuelta al registro.' },
-    { ini: 'VC', nombre: 'Verónica Cabral', que: 'Alquiler anual en VGB',
-      texto: 'Buscaba alquiler anual, que acá es lo más difícil de conseguir. En tres semanas tenía las llaves.' },
-    { ini: 'GF', nombre: 'Gustavo Ferreyra', que: 'Compró terreno en Villa Rumipal',
-      texto: 'Conocen cada loteo del valle de memoria. Te dicen cuál tiene escritura y cuál viene con boleto.' }
-  ];
-
-  (function stagger() {
-    var deck = $('#stgDeck');
-    if (!deck) return;
-    var live = $('#stgLive');
-    var cardSize = 365;
-    var lista = RESENAS.slice();
-    var nodos = [];
-    var mq = window.matchMedia('(min-width: 640px)');
-
-    function medir() { cardSize = mq.matches ? 365 : 290; }
-
-    function crear(d) {
-      var el = document.createElement('article');
-      el.className = 'stg__card';
-      el.tabIndex = 0;
-      el.innerHTML =
-        '<span class="stg__edge" aria-hidden="true"></span>' +
-        '<div class="stg__ph" aria-hidden="true">' + d.ini + '</div>' +
-        '<h3 class="stg__quote">&ldquo;' + d.texto + '&rdquo;</h3>' +
-        '<p class="stg__by">' + d.nombre + ', ' + d.que + '</p>';
-      return el;
-    }
-
-    function colocar(animar) {
-      var n = nodos.length;
-      for (var i = 0; i < n; i++) {
-        /* misma formula que el original */
-        var pos = (n % 2) ? i - (n + 1) / 2 : i - n / 2;
-        var centro = pos === 0;
-        var el = nodos[i].el;
-
-        if (!animar) el.style.transition = 'none';
-        el.classList.toggle('is-center', centro);
-        el.style.width = cardSize + 'px';
-        el.style.height = cardSize + 'px';
-        el.style.zIndex = centro ? 10 : 0;
-        el.setAttribute('aria-hidden', centro ? 'false' : 'true');
-        el.style.transform =
-          'translate(-50%, -50%)' +
-          ' translateX(' + ((cardSize / 1.5) * pos) + 'px)' +
-          ' translateY(' + (centro ? -65 : (pos % 2 ? 15 : -15)) + 'px)' +
-          ' rotate(' + (centro ? 0 : (pos % 2 ? 2.5 : -2.5)) + 'deg)';
-        if (!animar) {
-          void el.offsetWidth;           /* fuerza reflow antes de devolver la transicion */
-          el.style.transition = '';
-        }
-      }
-      var c = nodos[(n % 2) ? (n + 1) / 2 : n / 2];
-      if (live && c) live.textContent = c.data.nombre + ': ' + c.data.texto;
-    }
-
-    function mover(pasos) {
-      if (!pasos) return;
-      var i;
-      if (pasos > 0) {
-        for (i = pasos; i > 0; i--) {
-          var a = nodos.shift();
-          if (!a) return;
-          a.el.remove();
-          var nuevoA = { data: a.data, el: crear(a.data) };
-          deck.appendChild(nuevoA.el);
-          nodos.push(nuevoA);
-        }
-      } else {
-        for (i = pasos; i < 0; i++) {
-          var b = nodos.pop();
-          if (!b) return;
-          b.el.remove();
-          var nuevoB = { data: b.data, el: crear(b.data) };
-          deck.insertBefore(nuevoB.el, deck.firstChild);
-          nodos.unshift(nuevoB);
-        }
-      }
-      colocar(true);
-    }
-
-    medir();
-    lista.forEach(function (d) {
-      var el = crear(d);
-      deck.appendChild(el);
-      nodos.push({ data: d, el: el });
-    });
-    colocar(false);
-
-    deck.addEventListener('click', function (e) {
-      var card = e.target.closest('.stg__card');
-      if (!card) return;
-      var idx = nodos.findIndex(function (x) { return x.el === card; });
-      if (idx === -1) return;
-      var n = nodos.length;
-      mover((n % 2) ? idx - (n + 1) / 2 : idx - n / 2);
-    });
-    deck.addEventListener('keydown', function (e) {
-      if (e.key !== 'Enter' && e.key !== ' ') return;
-      var card = e.target.closest('.stg__card');
-      if (!card) return;
-      e.preventDefault();
-      card.click();
-    });
-
-    $('#stgPrev').addEventListener('click', function () { mover(-1); });
-    $('#stgNext').addEventListener('click', function () { mover(1); });
-    $('#stg').addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowLeft') { e.preventDefault(); mover(-1); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); mover(1); }
-    });
-
-    /* remedir: el evento 'resize' no alcanza. Si el primer layout llega
-       trabado (pestaña de fondo, panel oculto), medir() se queda con el
-       tamaño movil y nunca se corrige. matchMedia avisa del cambio real
-       de breakpoint, y los timers cubren el layout inicial demorado. */
-    function remedir() {
-      var antes = cardSize;
-      medir();
-      if (antes !== cardSize) colocar(false);
-    }
-    if (mq.addEventListener) mq.addEventListener('change', remedir);
-    else if (mq.addListener) mq.addListener(remedir);
-    window.addEventListener('resize', remedir);
-    window.addEventListener('load', remedir);
-    [120, 600, 1600].forEach(function (ms) { window.setTimeout(remedir, ms); });
   })();
 
   /* ---------------------------------------------------------
