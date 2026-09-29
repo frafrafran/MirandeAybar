@@ -74,9 +74,9 @@ Cada sección con pin es un `.track` alto que envuelve un `.pin`
 | Track | Largo | Qué maneja |
 | --- | --- | --- |
 | Hero | 300vh | El sol sube sobre las sierras, deriva del titular, barra de avance |
-| Manifiesto | 200vh | Revelado palabra por palabra + marco escalando 0.8 → 1.15 |
-| El valle se abre | 260vh | La ventana de video creciendo con `clip-path` |
-| Servicios | 400vh | Comprá / Vendé / Invertí / Alquiler girando en `rotateX` |
+| Manifiesto | 170vh | Revelado palabra por palabra + marco escalando 0.8 → 1.15 |
+| El valle se abre | 212vh | La ventana de video creciendo con `clip-path` |
+| Servicios | 310vh | Comprá / Vendé / Invertí / Alquiler girando en `rotateX` |
 
 `trackProgress()` devuelve 0 cuando el pin engancha y 1 cuando se suelta; todos
 los efectos son función pura de ese número.

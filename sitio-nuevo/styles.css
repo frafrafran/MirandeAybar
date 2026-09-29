@@ -58,7 +58,7 @@
 
   --r:18px;
 
-  --t-thesis:200vh; --t-serv:400vh;
+  --t-thesis:170vh; --t-serv:310vh;
 }
 
 
@@ -255,7 +255,7 @@ section[id],[id]{scroll-margin-top:96px;}
   padding-inline:var(--px);display:grid;gap:1.6rem;justify-items:center;text-align:center;}
 .words{max-width:20ch;}
 .words span{display:inline-block;opacity:0;filter:blur(12px);
-  transition:opacity .55s var(--e-out),filter .55s var(--e-out);will-change:opacity,filter;}
+  transition:opacity .39s var(--e-out),filter .39s var(--e-out);will-change:opacity,filter;}
 .words span.is-lit{opacity:1;filter:blur(0);}
 .thesis__by{color:var(--muted-l);}
 
@@ -304,7 +304,7 @@ section[id],[id]{scroll-margin-top:96px;}
    Port del ScrollExpandMedia. La ventana crece con clip-path en vez de animar
    width/height: no toca el layout y lo compone la GPU. Ademas el video queda
    quieto y lo que se abre es el encuadre, en vez de reencuadrarse a cada cuadro. */
-.track--reveal{height:260vh;}
+.track--reveal{height:212vh;}
 .track--reveal .pin{background:var(--ink);}
 
 .rv__bg{position:absolute;inset:0;z-index:0;will-change:opacity;}
@@ -975,8 +975,8 @@ body.sin-scroll{overflow:hidden;}
 /* ============================ REVEALS ============================
    Ocultos solo cuando el JS confirma que puede volver a mostrarlos. */
 .js .reveal{opacity:0;transform:translateY(26px);
-  transition:opacity .85s var(--e-out),transform .85s var(--e-out);
-  transition-delay:calc(var(--d,0) * 90ms);}
+  transition:opacity .6s var(--e-out),transform .6s var(--e-out);
+  transition-delay:calc(var(--d,0) * 63ms);}
 .js .reveal.is-in{opacity:1;transform:none;}
 
 /* ============================ MOTION REDUCIDO ============================ */
