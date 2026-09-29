@@ -499,7 +499,11 @@ section[id],[id]{scroll-margin-top:96px;}
 .team__site{color:var(--muted-l);margin-left:auto;}
 
 .team__members{display:grid;gap:clamp(1rem,2.5vw,2rem);}
-@media (min-width:760px){.team__members{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (min-width:760px){.team__members{grid-template-columns:repeat(2,minmax(0,1fr));}
+  /* con dos columnas, la tercera tarjeta ocupa la fila entera en vez de quedar sola a un costado */
+  .team__members > .tm:last-child:nth-child(odd){grid-column:1 / -1;}}
+@media (min-width:1000px){.team__members{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .team__members > .tm:last-child:nth-child(odd){grid-column:auto;}}
 
 .tm{position:relative;overflow:hidden;isolation:isolate;
   /* el tinte baja el fondo efectivo de la crema (239,227,210) a ~(227,212,192),
