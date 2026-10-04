@@ -18,16 +18,14 @@ window.CONFIG = {
   /* cuántas propiedades se ven antes de tocar "Ver más" */
   porTanda: 8,
 
-  /* Ubicacion de la oficina, para el mapa del pie de pagina.
-     ATENCION: es aproximada. El edificio no figura en OpenStreetMap y la
-     busqueda solo devuelve la avenida, sin el numero 95, asi que el pin
-     puede estar corrido una cuadra.
-     PARA CORREGIRLO: abri Google Maps, busca la oficina, hace clic derecho
-     justo encima y elegi la primera opcion (copia algo como "-31.98, -64.56").
-     Pega esos dos numeros aca abajo y listo. */
+  /* Ubicacion de la oficina, para el mapa del pie de pagina. Es el punto
+     de "Paseo Los Troncos" en Google Maps (Av. Julio A. Roca 95).
+     PARA CAMBIARLA: Google Maps -> clic derecho sobre el lugar -> la
+     primera opcion copia algo como "-31.97, -64.55". Pegar esos dos
+     numeros aca abajo. */
   oficina: {
-    lat: -31.98299,
-    lng: -64.560501,
+    lat: -31.9792235,
+    lng: -64.5595411,
     direccion: 'Paseo Los Troncos, Av. J. A. Roca 95',
     localidad: 'Villa General Belgrano, Córdoba'
   }

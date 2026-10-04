@@ -34,7 +34,7 @@ Table Editor → tabla `propiedades` → **Insert row**. Campos:
 
 | Campo | Qué poner | Ejemplo |
 |---|---|---|
-| `codigo` | El código del Excel, **único**. El siguiente libre (hoy, `MA29`). Es la *Referencia* que ve el cliente en la ficha. | `MA29` |
+| `codigo` | El código del Excel, **único**. El siguiente libre (hoy, `MA30`). Es la *Referencia* que ve el cliente en la ficha. | `MA30` |
 | `titulo` | Cómo se ve en la web. Poner la localidad al final ayuda a las fotos. | `Casa 3 Dormitorios en Los Reartes` |
 | `tipo` | Uno de los que ya existen, escrito igual, para que el filtro no los duplique: `Casa`, `Lote`, `Cabaña`, `Dúplex`, `Campo`, `Local comercial`, `Salón de fiestas` | `Casa` |
 | `operacion` | `venta` o `alquiler` (minúsculas) | `venta` |
@@ -42,7 +42,7 @@ Table Editor → tabla `propiedades` → **Insert row**. Campos:
 | `precio_hasta` | Solo si es un rango ("18.000 a 39.000"): el máximo. Si no, vacío. | `39000` |
 | `precio_por_unidad` | `true` si el precio es por unidad (el Excel dice "c/u"). En la web sale "c/u". | `false` |
 | `moneda` | `USD` o `ARS` | `USD` |
-| `localidad` | Igual que las demás: `Villa General Belgrano`, `Los Reartes`, `La Cumbrecita`, `Villa Yacanto`, `Villa Ciudad Parque`, `El Durazno`, `Villa Los Aromos`, `Villa Berna` | `Los Reartes` |
+| `localidad` | Igual que las demás: `Villa General Belgrano`, `Los Reartes`, `La Cumbrecita`, `Villa Yacanto`, `Villa Ciudad Parque`, `El Durazno`, `Villa Los Aromos`, `Villa Berna`, `Santa Rosa de Calamuchita` | `Los Reartes` |
 | `dormitorios`, `banos` | Números. Para lotes, `0`. | `3`, `2` |
 | `superficie` | m² cubiertos. Si es un rango, el mínimo. | `120` |
 | `superficie_hasta` | Solo si los m² cubiertos son un rango ("65/85"): el máximo. | `85` |
@@ -62,7 +62,7 @@ Guardar. La propiedad ya aparece en la web con "Foto en preparación".
 
 ### 2. Cargar las fotos
 
-Seguir la parte B. La herramienta reconoce `MA29` y arma todo.
+Seguir la parte B. La herramienta reconoce `MA30` y arma todo.
 
 ### Para cambiar algo de una propiedad existente
 
@@ -78,7 +78,7 @@ sigue visible con la marca "Vendida" (si preferís que desaparezca, `publicada` 
 
 Por el chat, así:
 
-1. Escribe el código y una descripción corta: **`MA29 CASA 3 DORMITORIOS LOS REARTES`**
+1. Escribe el código y una descripción corta: **`MA30 CASA 3 DORMITORIOS LOS REARTES`**
 2. Manda las fotos de esa propiedad, todas seguidas.
 3. Siguiente propiedad: otra vez el código y las fotos.
 
@@ -108,9 +108,9 @@ carpeta **`listo-para-r2\`**:
 
 ```
 listo-para-r2\
-  MA29-casa-3-dormitorios-en-los-reartes\
-    MA29-casa-3-dormitorios-en-los-reartes-01.webp
-    MA29-casa-3-dormitorios-en-los-reartes-02.webp
+  MA30-casa-3-dormitorios-en-los-reartes\
+    MA30-casa-3-dormitorios-en-los-reartes-01.webp
+    MA30-casa-3-dormitorios-en-los-reartes-02.webp
   _sin-codigo\            <- fotos que no tenían código al lado
   revision.csv            <- qué tanda fue a qué propiedad y con qué seguridad
   actualizar-fotos.sql    <- el comando para la base
@@ -122,9 +122,9 @@ listo-para-r2\
 - `REVISAR`: no encontró con seguridad la propiedad. Se resuelve a mano
   diciéndole el `id` de la fila en Supabase:
   ```powershell
-  python separar-fotos-whatsapp.py "...zip" --r2 https://pub-80c8232a5cae49bdb5c7fa00acf6dfb6.r2.dev --forzar MA29=35
+  python separar-fotos-whatsapp.py "...zip" --r2 https://pub-80c8232a5cae49bdb5c7fa00acf6dfb6.r2.dev --forzar MA30=35
   ```
-  (`MA29` = lo que escribió Papá, `35` = el `id` de la fila).
+  (`MA30` = lo que escribió Papá, `35` = el `id` de la fila).
 - `NOTA sin fotos al lado`: escribió un código pero no hay fotos pegadas.
   Avisarle.
 
